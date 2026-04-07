@@ -1,0 +1,629 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Supply Chain Simulator - OpExcellence</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#065f46',
+                        'primary-dark': '#064e3b',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+        }
+        
+        input[type="range"] {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 100%;
+            height: 6px;
+            border-radius: 3px;
+            background: #e5e7eb;
+            outline: none;
+        }
+        
+        input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: #065f46;
+            cursor: pointer;
+            transition: all 0.15s ease;
+        }
+        
+        input[type="range"]::-webkit-slider-thumb:hover {
+            transform: scale(1.2);
+            box-shadow: 0 0 0 6px rgba(6, 95, 70, 0.1);
+        }
+        
+        input[type="range"]::-moz-range-thumb {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: #065f46;
+            cursor: pointer;
+            border: none;
+            transition: all 0.15s ease;
+        }
+        
+        input[type="range"]::-moz-range-thumb:hover {
+            transform: scale(1.2);
+            box-shadow: 0 0 0 6px rgba(6, 95, 70, 0.1);
+        }
+        
+        .metric-card {
+            transition: all 0.3s ease;
+        }
+        
+        .metric-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+        
+        .status-good {
+            background: linear-gradient(135deg, #065f46 0%, #047857 100%);
+        }
+        
+        .status-warning {
+            background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+        }
+        
+        .status-critical {
+            background: linear-gradient(135deg, #dc2626 0%, #b91c1c 100%);
+        }
+        
+        .pulse {
+            animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% {
+                opacity: 1;
+            }
+            50% {
+                opacity: 0.7;
+            }
+        }
+        
+        .progress-bar {
+            transition: width 0.5s ease, background-color 0.3s ease;
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-gray-50 to-gray-100 min-h-screen">
+    <!-- Header -->
+    <div class="bg-white shadow-sm border-b border-gray-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center gap-3">
+                    <a href="index.html" class="text-primary hover:text-primary-dark transition-colors">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+                        </svg>
+                    </a>
+                    <h1 class="text-xl md:text-2xl font-bold text-gray-900">Supply Chain Simulator</h1>
+                </div>
+                <div class="flex items-center gap-2 text-sm text-gray-600">
+                    <div class="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
+                    <span class="hidden sm:inline">Interactive Demo</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <!-- Introduction -->
+        <div class="bg-blue-50 border-l-4 border-blue-500 p-4 mb-8 rounded-r-lg">
+            <div class="flex items-start gap-3">
+                <svg class="w-6 h-6 text-blue-600 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                </svg>
+                <div>
+                    <h3 class="font-bold text-blue-900 mb-1">Cara Menggunakan Simulator</h3>
+                    <p class="text-sm text-blue-800">Geser slider untuk mengatur parameter supply chain Anda. Simulator akan otomatis menghitung dan menampilkan hasil serta insight bottleneck.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="grid lg:grid-cols-3 gap-8">
+            <!-- LEFT: Input Parameters -->
+            <div class="lg:col-span-1 space-y-6">
+                <div class="bg-white rounded-xl shadow-lg p-6">
+                    <h2 class="text-lg font-bold text-gray-900 mb-6 flex items-center gap-2">
+                        <svg class="w-5 h-5 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4"></path>
+                        </svg>
+                        Parameter Input
+                    </h2>
+                    
+                    <!-- Collection Rate -->
+                    <div class="mb-6">
+                        <label class="block text-sm font-semibold text-gray-700 mb-2">
+                            Collection Rate (ton/hour)
+                        </label>
+                        <input type="range" id="collectionRate" min="5" max="50" value="20" step="1" class="mb-2">
+                        <div class="flex justify-between text-sm">
+                            <span class="text-gray-500">5</span>
+                            <span class="font-bold text-primary" id="collectionRateValue">20</span>
+                            <span class="text-gray-500">50</span>
+                        </div>
+                    </div>
+
+                    <!-- Stockpile Capacity -->
+                    <div class="mb-6">
+                        <label class="block text-sm font-semibold text-gray-700 mb-2">
+                            Stockpile Capacity (ton)
+                        </label>
+                        <input type="range" id="stockpileCapacity" min="100" max="1000" value="500" step="50" class="mb-2">
+                        <div class="flex justify-between text-sm">
+                            <span class="text-gray-500">100</span>
+                            <span class="font-bold text-primary" id="stockpileCapacityValue">500</span>
+                            <span class="text-gray-500">1000</span>
+                        </div>
+                    </div>
+
+                    <!-- Number of Transporters -->
+                    <div class="mb-6">
+                        <label class="block text-sm font-semibold text-gray-700 mb-2">
+                            Number of Transporters
+                        </label>
+                        <input type="range" id="numTransporters" min="1" max="10" value="3" step="1" class="mb-2">
+                        <div class="flex justify-between text-sm">
+                            <span class="text-gray-500">1</span>
+                            <span class="font-bold text-primary" id="numTransportersValue">3</span>
+                            <span class="text-gray-500">10</span>
+                        </div>
+                    </div>
+
+                    <!-- Transporter Speed -->
+                    <div class="mb-6">
+                        <label class="block text-sm font-semibold text-gray-700 mb-2">
+                            Transporter Speed (km/h)
+                        </label>
+                        <input type="range" id="transporterSpeed" min="20" max="80" value="40" step="5" class="mb-2">
+                        <div class="flex justify-between text-sm">
+                            <span class="text-gray-500">20</span>
+                            <span class="font-bold text-primary" id="transporterSpeedValue">40</span>
+                            <span class="text-gray-500">80</span>
+                        </div>
+                    </div>
+
+                    <!-- Distance -->
+                    <div class="mb-6">
+                        <label class="block text-sm font-semibold text-gray-700 mb-2">
+                            Distance (km)
+                        </label>
+                        <input type="range" id="distance" min="5" max="100" value="30" step="5" class="mb-2">
+                        <div class="flex justify-between text-sm">
+                            <span class="text-gray-500">5</span>
+                            <span class="font-bold text-primary" id="distanceValue">30</span>
+                            <span class="text-gray-500">100</span>
+                        </div>
+                    </div>
+
+                    <!-- Loading Time -->
+                    <div class="mb-6">
+                        <label class="block text-sm font-semibold text-gray-700 mb-2">
+                            Loading Time (minutes)
+                        </label>
+                        <input type="range" id="loadingTime" min="10" max="120" value="30" step="5" class="mb-2">
+                        <div class="flex justify-between text-sm">
+                            <span class="text-gray-500">10</span>
+                            <span class="font-bold text-primary" id="loadingTimeValue">30</span>
+                            <span class="text-gray-500">120</span>
+                        </div>
+                    </div>
+
+                    <!-- Factory Demand -->
+                    <div class="mb-6">
+                        <label class="block text-sm font-semibold text-gray-700 mb-2">
+                            Factory Demand (ton/day)
+                        </label>
+                        <input type="range" id="factoryDemand" min="100" max="1000" value="400" step="50" class="mb-2">
+                        <div class="flex justify-between text-sm">
+                            <span class="text-gray-500">100</span>
+                            <span class="font-bold text-primary" id="factoryDemandValue">400</span>
+                            <span class="text-gray-500">1000</span>
+                        </div>
+                    </div>
+
+                    <!-- Reset Button -->
+                    <button onclick="resetSimulator()" class="w-full bg-gray-100 hover:bg-gray-200 text-gray-700 font-semibold py-2 px-4 rounded-lg transition-colors flex items-center justify-center gap-2">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path>
+                        </svg>
+                        Reset to Default
+                    </button>
+                </div>
+            </div>
+
+            <!-- RIGHT: Output & Results -->
+            <div class="lg:col-span-2 space-y-6">
+                <!-- Key Metrics -->
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <div class="metric-card bg-white rounded-xl shadow-lg p-6">
+                        <div class="flex items-center justify-between mb-2">
+                            <h3 class="text-sm font-semibold text-gray-600">Supply Capacity</h3>
+                            <svg class="w-5 h-5 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path>
+                            </svg>
+                        </div>
+                        <div class="text-3xl font-bold text-gray-900" id="supplyCapacity">480</div>
+                        <div class="text-xs text-gray-500 mt-1">ton/day</div>
+                    </div>
+
+                    <div class="metric-card bg-white rounded-xl shadow-lg p-6">
+                        <div class="flex items-center justify-between mb-2">
+                            <h3 class="text-sm font-semibold text-gray-600">Cycle Time</h3>
+                            <svg class="w-5 h-5 text-purple-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                            </svg>
+                        </div>
+                        <div class="text-3xl font-bold text-gray-900" id="cycleTime">2.5</div>
+                        <div class="text-xs text-gray-500 mt-1">hours/trip</div>
+                    </div>
+
+                    <div class="metric-card bg-white rounded-xl shadow-lg p-6">
+                        <div class="flex items-center justify-between mb-2">
+                            <h3 class="text-sm font-semibold text-gray-600">Daily Trips</h3>
+                            <svg class="w-5 h-5 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4"></path>
+                            </svg>
+                        </div>
+                        <div class="text-3xl font-bold text-gray-900" id="dailyTrips">24</div>
+                        <div class="text-xs text-gray-500 mt-1">trips total</div>
+                    </div>
+                </div>
+
+                <!-- Supply vs Demand -->
+                <div class="bg-white rounded-xl shadow-lg p-6">
+                    <h2 class="text-lg font-bold text-gray-900 mb-4">Supply vs Demand Analysis</h2>
+                    
+                    <div class="space-y-4">
+                        <!-- Supply Bar -->
+                        <div>
+                            <div class="flex justify-between text-sm mb-2">
+                                <span class="font-semibold text-gray-700">Daily Supply</span>
+                                <span class="font-bold text-blue-600" id="supplyAmount">480 ton</span>
+                            </div>
+                            <div class="w-full bg-gray-200 rounded-full h-4 overflow-hidden">
+                                <div id="supplyBar" class="progress-bar h-4 bg-blue-500 rounded-full" style="width: 80%"></div>
+                            </div>
+                        </div>
+
+                        <!-- Demand Bar -->
+                        <div>
+                            <div class="flex justify-between text-sm mb-2">
+                                <span class="font-semibold text-gray-700">Factory Demand</span>
+                                <span class="font-bold text-gray-600" id="demandAmount">400 ton</span>
+                            </div>
+                            <div class="w-full bg-gray-200 rounded-full h-4 overflow-hidden">
+                                <div id="demandBar" class="progress-bar h-4 bg-gray-400 rounded-full" style="width: 66.7%"></div>
+                            </div>
+                        </div>
+
+                        <!-- Gap/Surplus -->
+                        <div class="mt-4 p-4 rounded-lg" id="gapSection">
+                            <div class="flex items-center justify-between">
+                                <span class="font-semibold text-gray-700">Gap/Surplus</span>
+                                <span class="text-2xl font-bold" id="gapAmount">+80 ton</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Stockpile & Factory Inventory -->
+                <div class="grid md:grid-cols-2 gap-6">
+                    <!-- Stockpile Level -->
+                    <div class="bg-white rounded-xl shadow-lg p-6">
+                        <h3 class="text-lg font-bold text-gray-900 mb-4">Stockpile Level</h3>
+                        <div class="relative pt-1">
+                            <div class="flex items-center justify-between mb-2">
+                                <span class="text-sm font-semibold text-gray-700">Current Level</span>
+                                <span class="text-sm font-bold" id="stockpilePercent">60%</span>
+                            </div>
+                            <div class="w-full bg-gray-200 rounded-full h-8 overflow-hidden">
+                                <div id="stockpileBar" class="progress-bar h-8 rounded-full flex items-center justify-end pr-3" style="width: 60%">
+                                    <span class="text-white text-xs font-bold" id="stockpileAmount">300 ton</span>
+                                </div>
+                            </div>
+                            <div class="flex justify-between text-xs text-gray-500 mt-1">
+                                <span>0</span>
+                                <span id="stockpileMax">500 ton</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Factory Inventory -->
+                    <div class="bg-white rounded-xl shadow-lg p-6">
+                        <h3 class="text-lg font-bold text-gray-900 mb-4">Factory Inventory</h3>
+                        <div class="relative pt-1">
+                            <div class="flex items-center justify-between mb-2">
+                                <span class="text-sm font-semibold text-gray-700">Current Stock</span>
+                                <span class="text-sm font-bold text-green-600" id="factoryAmount">720 ton</span>
+                            </div>
+                            <div class="w-full bg-gray-200 rounded-full h-8 overflow-hidden">
+                                <div id="factoryBar" class="progress-bar h-8 bg-green-500 rounded-full flex items-center justify-end pr-3" style="width: 72%">
+                                    <span class="text-white text-xs font-bold">3 days</span>
+                                </div>
+                            </div>
+                            <div class="text-xs text-gray-500 mt-1">Days of stock based on demand</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Bottleneck Insight -->
+                <div id="insightBox" class="rounded-xl shadow-lg p-6 text-white">
+                    <div class="flex items-start gap-3">
+                        <svg class="w-6 h-6 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"></path>
+                        </svg>
+                        <div>
+                            <h3 class="font-bold text-lg mb-2" id="insightTitle">System Status: Optimal</h3>
+                            <p class="text-sm opacity-90" id="insightMessage">Supply exceeds demand. System running smoothly.</p>
+                            <div class="mt-3 pt-3 border-t border-white/20">
+                                <p class="text-sm font-semibold mb-1">Recommendation:</p>
+                                <p class="text-sm opacity-90" id="insightRecommendation">Consider reducing transporter count or increasing factory demand to optimize costs.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Info Footer -->
+        <div class="mt-8 text-center">
+            <div class="inline-block bg-white rounded-lg shadow-sm px-6 py-3 text-sm text-gray-600">
+                💡 <strong>Demo Mode:</strong> This simulator uses simplified calculations for demonstration purposes. Real-world scenarios may involve additional variables.
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Get all slider elements
+        const sliders = {
+            collectionRate: document.getElementById('collectionRate'),
+            stockpileCapacity: document.getElementById('stockpileCapacity'),
+            numTransporters: document.getElementById('numTransporters'),
+            transporterSpeed: document.getElementById('transporterSpeed'),
+            distance: document.getElementById('distance'),
+            loadingTime: document.getElementById('loadingTime'),
+            factoryDemand: document.getElementById('factoryDemand')
+        };
+
+        // Update display values
+        function updateDisplayValues() {
+            document.getElementById('collectionRateValue').textContent = sliders.collectionRate.value;
+            document.getElementById('stockpileCapacityValue').textContent = sliders.stockpileCapacity.value;
+            document.getElementById('numTransportersValue').textContent = sliders.numTransporters.value;
+            document.getElementById('transporterSpeedValue').textContent = sliders.transporterSpeed.value;
+            document.getElementById('distanceValue').textContent = sliders.distance.value;
+            document.getElementById('loadingTimeValue').textContent = sliders.loadingTime.value;
+            document.getElementById('factoryDemandValue').textContent = sliders.factoryDemand.value;
+        }
+
+        // Calculate supply chain metrics
+        function calculateMetrics() {
+            const collectionRate = parseFloat(sliders.collectionRate.value);
+            const stockpileCapacity = parseFloat(sliders.stockpileCapacity.value);
+            const numTransporters = parseInt(sliders.numTransporters.value);
+            const transporterSpeed = parseFloat(sliders.transporterSpeed.value);
+            const distance = parseFloat(sliders.distance.value);
+            const loadingTime = parseFloat(sliders.loadingTime.value);
+            const factoryDemand = parseFloat(sliders.factoryDemand.value);
+
+            // Calculate cycle time (hours)
+            const travelTime = (distance / transporterSpeed) * 2; // Round trip
+            const loadUnloadTime = loadingTime / 60 * 2; // Convert to hours and double for load+unload
+            const cycleTime = travelTime + loadUnloadTime;
+
+            // Calculate trips per day per transporter
+            const tripsPerDay = 24 / cycleTime;
+            const totalTrips = tripsPerDay * numTransporters;
+
+            // Assume each transporter carries 20 tons
+            const capacityPerTrip = 20;
+            const supplyPerDay = totalTrips * capacityPerTrip;
+
+            // Collection limit
+            const collectionLimit = collectionRate * 24;
+            const actualSupply = Math.min(supplyPerDay, collectionLimit);
+
+            // Stockpile dynamics (simplified)
+            const netFlow = actualSupply - factoryDemand;
+            const stockpileLevel = Math.max(0, Math.min(stockpileCapacity, stockpileCapacity * 0.6 + netFlow));
+            const stockpilePercent = (stockpileLevel / stockpileCapacity) * 100;
+
+            // Factory inventory (days of stock)
+            const factoryStock = actualSupply * 1.8; // Simplified
+            const daysOfStock = factoryStock / factoryDemand;
+
+            return {
+                cycleTime: cycleTime.toFixed(1),
+                totalTrips: Math.floor(totalTrips),
+                supplyPerDay: Math.floor(actualSupply),
+                factoryDemand: factoryDemand,
+                gap: Math.floor(actualSupply - factoryDemand),
+                stockpileLevel: Math.floor(stockpileLevel),
+                stockpilePercent: stockpilePercent.toFixed(0),
+                stockpileCapacity: stockpileCapacity,
+                factoryStock: Math.floor(factoryStock),
+                daysOfStock: daysOfStock.toFixed(1),
+                collectionLimit: Math.floor(collectionLimit),
+                bottleneck: identifyBottleneck(actualSupply, factoryDemand, supplyPerDay, collectionLimit, stockpileLevel, stockpileCapacity)
+            };
+        }
+
+        // Identify bottleneck
+        function identifyBottleneck(supply, demand, transportCapacity, collectionLimit, stockpile, stockpileCapacity) {
+            if (supply < demand) {
+                if (transportCapacity < collectionLimit) {
+                    return 'transport';
+                } else {
+                    return 'collection';
+                }
+            } else if (stockpile > stockpileCapacity * 0.9) {
+                return 'stockpile_overflow';
+            } else if (stockpile < stockpileCapacity * 0.2) {
+                return 'stockpile_low';
+            } else if (supply > demand * 1.5) {
+                return 'oversupply';
+            } else {
+                return 'optimal';
+            }
+        }
+
+        // Update UI with calculated metrics
+        function updateUI() {
+            const metrics = calculateMetrics();
+
+            // Update key metrics
+            document.getElementById('supplyCapacity').textContent = metrics.supplyPerDay;
+            document.getElementById('cycleTime').textContent = metrics.cycleTime;
+            document.getElementById('dailyTrips').textContent = metrics.totalTrips;
+
+            // Update supply vs demand
+            document.getElementById('supplyAmount').textContent = metrics.supplyPerDay + ' ton';
+            document.getElementById('demandAmount').textContent = metrics.factoryDemand + ' ton';
+            
+            const maxValue = Math.max(metrics.supplyPerDay, metrics.factoryDemand);
+            const supplyPercent = (metrics.supplyPerDay / maxValue) * 100;
+            const demandPercent = (metrics.factoryDemand / maxValue) * 100;
+            
+            document.getElementById('supplyBar').style.width = supplyPercent + '%';
+            document.getElementById('demandBar').style.width = demandPercent + '%';
+
+            // Update gap
+            const gapSection = document.getElementById('gapSection');
+            const gapAmount = document.getElementById('gapAmount');
+            
+            if (metrics.gap >= 0) {
+                gapAmount.textContent = '+' + metrics.gap + ' ton';
+                gapAmount.className = 'text-2xl font-bold text-green-600';
+                gapSection.className = 'mt-4 p-4 rounded-lg bg-green-50 border border-green-200';
+            } else {
+                gapAmount.textContent = metrics.gap + ' ton';
+                gapAmount.className = 'text-2xl font-bold text-red-600';
+                gapSection.className = 'mt-4 p-4 rounded-lg bg-red-50 border border-red-200';
+            }
+
+            // Update stockpile
+            document.getElementById('stockpilePercent').textContent = metrics.stockpilePercent + '%';
+            document.getElementById('stockpileAmount').textContent = metrics.stockpileLevel + ' ton';
+            document.getElementById('stockpileMax').textContent = metrics.stockpileCapacity + ' ton';
+            
+            const stockpileBar = document.getElementById('stockpileBar');
+            stockpileBar.style.width = metrics.stockpilePercent + '%';
+            
+            if (metrics.stockpilePercent > 80) {
+                stockpileBar.className = 'progress-bar h-8 bg-red-500 rounded-full flex items-center justify-end pr-3';
+            } else if (metrics.stockpilePercent > 60) {
+                stockpileBar.className = 'progress-bar h-8 bg-yellow-500 rounded-full flex items-center justify-end pr-3';
+            } else if (metrics.stockpilePercent < 30) {
+                stockpileBar.className = 'progress-bar h-8 bg-orange-500 rounded-full flex items-center justify-end pr-3';
+            } else {
+                stockpileBar.className = 'progress-bar h-8 bg-green-500 rounded-full flex items-center justify-end pr-3';
+            }
+
+            // Update factory inventory
+            document.getElementById('factoryAmount').textContent = metrics.factoryStock + ' ton';
+            const factoryBar = document.getElementById('factoryBar');
+            const factoryPercent = Math.min((metrics.daysOfStock / 5) * 100, 100);
+            factoryBar.style.width = factoryPercent + '%';
+
+            // Update insight
+            updateInsight(metrics.bottleneck, metrics);
+        }
+
+        // Update insight box
+        function updateInsight(bottleneck, metrics) {
+            const insightBox = document.getElementById('insightBox');
+            const insightTitle = document.getElementById('insightTitle');
+            const insightMessage = document.getElementById('insightMessage');
+            const insightRecommendation = document.getElementById('insightRecommendation');
+
+            switch(bottleneck) {
+                case 'transport':
+                    insightBox.className = 'status-critical rounded-xl shadow-lg p-6 text-white';
+                    insightTitle.textContent = '⚠️ Bottleneck: Insufficient Transport';
+                    insightMessage.textContent = 'Transport capacity cannot meet factory demand. Delivery vehicles are the limiting factor.';
+                    insightRecommendation.textContent = 'Add more transporters or increase vehicle speed to improve supply capacity.';
+                    break;
+                    
+                case 'collection':
+                    insightBox.className = 'status-critical rounded-xl shadow-lg p-6 text-white';
+                    insightTitle.textContent = '⚠️ Bottleneck: Low Collection Rate';
+                    insightMessage.textContent = 'Collection rate is too low to meet demand. Supply is constrained at source.';
+                    insightRecommendation.textContent = 'Increase collection rate or reduce factory demand to balance the system.';
+                    break;
+                    
+                case 'stockpile_overflow':
+                    insightBox.className = 'status-warning rounded-xl shadow-lg p-6 text-white';
+                    insightTitle.textContent = '⚠️ Warning: Stockpile Overflow Risk';
+                    insightMessage.textContent = 'Stockpile is near maximum capacity. Risk of overflow and material loss.';
+                    insightRecommendation.textContent = 'Increase transport frequency or expand stockpile capacity to prevent overflow.';
+                    break;
+                    
+                case 'stockpile_low':
+                    insightBox.className = 'status-warning rounded-xl shadow-lg p-6 text-white';
+                    insightTitle.textContent = '⚠️ Warning: Low Stockpile Level';
+                    insightMessage.textContent = 'Stockpile level is critically low. Risk of supply interruption to factory.';
+                    insightRecommendation.textContent = 'Increase collection rate or reduce transport frequency to build stockpile.';
+                    break;
+                    
+                case 'oversupply':
+                    insightBox.className = 'status-warning rounded-xl shadow-lg p-6 text-white';
+                    insightTitle.textContent = '💡 Insight: Oversupply Detected';
+                    insightMessage.textContent = 'Supply significantly exceeds demand. Potential for cost optimization.';
+                    insightRecommendation.textContent = 'Consider reducing transporter count or collection rate to optimize operational costs.';
+                    break;
+                    
+                default:
+                    insightBox.className = 'status-good rounded-xl shadow-lg p-6 text-white';
+                    insightTitle.textContent = '✅ System Status: Optimal';
+                    insightMessage.textContent = 'Supply meets demand efficiently. System is well-balanced.';
+                    insightRecommendation.textContent = 'Monitor stockpile levels and maintain current operational parameters.';
+            }
+        }
+
+        // Reset simulator
+        function resetSimulator() {
+            sliders.collectionRate.value = 20;
+            sliders.stockpileCapacity.value = 500;
+            sliders.numTransporters.value = 3;
+            sliders.transporterSpeed.value = 40;
+            sliders.distance.value = 30;
+            sliders.loadingTime.value = 30;
+            sliders.factoryDemand.value = 400;
+            
+            updateDisplayValues();
+            updateUI();
+        }
+
+        // Add event listeners to all sliders
+        Object.values(sliders).forEach(slider => {
+            slider.addEventListener('input', function() {
+                updateDisplayValues();
+                updateUI();
+            });
+        });
+
+        // Initialize on load
+        updateDisplayValues();
+        updateUI();
+    </script>
+</body>
+</html>

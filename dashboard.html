@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Operational Dashboard - Demo</title>
+    <title>Operational Dashboard - Niyata Consulting</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
     <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
@@ -13,10 +13,35 @@
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
         }
+        #root {
+            min-height: 100vh;
+        }
+        .loading {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            background: #f9fafb;
+        }
+        .spinner {
+            width: 50px;
+            height: 50px;
+            border: 4px solid #f3f4f6;
+            border-top-color: #065f46;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
     </style>
 </head>
 <body>
-    <div id="root"></div>
+    <div id="root">
+        <div class="loading">
+            <div class="spinner"></div>
+        </div>
+    </div>
 
     <script type="text/babel">
         const { useState, useEffect } = React;
@@ -29,12 +54,10 @@
           const [kpiData, setKpiData] = useState(generateKPIData());
           const [waitingTimeData] = useState(generateWaitingTimeData());
 
-          // Real-time updates every 3 seconds
           useEffect(() => {
             const timer = setInterval(() => {
               setCurrentTime(new Date());
               setKpiData(generateKPIData());
-              // Randomly update one delivery
               setDeliveryData(prev => {
                 const newData = [...prev];
                 const lastDay = newData[newData.length - 1];
@@ -42,7 +65,6 @@
                 lastDay.delayed = 50 - lastDay.onTime;
                 return newData;
               });
-              // Randomly update one stock item
               setStockData(prev => {
                 const newData = [...prev];
                 const randomIndex = Math.floor(Math.random() * newData.length);
@@ -111,7 +133,6 @@
 
           return (
             <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 p-4 md:p-8 font-sans">
-              {/* Back Button */}
               <div className="max-w-7xl mx-auto mb-4">
                 <a href="index.html" className="inline-flex items-center gap-2 text-gray-600 hover:text-gray-900 transition-colors">
                   <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -121,7 +142,6 @@
                 </a>
               </div>
 
-              {/* Header */}
               <div className="max-w-7xl mx-auto mb-8">
                 <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-2">
                   <div>
@@ -139,7 +159,6 @@
                 </div>
               </div>
 
-              {/* KPI Cards */}
               <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6 mb-8">
                 <div className="bg-white rounded-2xl shadow-lg p-6 border border-gray-200 hover:shadow-xl transition-shadow">
                   <div className="flex items-start justify-between mb-4">
@@ -203,9 +222,7 @@
                 </div>
               </div>
 
-              {/* Main Content */}
               <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
-                {/* Delivery Performance */}
                 <div className="bg-white rounded-2xl shadow-lg p-6 border border-gray-200">
                   <div className="mb-6">
                     <h2 className="text-xl font-bold text-gray-900 mb-1">Delivery Performance</h2>
@@ -245,7 +262,6 @@
                   </ResponsiveContainer>
                 </div>
 
-                {/* Waiting Time Analysis */}
                 <div className="bg-white rounded-2xl shadow-lg p-6 border border-gray-200">
                   <div className="mb-6">
                     <h2 className="text-xl font-bold text-gray-900 mb-1">Waiting Time Analysis</h2>
@@ -273,7 +289,6 @@
                 </div>
               </div>
 
-              {/* Stock Levels */}
               <div className="max-w-7xl mx-auto">
                 <div className="bg-white rounded-2xl shadow-lg p-6 border border-gray-200">
                   <div className="mb-6">
@@ -336,7 +351,6 @@
                 </div>
               </div>
 
-              {/* Footer Info */}
               <div className="max-w-7xl mx-auto mt-8 text-center">
                 <div className="bg-blue-50 border border-blue-200 rounded-xl p-6 mb-4">
                   <p className="text-sm text-blue-900 mb-2">
@@ -354,7 +368,8 @@
           );
         }
 
-        ReactDOM.render(<OperationalDashboard />, document.getElementById('root'));
+        const root = ReactDOM.createRoot(document.getElementById('root'));
+        root.render(<OperationalDashboard />);
     </script>
 </body>
 </html>

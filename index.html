@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title> Niyata by Gilang Yandeza | Operational Excellence Consultant</title>
+    <title>Niyata Consulting - Operational Excellence</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
@@ -21,148 +21,327 @@
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
         }
-        .btn-primary {
-            transition: all 0.3s ease;
+        
+        .loader {
+            position: fixed;
+            inset: 0;
+            background: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            transition: opacity 0.5s, visibility 0.5s;
         }
+        
+        .loader.hidden {
+            opacity: 0;
+            visibility: hidden;
+        }
+        
+        .spinner {
+            width: 50px;
+            height: 50px;
+            border: 4px solid #f3f4f6;
+            border-top-color: #065f46;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        
+        .hero-pattern {
+            background-color: #ffffff;
+            background-image: 
+                radial-gradient(circle at 25% 25%, rgba(6, 95, 70, 0.03) 0%, transparent 50%),
+                radial-gradient(circle at 75% 75%, rgba(6, 95, 70, 0.03) 0%, transparent 50%);
+            background-size: 600px 600px;
+            position: relative;
+        }
+        
+        .hero-pattern::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, rgba(6, 95, 70, 0.03) 0%, transparent 50%, rgba(6, 78, 59, 0.05) 100%);
+        }
+        
+        .btn-primary {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
         .btn-primary:hover {
             transform: translateY(-2px);
-            box-shadow: 0 10px 20px rgba(6, 95, 70, 0.2);
+            box-shadow: 0 10px 25px rgba(6, 95, 70, 0.25);
         }
+        
         .card {
-            transition: all 0.3s ease;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
         }
+        
         .card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.12);
+        }
+        
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        }
+        
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .whatsapp-float {
+            position: fixed;
+            width: 60px;
+            height: 60px;
+            bottom: 30px;
+            right: 30px;
+            background-color: #25D366;
+            color: #fff;
+            border-radius: 50%;
+            text-align: center;
+            font-size: 30px;
+            box-shadow: 0 4px 12px rgba(37, 211, 102, 0.4);
+            z-index: 100;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            animation: pulse-wa 2s infinite;
+        }
+        
+        .whatsapp-float:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 20px rgba(37, 211, 102, 0.6);
+        }
+        
+        @keyframes pulse-wa {
+            0%, 100% {
+                box-shadow: 0 4px 12px rgba(37, 211, 102, 0.4);
+            }
+            50% {
+                box-shadow: 0 4px 20px rgba(37, 211, 102, 0.7);
+            }
+        }
+        
+        .lang-switch {
+            position: relative;
+            display: inline-block;
+            width: 80px;
+            height: 34px;
+        }
+        
+        .lang-switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+        
+        .lang-slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #065f46;
+            transition: 0.4s;
+            border-radius: 34px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 8px;
+            font-size: 11px;
+            font-weight: 600;
+            color: white;
+        }
+        
+        .lang-slider:before {
+            position: absolute;
+            content: "";
+            height: 26px;
+            width: 36px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            transition: 0.4s;
+            border-radius: 50%;
+        }
+        
+        input:checked + .lang-slider:before {
+            transform: translateX(42px);
+        }
+        
+        .logo-icon {
+            width: 32px;
+            height: 32px;
+            background: linear-gradient(135deg, #065f46 0%, #047857 100%);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            color: white;
+            font-size: 18px;
         }
     </style>
 </head>
 <body class="bg-white text-gray-900">
-    <!-- Navbar -->
+    <div class="loader" id="loader">
+        <div class="spinner"></div>
+    </div>
+
+    <a href="https://wa.me/6281234567890?text=Halo%20saya%20tertarik%20dengan%20layanan%20konsultasi" 
+       target="_blank" 
+       class="whatsapp-float"
+       aria-label="Contact via WhatsApp">
+        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/>
+        </svg>
+    </a>
+
     <nav class="fixed top-0 w-full bg-white/95 backdrop-blur-sm shadow-sm z-50">
         <div class="max-w-6xl mx-auto px-6 py-4">
             <div class="flex justify-between items-center">
-                <div class="text-xl font-bold text-primary">Niyata by Gilang Yandeza</div>
-                <a href="#cta" class="hidden md:inline-block bg-primary text-white px-6 py-2 rounded-lg btn-primary font-medium">
-                    Konsultasi Gratis
-                </a>
+                <div class="flex items-center gap-3">
+                    <div class="logo-icon">N</div>
+                    <div>
+                        <div class="text-xl font-bold text-gray-900">
+                            <span class="text-primary">Niyata</span> Consulting
+                        </div>
+                        <div class="text-xs text-gray-500 hidden sm:block">Operational Excellence</div>
+                    </div>
+                </div>
+                <div class="flex items-center gap-4">
+                    <label class="lang-switch">
+                        <input type="checkbox" id="langToggle">
+                        <span class="lang-slider">
+                            <span>ID</span>
+                            <span>EN</span>
+                        </span>
+                    </label>
+                    <a href="#cta" class="hidden md:inline-block bg-primary text-white px-6 py-2 rounded-lg btn-primary font-medium" data-translate="nav_cta">
+                        Konsultasi Gratis
+                    </a>
+                </div>
             </div>
         </div>
     </nav>
 
-    <!-- Hero Section -->
-    <section id="hero" class="pt-32 pb-20 px-6">
-        <div class="max-w-4xl mx-auto text-center">
-            <h1 class="text-4xl md:text-5xl font-bold text-gray-900 mb-6 leading-tight">
+    <section id="hero" class="pt-32 pb-20 px-6 hero-pattern relative overflow-hidden">
+        <div class="max-w-4xl mx-auto text-center relative z-10 fade-in">
+            <h1 class="text-4xl md:text-5xl font-bold text-gray-900 mb-6 leading-tight" data-translate="hero_title">
                 Tingkatkan Visibilitas Operasi Anda<br>Tanpa Sistem Mahal
             </h1>
-            <p class="text-lg md:text-xl text-gray-700 mb-8 leading-relaxed">
+            <p class="text-lg md:text-xl text-gray-700 mb-8 leading-relaxed" data-translate="hero_subtitle">
                 Saya membantu perusahaan di sektor plantation, logistics, dan manufacturing merapikan sistem operasional, mempercepat pengambilan keputusan, dan mengurangi bottleneck melalui dashboard, PMO, dan pendekatan berbasis data.
             </p>
             <div class="flex flex-col sm:flex-row gap-4 justify-center items-center">
-                <a href="#cta" class="bg-primary text-white px-8 py-4 rounded-lg btn-primary font-semibold text-lg inline-flex items-center gap-2">
+                <a href="#cta" class="bg-primary text-white px-8 py-4 rounded-lg btn-primary font-semibold text-lg inline-flex items-center gap-2" data-translate="hero_cta">
                     👉 Cek Kondisi Operasi Anda (Gratis 1 Jam)
                 </a>
-                <span class="text-sm text-gray-600">Diskusi langsung tanpa komitmen</span>
+                <span class="text-sm text-gray-600" data-translate="hero_cta_sub">Diskusi langsung tanpa komitmen</span>
             </div>
         </div>
     </section>
 
-    <!-- Problem Section -->
     <section id="problem" class="py-20 px-6 bg-gray-50">
-        <div class="max-w-4xl mx-auto">
-            <h2 class="text-3xl md:text-4xl font-bold text-center mb-12">Apakah Anda Mengalami Hal Ini?</h2>
+        <div class="max-w-4xl mx-auto fade-in">
+            <h2 class="text-3xl md:text-4xl font-bold text-center mb-12" data-translate="problem_title">Apakah Anda Mengalami Hal Ini?</h2>
             <div class="space-y-4 mb-8">
-                <div class="flex items-start gap-4 bg-white p-6 rounded-lg shadow-sm">
+                <div class="flex items-start gap-4 bg-white p-6 rounded-lg shadow-sm hover:shadow-md transition-shadow">
                     <svg class="w-6 h-6 text-primary flex-shrink-0 mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
                     </svg>
-                    <p class="text-gray-700">Data operasional tersebar di Excel, WhatsApp, dan laporan manual</p>
+                    <p class="text-gray-700" data-translate="problem_1">Data operasional tersebar di Excel, WhatsApp, dan laporan manual</p>
                 </div>
-                <div class="flex items-start gap-4 bg-white p-6 rounded-lg shadow-sm">
+                <div class="flex items-start gap-4 bg-white p-6 rounded-lg shadow-sm hover:shadow-md transition-shadow">
                     <svg class="w-6 h-6 text-primary flex-shrink-0 mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                     </svg>
-                    <p class="text-gray-700">Reporting lambat dan tidak konsisten</p>
+                    <p class="text-gray-700" data-translate="problem_2">Reporting lambat dan tidak konsisten</p>
                 </div>
-                <div class="flex items-start gap-4 bg-white p-6 rounded-lg shadow-sm">
+                <div class="flex items-start gap-4 bg-white p-6 rounded-lg shadow-sm hover:shadow-md transition-shadow">
                     <svg class="w-6 h-6 text-primary flex-shrink-0 mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path>
                     </svg>
-                    <p class="text-gray-700">Banyak meeting, tapi tetap tidak jelas progressnya</p>
+                    <p class="text-gray-700" data-translate="problem_3">Banyak meeting, tapi tetap tidak jelas progressnya</p>
                 </div>
-                <div class="flex items-start gap-4 bg-white p-6 rounded-lg shadow-sm">
+                <div class="flex items-start gap-4 bg-white p-6 rounded-lg shadow-sm hover:shadow-md transition-shadow">
                     <svg class="w-6 h-6 text-primary flex-shrink-0 mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path>
                     </svg>
-                    <p class="text-gray-700">Sulit mengetahui bottleneck (waiting time, delay, stock issue)</p>
+                    <p class="text-gray-700" data-translate="problem_4">Sulit mengetahui bottleneck (waiting time, delay, stock issue)</p>
                 </div>
-                <div class="flex items-start gap-4 bg-white p-6 rounded-lg shadow-sm">
+                <div class="flex items-start gap-4 bg-white p-6 rounded-lg shadow-sm hover:shadow-md transition-shadow">
                     <svg class="w-6 h-6 text-primary flex-shrink-0 mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                     </svg>
-                    <p class="text-gray-700">Keputusan masih berdasarkan feeling, bukan data</p>
+                    <p class="text-gray-700" data-translate="problem_5">Keputusan masih berdasarkan feeling, bukan data</p>
                 </div>
             </div>
-            <p class="text-center text-lg text-gray-800 font-medium">
+            <p class="text-center text-lg text-gray-800 font-medium" data-translate="problem_closing">
                 Jika 2–3 poin di atas terjadi, berarti sistem operasional Anda belum optimal.
             </p>
         </div>
     </section>
 
-    <!-- Solution Section -->
-    <section id="solution" class="py-20 px-6">
-        <div class="max-w-4xl mx-auto">
-            <h2 class="text-3xl md:text-4xl font-bold text-center mb-8">Solusi Praktis, Bukan Teori</h2>
-            <p class="text-lg text-gray-700 text-center mb-12">
+    <section id="solution" class="py-20 px-6 bg-white">
+        <div class="max-w-4xl mx-auto fade-in">
+            <h2 class="text-3xl md:text-4xl font-bold text-center mb-8" data-translate="solution_title">Solusi Praktis, Bukan Teori</h2>
+            <p class="text-lg text-gray-700 text-center mb-12" data-translate="solution_subtitle">
                 Saya tidak menjual software mahal. Saya membantu Anda membangun sistem sederhana yang langsung bisa digunakan oleh tim Anda.
             </p>
             <div class="grid md:grid-cols-3 gap-8">
-                <div class="text-center">
+                <div class="text-center card p-6 rounded-xl">
                     <div class="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
                         <svg class="w-8 h-8 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
                         </svg>
                     </div>
-                    <h3 class="font-bold text-xl mb-2">Visibilitas</h3>
-                    <p class="text-gray-600">Dashboard yang jelas</p>
+                    <h3 class="font-bold text-xl mb-2" data-translate="solution_focus_1">Visibilitas</h3>
+                    <p class="text-gray-600" data-translate="solution_focus_1_desc">Dashboard yang jelas</p>
                 </div>
-                <div class="text-center">
+                <div class="text-center card p-6 rounded-xl">
                     <div class="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
                         <svg class="w-8 h-8 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path>
                         </svg>
                     </div>
-                    <h3 class="font-bold text-xl mb-2">Struktur</h3>
-                    <p class="text-gray-600">PMO & tracking project</p>
+                    <h3 class="font-bold text-xl mb-2" data-translate="solution_focus_2">Struktur</h3>
+                    <p class="text-gray-600" data-translate="solution_focus_2_desc">PMO & tracking project</p>
                 </div>
-                <div class="text-center">
+                <div class="text-center card p-6 rounded-xl">
                     <div class="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
                         <svg class="w-8 h-8 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
                         </svg>
                     </div>
-                    <h3 class="font-bold text-xl mb-2">Kecepatan Keputusan</h3>
-                    <p class="text-gray-600">Insight yang actionable</p>
+                    <h3 class="font-bold text-xl mb-2" data-translate="solution_focus_3">Kecepatan Keputusan</h3>
+                    <p class="text-gray-600" data-translate="solution_focus_3_desc">Insight yang actionable</p>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Services Section -->
     <section id="services" class="py-20 px-6 bg-gray-50">
-        <div class="max-w-6xl mx-auto">
-            <h2 class="text-3xl md:text-4xl font-bold text-center mb-16">Layanan yang Bisa Langsung Anda Gunakan</h2>
+        <div class="max-w-6xl mx-auto fade-in">
+            <h2 class="text-3xl md:text-4xl font-bold text-center mb-16" data-translate="services_title">Layanan yang Bisa Langsung Anda Gunakan</h2>
             <div class="grid md:grid-cols-3 gap-8">
-                <!-- Service 1 -->
                 <div class="bg-white p-8 rounded-xl shadow-sm card">
                     <div class="w-14 h-14 bg-primary/10 rounded-lg flex items-center justify-center mb-6">
                         <svg class="w-7 h-7 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
                         </svg>
                     </div>
-                    <h3 class="text-xl font-bold mb-4">Operational Dashboard Setup</h3>
-                    <p class="text-gray-700 mb-4">
+                    <h3 class="text-xl font-bold mb-4" data-translate="service_1_title">Operational Dashboard Setup</h3>
+                    <p class="text-gray-700 mb-4" data-translate="service_1_desc">
                         Membantu Anda melihat kondisi operasi secara real-time:
                     </p>
                     <ul class="space-y-2 mb-6">
@@ -170,35 +349,34 @@
                             <svg class="w-5 h-5 text-primary" fill="currentColor" viewBox="0 0 20 20">
                                 <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
                             </svg>
-                            Delivery
+                            <span data-translate="service_1_feature_1">Delivery</span>
                         </li>
                         <li class="flex items-center gap-2 text-gray-700">
                             <svg class="w-5 h-5 text-primary" fill="currentColor" viewBox="0 0 20 20">
                                 <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
                             </svg>
-                            Waiting time
+                            <span data-translate="service_1_feature_2">Waiting time</span>
                         </li>
                         <li class="flex items-center gap-2 text-gray-700">
                             <svg class="w-5 h-5 text-primary" fill="currentColor" viewBox="0 0 20 20">
                                 <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
                             </svg>
-                            Stock
+                            <span data-translate="service_1_feature_3">Stock</span>
                         </li>
                     </ul>
                     <div class="pt-4 border-t border-gray-200">
-                        <p class="text-primary font-semibold">👉 Hasil: Anda tahu masalah sebelum menjadi besar</p>
+                        <p class="text-primary font-semibold" data-translate="service_1_result">👉 Hasil: Anda tahu masalah sebelum menjadi besar</p>
                     </div>
                 </div>
 
-                <!-- Service 2 -->
                 <div class="bg-white p-8 rounded-xl shadow-sm card">
                     <div class="w-14 h-14 bg-primary/10 rounded-lg flex items-center justify-center mb-6">
                         <svg class="w-7 h-7 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"></path>
                         </svg>
                     </div>
-                    <h3 class="text-xl font-bold mb-4">PMO & Project Tracking System</h3>
-                    <p class="text-gray-700 mb-4">
+                    <h3 class="text-xl font-bold mb-4" data-translate="service_2_title">PMO & Project Tracking System</h3>
+                    <p class="text-gray-700 mb-4" data-translate="service_2_desc">
                         Merapikan cara tim Anda mengelola project:
                     </p>
                     <ul class="space-y-2 mb-6">
@@ -206,35 +384,34 @@
                             <svg class="w-5 h-5 text-primary" fill="currentColor" viewBox="0 0 20 20">
                                 <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
                             </svg>
-                            Tracking progress
+                            <span data-translate="service_2_feature_1">Tracking progress</span>
                         </li>
                         <li class="flex items-center gap-2 text-gray-700">
                             <svg class="w-5 h-5 text-primary" fill="currentColor" viewBox="0 0 20 20">
                                 <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
                             </svg>
-                            Reporting yang jelas
+                            <span data-translate="service_2_feature_2">Reporting yang jelas</span>
                         </li>
                         <li class="flex items-center gap-2 text-gray-700">
                             <svg class="w-5 h-5 text-primary" fill="currentColor" viewBox="0 0 20 20">
                                 <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
                             </svg>
-                            Alignment antar tim
+                            <span data-translate="service_2_feature_3">Alignment antar tim</span>
                         </li>
                     </ul>
                     <div class="pt-4 border-t border-gray-200">
-                        <p class="text-primary font-semibold">👉 Hasil: Project lebih terkontrol dan transparan</p>
+                        <p class="text-primary font-semibold" data-translate="service_2_result">👉 Hasil: Project lebih terkontrol dan transparan</p>
                     </div>
                 </div>
 
-                <!-- Service 3 -->
                 <div class="bg-white p-8 rounded-xl shadow-sm card">
                     <div class="w-14 h-14 bg-primary/10 rounded-lg flex items-center justify-center mb-6">
                         <svg class="w-7 h-7 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                         </svg>
                     </div>
-                    <h3 class="text-xl font-bold mb-4">Operational Efficiency Review</h3>
-                    <p class="text-gray-700 mb-4">
+                    <h3 class="text-xl font-bold mb-4" data-translate="service_3_title">Operational Efficiency Review</h3>
+                    <p class="text-gray-700 mb-4" data-translate="service_3_desc">
                         Analisis cepat untuk menemukan bottleneck:
                     </p>
                     <ul class="space-y-2 mb-6">
@@ -242,67 +419,89 @@
                             <svg class="w-5 h-5 text-primary" fill="currentColor" viewBox="0 0 20 20">
                                 <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
                             </svg>
-                            Identifikasi waste
+                            <span data-translate="service_3_feature_1">Identifikasi waste</span>
                         </li>
                         <li class="flex items-center gap-2 text-gray-700">
                             <svg class="w-5 h-5 text-primary" fill="currentColor" viewBox="0 0 20 20">
                                 <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
                             </svg>
-                            Insight praktis
+                            <span data-translate="service_3_feature_2">Insight praktis</span>
                         </li>
                         <li class="flex items-center gap-2 text-gray-700">
                             <svg class="w-5 h-5 text-primary" fill="currentColor" viewBox="0 0 20 20">
                                 <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
                             </svg>
-                            Quick wins
+                            <span data-translate="service_3_feature_3">Quick wins</span>
                         </li>
                     </ul>
                     <div class="pt-4 border-t border-gray-200">
-                        <p class="text-primary font-semibold">👉 Hasil: Peningkatan efisiensi dalam waktu singkat</p>
+                        <p class="text-primary font-semibold" data-translate="service_3_result">👉 Hasil: Peningkatan efisiensi dalam waktu singkat</p>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Portfolio Demo Section -->
-    <section id="portfolio" class="py-20 px-6">
-        <div class="max-w-6xl mx-auto">
-            <h2 class="text-3xl md:text-4xl font-bold text-center mb-6">Lihat Demo Langsung</h2>
-            <p class="text-center text-lg text-gray-600 mb-12">
+    <section id="portfolio" class="py-20 px-6 bg-white">
+        <div class="max-w-6xl mx-auto fade-in">
+            <h2 class="text-3xl md:text-4xl font-bold text-center mb-6" data-translate="portfolio_title">Lihat Demo Langsung</h2>
+            <p class="text-center text-lg text-gray-600 mb-12" data-translate="portfolio_subtitle">
                 Contoh tools yang bisa Anda gunakan untuk meningkatkan visibilitas operasional
             </p>
             
-            <div class="grid md:grid-cols-1 gap-8 max-w-2xl mx-auto">
-                <!-- Demo Card -->
-                <a href="dashboard.html" target="_blank" class="card bg-white p-8 rounded-xl shadow-lg border-2 border-primary/20 hover:border-primary transition-all">
-                    <div class="flex items-start gap-6">
+            <div class="grid md:grid-cols-2 gap-8">
+                <a href="dashboard.html" target="_blank" class="card bg-white p-6 rounded-xl shadow-lg border-2 border-primary/20 hover:border-primary transition-all">
+                    <div class="flex items-start gap-4">
                         <div class="flex-shrink-0">
-                            <div class="w-16 h-16 bg-primary/10 rounded-xl flex items-center justify-center">
-                                <svg class="w-8 h-8 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <div class="w-14 h-14 bg-primary/10 rounded-xl flex items-center justify-center">
+                                <svg class="w-7 h-7 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
                                 </svg>
                             </div>
                         </div>
                         <div class="flex-1">
-                            <div class="flex items-center gap-2 mb-3">
-                                <h3 class="font-bold text-2xl text-gray-900">Operational Dashboard</h3>
-                                <span class="px-3 py-1 bg-green-100 text-green-800 text-xs font-semibold rounded-full flex items-center gap-1">
-                                    <span class="w-2 h-2 bg-green-500 rounded-full animate-pulse"></span>
-                                    LIVE DEMO
+                            <div class="flex items-center gap-2 mb-2">
+                                <h3 class="font-bold text-xl text-gray-900" data-translate="demo_dashboard_title">Operational Dashboard</h3>
+                                <span class="px-2 py-1 bg-green-100 text-green-800 text-xs font-semibold rounded-full flex items-center gap-1">
+                                    <span class="w-1.5 h-1.5 bg-green-500 rounded-full animate-pulse"></span>
+                                    LIVE
                                 </span>
                             </div>
-                            <p class="text-gray-700 mb-4 leading-relaxed">
-                                Monitor delivery performance, waiting time analysis, dan stock levels secara real-time. Dashboard ini memberikan visibilitas penuh terhadap operasional Anda dengan update otomatis setiap 3 detik.
+                            <p class="text-gray-700 mb-3 text-sm" data-translate="demo_dashboard_desc">
+                                Monitor delivery, waiting time, dan stock levels secara real-time
                             </p>
-                            <div class="flex flex-wrap gap-2 mb-4">
-                                <span class="px-3 py-1 bg-gray-100 text-gray-700 text-sm rounded-full">Real-time Updates</span>
-                                <span class="px-3 py-1 bg-gray-100 text-gray-700 text-sm rounded-full">KPI Tracking</span>
-                                <span class="px-3 py-1 bg-gray-100 text-gray-700 text-sm rounded-full">Stock Alerts</span>
+                            <div class="flex items-center text-primary font-semibold text-sm">
+                                <span data-translate="demo_open">Buka Demo</span>
+                                <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path>
+                                </svg>
                             </div>
-                            <div class="flex items-center text-primary font-bold text-lg">
-                                Buka Dashboard Demo
-                                <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        </div>
+                    </div>
+                </a>
+
+                <a href="simulator.html" target="_blank" class="card bg-white p-6 rounded-xl shadow-lg border-2 border-primary/20 hover:border-primary transition-all">
+                    <div class="flex items-start gap-4">
+                        <div class="flex-shrink-0">
+                            <div class="w-14 h-14 bg-primary/10 rounded-xl flex items-center justify-center">
+                                <svg class="w-7 h-7 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 12l3-3 3 3 4-4M8 21l4-4 4 4M3 4h18M4 4h16v12a1 1 0 01-1 1H5a1 1 0 01-1-1V4z"></path>
+                                </svg>
+                            </div>
+                        </div>
+                        <div class="flex-1">
+                            <div class="flex items-center gap-2 mb-2">
+                                <h3 class="font-bold text-xl text-gray-900" data-translate="demo_simulator_title">Supply Chain Simulator</h3>
+                                <span class="px-2 py-1 bg-blue-100 text-blue-800 text-xs font-semibold rounded-full">
+                                    INTERACTIVE
+                                </span>
+                            </div>
+                            <p class="text-gray-700 mb-3 text-sm" data-translate="demo_simulator_desc">
+                                Identifikasi bottleneck dalam supply chain Anda
+                            </p>
+                            <div class="flex items-center text-primary font-semibold text-sm">
+                                <span data-translate="demo_open">Buka Demo</span>
+                                <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path>
                                 </svg>
                             </div>
@@ -310,55 +509,49 @@
                     </div>
                 </a>
             </div>
-            
-            <div class="text-center mt-8">
-                <p class="text-gray-600">Dashboard ini bisa disesuaikan dengan kebutuhan spesifik operasional Anda</p>
-            </div>
         </div>
     </section>
 
-    <!-- About Section -->
-    <section id="about" class="py-20 px-6">
-        <div class="max-w-4xl mx-auto">
-            <h2 class="text-3xl md:text-4xl font-bold text-center mb-12">Tentang Saya</h2>
-            <div class="bg-gray-50 p-8 md:p-12 rounded-xl">
-                <p class="text-lg text-gray-700 mb-6">
+    <section id="about" class="py-20 px-6 bg-gray-50">
+        <div class="max-w-4xl mx-auto fade-in">
+            <h2 class="text-3xl md:text-4xl font-bold text-center mb-12" data-translate="about_title">Tentang Saya</h2>
+            <div class="bg-white p-8 md:p-12 rounded-xl shadow-sm">
+                <p class="text-lg text-gray-700 mb-6" data-translate="about_intro">
                     Saya adalah Project Manager / PMO dengan pengalaman di supply chain digitalization, khususnya di lingkungan plantation dan manufacturing.
                 </p>
-                <p class="text-lg text-gray-800 font-semibold mb-4">Fokus saya adalah:</p>
+                <p class="text-lg text-gray-800 font-semibold mb-4" data-translate="about_focus_title">Fokus saya adalah:</p>
                 <ul class="space-y-3 mb-6">
                     <li class="flex items-start gap-3">
                         <svg class="w-6 h-6 text-primary flex-shrink-0 mt-1" fill="currentColor" viewBox="0 0 20 20">
                             <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
                         </svg>
-                        <span class="text-gray-700">Meningkatkan visibilitas operasional</span>
+                        <span class="text-gray-700" data-translate="about_focus_1">Meningkatkan visibilitas operasional</span>
                     </li>
                     <li class="flex items-start gap-3">
                         <svg class="w-6 h-6 text-primary flex-shrink-0 mt-1" fill="currentColor" viewBox="0 0 20 20">
                             <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
                         </svg>
-                        <span class="text-gray-700">Mengurangi bottleneck</span>
+                        <span class="text-gray-700" data-translate="about_focus_2">Mengurangi bottleneck</span>
                     </li>
                     <li class="flex items-start gap-3">
                         <svg class="w-6 h-6 text-primary flex-shrink-0 mt-1" fill="currentColor" viewBox="0 0 20 20">
                             <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
                         </svg>
-                        <span class="text-gray-700">Membantu tim membuat keputusan lebih cepat</span>
+                        <span class="text-gray-700" data-translate="about_focus_3">Membantu tim membuat keputusan lebih cepat</span>
                     </li>
                 </ul>
-                <p class="text-lg text-gray-700">
+                <p class="text-lg text-gray-700" data-translate="about_closing">
                     Saya terbiasa bekerja langsung dengan tim operasional, bukan hanya di level strategi.
                 </p>
             </div>
         </div>
     </section>
 
-    <!-- Differentiation Section -->
-    <section id="differentiation" class="py-20 px-6 bg-gray-50">
-        <div class="max-w-4xl mx-auto">
-            <h2 class="text-3xl md:text-4xl font-bold text-center mb-12">Kenapa Pendekatan Ini Berbeda?</h2>
+    <section id="differentiation" class="py-20 px-6 bg-white">
+        <div class="max-w-4xl mx-auto fade-in">
+            <h2 class="text-3xl md:text-4xl font-bold text-center mb-12" data-translate="diff_title">Kenapa Pendekatan Ini Berbeda?</h2>
             <div class="grid md:grid-cols-2 gap-6">
-                <div class="bg-white p-6 rounded-lg shadow-sm flex gap-4">
+                <div class="bg-gray-50 p-6 rounded-lg shadow-sm flex gap-4 hover:shadow-md transition-shadow">
                     <div class="flex-shrink-0">
                         <div class="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center">
                             <svg class="w-6 h-6 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -367,11 +560,11 @@
                         </div>
                     </div>
                     <div>
-                        <h3 class="font-bold text-lg mb-2">Bukan Konsultan Teori</h3>
-                        <p class="text-gray-700">Berbasis pengalaman lapangan</p>
+                        <h3 class="font-bold text-lg mb-2" data-translate="diff_1_title">Bukan Konsultan Teori</h3>
+                        <p class="text-gray-700" data-translate="diff_1_desc">Berbasis pengalaman lapangan</p>
                     </div>
                 </div>
-                <div class="bg-white p-6 rounded-lg shadow-sm flex gap-4">
+                <div class="bg-gray-50 p-6 rounded-lg shadow-sm flex gap-4 hover:shadow-md transition-shadow">
                     <div class="flex-shrink-0">
                         <div class="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center">
                             <svg class="w-6 h-6 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -380,11 +573,11 @@
                         </div>
                     </div>
                     <div>
-                        <h3 class="font-bold text-lg mb-2">Solusi Sederhana</h3>
-                        <p class="text-gray-700">Fokus ke solusi yang bisa langsung dipakai</p>
+                        <h3 class="font-bold text-lg mb-2" data-translate="diff_2_title">Solusi Sederhana</h3>
+                        <p class="text-gray-700" data-translate="diff_2_desc">Fokus ke solusi yang bisa langsung dipakai</p>
                     </div>
                 </div>
-                <div class="bg-white p-6 rounded-lg shadow-sm flex gap-4">
+                <div class="bg-gray-50 p-6 rounded-lg shadow-sm flex gap-4 hover:shadow-md transition-shadow">
                     <div class="flex-shrink-0">
                         <div class="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center">
                             <svg class="w-6 h-6 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -393,11 +586,11 @@
                         </div>
                     </div>
                     <div>
-                        <h3 class="font-bold text-lg mb-2">Tidak Tergantung Sistem Mahal</h3>
-                        <p class="text-gray-700">Gunakan tools yang sudah ada</p>
+                        <h3 class="font-bold text-lg mb-2" data-translate="diff_3_title">Tidak Tergantung Sistem Mahal</h3>
+                        <p class="text-gray-700" data-translate="diff_3_desc">Gunakan tools yang sudah ada</p>
                     </div>
                 </div>
-                <div class="bg-white p-6 rounded-lg shadow-sm flex gap-4">
+                <div class="bg-gray-50 p-6 rounded-lg shadow-sm flex gap-4 hover:shadow-md transition-shadow">
                     <div class="flex-shrink-0">
                         <div class="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center">
                             <svg class="w-6 h-6 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -406,20 +599,19 @@
                         </div>
                     </div>
                     <div>
-                        <h3 class="font-bold text-lg mb-2">Mengutamakan Hasil</h3>
-                        <p class="text-gray-700">Bukan kompleksitas</p>
+                        <h3 class="font-bold text-lg mb-2" data-translate="diff_4_title">Mengutamakan Hasil</h3>
+                        <p class="text-gray-700" data-translate="diff_4_desc">Bukan kompleksitas</p>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Offer Section -->
-    <section id="offer" class="py-20 px-6">
-        <div class="max-w-3xl mx-auto text-center">
-            <h2 class="text-3xl md:text-4xl font-bold mb-8">Mulai dari Analisis Gratis</h2>
-            <div class="bg-primary/5 border-2 border-primary/20 p-8 md:p-12 rounded-xl">
-                <p class="text-lg text-gray-800 mb-6">
+    <section id="offer" class="py-20 px-6 bg-gray-50">
+        <div class="max-w-3xl mx-auto text-center fade-in">
+            <h2 class="text-3xl md:text-4xl font-bold mb-8" data-translate="offer_title">Mulai dari Analisis Gratis</h2>
+            <div class="bg-white border-2 border-primary/20 p-8 md:p-12 rounded-xl shadow-lg">
+                <p class="text-lg text-gray-800 mb-6" data-translate="offer_intro">
                     Saya menawarkan sesi 1 jam untuk:
                 </p>
                 <ul class="space-y-3 mb-8 text-left max-w-xl mx-auto">
@@ -427,42 +619,306 @@
                         <svg class="w-6 h-6 text-primary flex-shrink-0 mt-1" fill="currentColor" viewBox="0 0 20 20">
                             <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
                         </svg>
-                        <span class="text-gray-700">Review kondisi operasional Anda</span>
+                        <span class="text-gray-700" data-translate="offer_item_1">Review kondisi operasional Anda</span>
                     </li>
                     <li class="flex items-start gap-3">
                         <svg class="w-6 h-6 text-primary flex-shrink-0 mt-1" fill="currentColor" viewBox="0 0 20 20">
                             <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
                         </svg>
-                        <span class="text-gray-700">Identifikasi bottleneck utama</span>
+                        <span class="text-gray-700" data-translate="offer_item_2">Identifikasi bottleneck utama</span>
                     </li>
                     <li class="flex items-start gap-3">
                         <svg class="w-6 h-6 text-primary flex-shrink-0 mt-1" fill="currentColor" viewBox="0 0 20 20">
                             <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
                         </svg>
-                        <span class="text-gray-700">Memberikan insight awal yang bisa langsung digunakan</span>
+                        <span class="text-gray-700" data-translate="offer_item_3">Memberikan insight awal yang bisa langsung digunakan</span>
                     </li>
                 </ul>
-                <p class="text-xl font-bold text-primary mb-2">Tanpa biaya. Tanpa komitmen.</p>
+                <p class="text-xl font-bold text-primary mb-2" data-translate="offer_closing">Tanpa biaya. Tanpa komitmen.</p>
             </div>
         </div>
     </section>
 
-    <!-- Final CTA Section -->
-    <section id="cta" class="py-20 px-6 bg-primary text-white">
-        <div class="max-w-3xl mx-auto text-center">
-            <h2 class="text-3xl md:text-4xl font-bold mb-8">Siap Melihat Operasi Anda Lebih Jelas?</h2>
-            <a href="mailto:gyandeza@gmail.com" class="inline-block bg-white text-primary px-10 py-5 rounded-lg font-bold text-lg hover:bg-gray-100 transition-all duration-300 hover:scale-105 shadow-lg mb-4">
-                👉 Cek Kondisi Operasi Anda (Gratis 1 Jam)
-            </a>
-            <p class="text-white/90 mt-4">Respon dalam 24 jam</p>
+    <section id="contact" class="py-20 px-6 bg-white">
+        <div class="max-w-4xl mx-auto fade-in">
+            <h2 class="text-3xl md:text-4xl font-bold text-center mb-12" data-translate="contact_title">Hubungi Saya</h2>
+            <div class="grid md:grid-cols-3 gap-6">
+                <a href="https://wa.me/6281234567890?text=Halo%20saya%20tertarik%20dengan%20layanan%20konsultasi" 
+                   target="_blank"
+                   class="bg-gradient-to-br from-green-500 to-green-600 text-white p-8 rounded-xl shadow-lg hover:shadow-2xl transition-all hover:scale-105 transform group">
+                    <div class="flex flex-col items-center text-center">
+                        <div class="w-16 h-16 bg-white/20 rounded-full flex items-center justify-center mb-4 group-hover:bg-white/30 transition-colors">
+                            <svg class="w-8 h-8" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/>
+                            </svg>
+                        </div>
+                        <h3 class="font-bold text-xl mb-2">WhatsApp</h3>
+                        <p class="text-white/90 text-sm mb-4" data-translate="contact_wa_desc">Chat langsung untuk konsultasi</p>
+                        <div class="px-4 py-2 bg-white/20 rounded-full text-sm font-semibold">
+                            +62 812-3456-7890
+                        </div>
+                    </div>
+                </a>
+
+                <a href="mailto:consultant@niyata.com" 
+                   class="bg-gray-50 border-2 border-gray-200 p-8 rounded-xl shadow-sm hover:shadow-lg transition-all hover:border-primary group">
+                    <div class="flex flex-col items-center text-center">
+                        <div class="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mb-4 group-hover:bg-primary/20 transition-colors">
+                            <svg class="w-8 h-8 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
+                            </svg>
+                        </div>
+                        <h3 class="font-bold text-xl mb-2 text-gray-900">Email</h3>
+                        <p class="text-gray-600 text-sm mb-4" data-translate="contact_email_desc">Kirim pertanyaan detail</p>
+                        <div class="px-4 py-2 bg-gray-100 rounded-full text-sm font-semibold text-gray-700">
+                            consultant@niyata.com
+                        </div>
+                    </div>
+                </a>
+
+                <a href="https://linkedin.com/in/yourprofile" 
+                   target="_blank"
+                   class="bg-gray-50 border-2 border-gray-200 p-8 rounded-xl shadow-sm hover:shadow-lg transition-all hover:border-primary group">
+                    <div class="flex flex-col items-center text-center">
+                        <div class="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mb-4 group-hover:bg-primary/20 transition-colors">
+                            <svg class="w-8 h-8 text-primary" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+                            </svg>
+                        </div>
+                        <h3 class="font-bold text-xl mb-2 text-gray-900">LinkedIn</h3>
+                        <p class="text-gray-600 text-sm mb-4" data-translate="contact_linkedin_desc">Lihat profil profesional</p>
+                        <div class="px-4 py-2 bg-gray-100 rounded-full text-sm font-semibold text-gray-700">
+                            /in/yourprofile
+                        </div>
+                    </div>
+                </a>
+            </div>
         </div>
     </section>
 
-    <!-- Footer -->
+    <section id="cta" class="py-20 px-6 bg-gradient-to-br from-primary to-primary-dark text-white">
+        <div class="max-w-3xl mx-auto text-center fade-in">
+            <h2 class="text-3xl md:text-4xl font-bold mb-8" data-translate="cta_title">Siap Melihat Operasi Anda Lebih Jelas?</h2>
+            <a href="https://wa.me/6281234567890?text=Halo%20saya%20tertarik%20dengan%20sesi%20konsultasi%20gratis" 
+               target="_blank"
+               class="inline-block bg-white text-primary px-10 py-5 rounded-lg font-bold text-lg hover:bg-gray-100 transition-all duration-300 hover:scale-105 shadow-lg mb-4"
+               data-translate="cta_button">
+                👉 Cek Kondisi Operasi Anda (Gratis 1 Jam)
+            </a>
+            <p class="text-white/90 mt-4" data-translate="cta_response">Respon dalam 24 jam</p>
+        </div>
+    </section>
+
     <footer class="bg-gray-900 text-white py-8 px-6">
         <div class="max-w-6xl mx-auto text-center">
-            <p class="text-gray-400">&copy; 2026 Niyata. All rights reserved.</p>
+            <p class="text-gray-400">&copy; 2026 Niyata Consulting. All rights reserved.</p>
         </div>
     </footer>
+
+    <script>
+        window.addEventListener('load', function() {
+            setTimeout(function() {
+                document.getElementById('loader').classList.add('hidden');
+            }, 800);
+        });
+
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver(function(entries) {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.fade-in').forEach(el => {
+            observer.observe(el);
+        });
+
+        const translations = {
+            id: {
+                nav_cta: 'Konsultasi Gratis',
+                hero_title: 'Tingkatkan Visibilitas Operasi Anda<br>Tanpa Sistem Mahal',
+                hero_subtitle: 'Saya membantu perusahaan di sektor plantation, logistics, dan manufacturing merapikan sistem operasional, mempercepat pengambilan keputusan, dan mengurangi bottleneck melalui dashboard, PMO, dan pendekatan berbasis data.',
+                hero_cta: '👉 Cek Kondisi Operasi Anda (Gratis 1 Jam)',
+                hero_cta_sub: 'Diskusi langsung tanpa komitmen',
+                problem_title: 'Apakah Anda Mengalami Hal Ini?',
+                problem_1: 'Data operasional tersebar di Excel, WhatsApp, dan laporan manual',
+                problem_2: 'Reporting lambat dan tidak konsisten',
+                problem_3: 'Banyak meeting, tapi tetap tidak jelas progressnya',
+                problem_4: 'Sulit mengetahui bottleneck (waiting time, delay, stock issue)',
+                problem_5: 'Keputusan masih berdasarkan feeling, bukan data',
+                problem_closing: 'Jika 2–3 poin di atas terjadi, berarti sistem operasional Anda belum optimal.',
+                solution_title: 'Solusi Praktis, Bukan Teori',
+                solution_subtitle: 'Saya tidak menjual software mahal. Saya membantu Anda membangun sistem sederhana yang langsung bisa digunakan oleh tim Anda.',
+                solution_focus_1: 'Visibilitas',
+                solution_focus_1_desc: 'Dashboard yang jelas',
+                solution_focus_2: 'Struktur',
+                solution_focus_2_desc: 'PMO & tracking project',
+                solution_focus_3: 'Kecepatan Keputusan',
+                solution_focus_3_desc: 'Insight yang actionable',
+                services_title: 'Layanan yang Bisa Langsung Anda Gunakan',
+                service_1_title: 'Operational Dashboard Setup',
+                service_1_desc: 'Membantu Anda melihat kondisi operasi secara real-time:',
+                service_1_feature_1: 'Delivery',
+                service_1_feature_2: 'Waiting time',
+                service_1_feature_3: 'Stock',
+                service_1_result: '👉 Hasil: Anda tahu masalah sebelum menjadi besar',
+                service_2_title: 'PMO & Project Tracking System',
+                service_2_desc: 'Merapikan cara tim Anda mengelola project:',
+                service_2_feature_1: 'Tracking progress',
+                service_2_feature_2: 'Reporting yang jelas',
+                service_2_feature_3: 'Alignment antar tim',
+                service_2_result: '👉 Hasil: Project lebih terkontrol dan transparan',
+                service_3_title: 'Operational Efficiency Review',
+                service_3_desc: 'Analisis cepat untuk menemukan bottleneck:',
+                service_3_feature_1: 'Identifikasi waste',
+                service_3_feature_2: 'Insight praktis',
+                service_3_feature_3: 'Quick wins',
+                service_3_result: '👉 Hasil: Peningkatan efisiensi dalam waktu singkat',
+                portfolio_title: 'Lihat Demo Langsung',
+                portfolio_subtitle: 'Contoh tools yang bisa Anda gunakan untuk meningkatkan visibilitas operasional',
+                demo_dashboard_title: 'Operational Dashboard',
+                demo_dashboard_desc: 'Monitor delivery, waiting time, dan stock levels secara real-time',
+                demo_simulator_title: 'Supply Chain Simulator',
+                demo_simulator_desc: 'Identifikasi bottleneck dalam supply chain Anda',
+                demo_open: 'Buka Demo',
+                about_title: 'Tentang Saya',
+                about_intro: 'Saya adalah Project Manager / PMO dengan pengalaman di supply chain digitalization, khususnya di lingkungan plantation dan manufacturing.',
+                about_focus_title: 'Fokus saya adalah:',
+                about_focus_1: 'Meningkatkan visibilitas operasional',
+                about_focus_2: 'Mengurangi bottleneck',
+                about_focus_3: 'Membantu tim membuat keputusan lebih cepat',
+                about_closing: 'Saya terbiasa bekerja langsung dengan tim operasional, bukan hanya di level strategi.',
+                diff_title: 'Kenapa Pendekatan Ini Berbeda?',
+                diff_1_title: 'Bukan Konsultan Teori',
+                diff_1_desc: 'Berbasis pengalaman lapangan',
+                diff_2_title: 'Solusi Sederhana',
+                diff_2_desc: 'Fokus ke solusi yang bisa langsung dipakai',
+                diff_3_title: 'Tidak Tergantung Sistem Mahal',
+                diff_3_desc: 'Gunakan tools yang sudah ada',
+                diff_4_title: 'Mengutamakan Hasil',
+                diff_4_desc: 'Bukan kompleksitas',
+                offer_title: 'Mulai dari Analisis Gratis',
+                offer_intro: 'Saya menawarkan sesi 1 jam untuk:',
+                offer_item_1: 'Review kondisi operasional Anda',
+                offer_item_2: 'Identifikasi bottleneck utama',
+                offer_item_3: 'Memberikan insight awal yang bisa langsung digunakan',
+                offer_closing: 'Tanpa biaya. Tanpa komitmen.',
+                contact_title: 'Hubungi Saya',
+                contact_wa_desc: 'Chat langsung untuk konsultasi',
+                contact_email_desc: 'Kirim pertanyaan detail',
+                contact_linkedin_desc: 'Lihat profil profesional',
+                cta_title: 'Siap Melihat Operasi Anda Lebih Jelas?',
+                cta_button: '👉 Cek Kondisi Operasi Anda (Gratis 1 Jam)',
+                cta_response: 'Respon dalam 24 jam'
+            },
+            en: {
+                nav_cta: 'Free Consultation',
+                hero_title: 'Increase Operational Visibility<br>Without Expensive Systems',
+                hero_subtitle: 'I help companies in plantation, logistics, and manufacturing sectors streamline operational systems, speed up decision-making, and reduce bottlenecks through dashboards, PMO, and data-driven approaches.',
+                hero_cta: '👉 Check Your Operations (Free 1 Hour)',
+                hero_cta_sub: 'Direct discussion without commitment',
+                problem_title: 'Are You Experiencing This?',
+                problem_1: 'Operational data scattered across Excel, WhatsApp, and manual reports',
+                problem_2: 'Slow and inconsistent reporting',
+                problem_3: 'Many meetings, but progress remains unclear',
+                problem_4: 'Difficult to identify bottlenecks (waiting time, delays, stock issues)',
+                problem_5: 'Decisions still based on feeling, not data',
+                problem_closing: 'If 2–3 points above occur, your operational system is not optimal yet.',
+                solution_title: 'Practical Solutions, Not Theory',
+                solution_subtitle: "I don't sell expensive software. I help you build simple systems that your team can use immediately.",
+                solution_focus_1: 'Visibility',
+                solution_focus_1_desc: 'Clear dashboard',
+                solution_focus_2: 'Structure',
+                solution_focus_2_desc: 'PMO & project tracking',
+                solution_focus_3: 'Decision Speed',
+                solution_focus_3_desc: 'Actionable insights',
+                services_title: 'Services You Can Use Immediately',
+                service_1_title: 'Operational Dashboard Setup',
+                service_1_desc: 'Help you see operational conditions in real-time:',
+                service_1_feature_1: 'Delivery',
+                service_1_feature_2: 'Waiting time',
+                service_1_feature_3: 'Stock',
+                service_1_result: '👉 Result: You know problems before they become big',
+                service_2_title: 'PMO & Project Tracking System',
+                service_2_desc: 'Streamline how your team manages projects:',
+                service_2_feature_1: 'Progress tracking',
+                service_2_feature_2: 'Clear reporting',
+                service_2_feature_3: 'Team alignment',
+                service_2_result: '👉 Result: Projects more controlled and transparent',
+                service_3_title: 'Operational Efficiency Review',
+                service_3_desc: 'Quick analysis to find bottlenecks:',
+                service_3_feature_1: 'Identify waste',
+                service_3_feature_2: 'Practical insights',
+                service_3_feature_3: 'Quick wins',
+                service_3_result: '👉 Result: Efficiency improvement in short time',
+                portfolio_title: 'View Live Demo',
+                portfolio_subtitle: 'Example tools you can use to increase operational visibility',
+                demo_dashboard_title: 'Operational Dashboard',
+                demo_dashboard_desc: 'Monitor delivery, waiting time, and stock levels in real-time',
+                demo_simulator_title: 'Supply Chain Simulator',
+                demo_simulator_desc: 'Identify bottlenecks in your supply chain',
+                demo_open: 'Open Demo',
+                about_title: 'About Me',
+                about_intro: 'I am a Project Manager / PMO with experience in supply chain digitalization, especially in plantation and manufacturing environments.',
+                about_focus_title: 'My focus is:',
+                about_focus_1: 'Increasing operational visibility',
+                about_focus_2: 'Reducing bottlenecks',
+                about_focus_3: 'Helping teams make faster decisions',
+                about_closing: 'I am used to working directly with operational teams, not just at the strategic level.',
+                diff_title: 'Why Is This Approach Different?',
+                diff_1_title: 'Not a Theory Consultant',
+                diff_1_desc: 'Based on field experience',
+                diff_2_title: 'Simple Solutions',
+                diff_2_desc: 'Focus on solutions that can be used immediately',
+                diff_3_title: 'No Dependence on Expensive Systems',
+                diff_3_desc: 'Use existing tools',
+                diff_4_title: 'Prioritizing Results',
+                diff_4_desc: 'Not complexity',
+                offer_title: 'Start with Free Analysis',
+                offer_intro: 'I offer a 1-hour session for:',
+                offer_item_1: 'Review your operational conditions',
+                offer_item_2: 'Identify main bottlenecks',
+                offer_item_3: 'Provide initial insights that can be used immediately',
+                offer_closing: 'No cost. No commitment.',
+                contact_title: 'Contact Me',
+                contact_wa_desc: 'Direct chat for consultation',
+                contact_email_desc: 'Send detailed questions',
+                contact_linkedin_desc: 'View professional profile',
+                cta_title: 'Ready to See Your Operations More Clearly?',
+                cta_button: '👉 Check Your Operations (Free 1 Hour)',
+                cta_response: 'Response within 24 hours'
+            }
+        };
+
+        function setLanguage(lang) {
+            document.querySelectorAll('[data-translate]').forEach(element => {
+                const key = element.getAttribute('data-translate');
+                if (translations[lang][key]) {
+                    element.innerHTML = translations[lang][key];
+                }
+            });
+            
+            localStorage.setItem('preferred_language', lang);
+            document.documentElement.lang = lang;
+        }
+
+        const langToggle = document.getElementById('langToggle');
+        const savedLang = localStorage.getItem('preferred_language') || 'id';
+        
+        if (savedLang === 'en') {
+            langToggle.checked = true;
+            setLanguage('en');
+        }
+
+        langToggle.addEventListener('change', function() {
+            setLanguage(this.checked ? 'en' : 'id');
+        });
+    </script>
 </body>
 </html>
