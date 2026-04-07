@@ -1,375 +1,88 @@
 <!DOCTYPE html>
-<html lang="id">
+<html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Operational Dashboard - Niyata Consulting</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
-    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
-    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
-    <script src="https://unpkg.com/recharts@2.5.0/dist/Recharts.js"></script>
-    <style>
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-        }
-        #root {
-            min-height: 100vh;
-        }
-        .loading {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            min-height: 100vh;
-            background: #f9fafb;
-        }
-        .spinner {
-            width: 50px;
-            height: 50px;
-            border: 4px solid #f3f4f6;
-            border-top-color: #065f46;
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
-        }
-        @keyframes spin {
-            to { transform: rotate(360deg); }
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Niyata Consulting - Dashboard</title>
+<script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body>
-    <div id="root">
-        <div class="loading">
-            <div class="spinner"></div>
-        </div>
-    </div>
 
-    <script type="text/babel">
-        const { useState, useEffect } = React;
-        const { LineChart, Line, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } = Recharts;
+<body class="bg-gray-100">
 
-        function OperationalDashboard() {
-          const [currentTime, setCurrentTime] = useState(new Date());
-          const [deliveryData, setDeliveryData] = useState(generateDeliveryData());
-          const [stockData, setstockData] = useState(generateStockData());
-          const [kpiData, setKpiData] = useState(generateKPIData());
-          const [waitingTimeData] = useState(generateWaitingTimeData());
+<div id="root"></div>
 
-          useEffect(() => {
-            const timer = setInterval(() => {
-              setCurrentTime(new Date());
-              setKpiData(generateKPIData());
-              setDeliveryData(prev => {
-                const newData = [...prev];
-                const lastDay = newData[newData.length - 1];
-                lastDay.onTime = Math.floor(Math.random() * 10) + 35;
-                lastDay.delayed = 50 - lastDay.onTime;
-                return newData;
-              });
-              setStockData(prev => {
-                const newData = [...prev];
-                const randomIndex = Math.floor(Math.random() * newData.length);
-                newData[randomIndex].current = Math.max(0, newData[randomIndex].current + (Math.random() > 0.5 ? 5 : -5));
-                return newData;
-              });
-            }, 3000);
+<script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+<script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+<script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
 
-            return () => clearInterval(timer);
-          }, []);
+<script type="text/babel">
 
-          function generateDeliveryData() {
-            const days = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
-            return days.map(day => ({
-              day,
-              onTime: Math.floor(Math.random() * 10) + 35,
-              delayed: Math.floor(Math.random() * 15) + 5
-            }));
-          }
+const { useState, useEffect } = React;
 
-          function generateStockData() {
-            return [
-              { name: 'Palm Oil', current: 850, min: 500, max: 1200, unit: 'tons' },
-              { name: 'Fertilizer', current: 320, min: 400, max: 800, unit: 'tons' },
-              { name: 'Pesticides', current: 180, min: 150, max: 300, unit: 'liters' },
-              { name: 'Packaging', current: 5200, min: 3000, max: 8000, unit: 'units' },
-              { name: 'Fuel', current: 450, min: 600, max: 1000, unit: 'liters' },
-              { name: 'Spare Parts', current: 95, min: 100, max: 200, unit: 'items' }
-            ];
-          }
+function Dashboard() {
 
-          function generateKPIData() {
-            return {
-              totalDeliveries: Math.floor(Math.random() * 20) + 280,
-              avgWaitingTime: (Math.random() * 0.5 + 2.8).toFixed(1),
-              stockTurnover: (Math.random() * 0.3 + 4.5).toFixed(1)
-            };
-          }
+const [kpi, setKpi] = useState({delivery:0, waiting:0, stock:0});
 
-          function generateWaitingTimeData() {
-            return [
-              { location: 'Loading Bay A', loading: 0.8, transport: 1.2, unloading: 0.5 },
-              { location: 'Loading Bay B', loading: 1.1, transport: 1.5, unloading: 0.7 },
-              { location: 'Warehouse 1', loading: 0.6, transport: 2.1, unloading: 0.8 },
-              { location: 'Warehouse 2', loading: 0.9, transport: 1.8, unloading: 0.6 },
-              { location: 'Processing Plant', loading: 1.2, transport: 1.4, unloading: 0.9 }
-            ];
-          }
+useEffect(()=>{
+    updateData();
+    const t = setInterval(updateData,3000);
+    return ()=>clearInterval(t);
+},[]);
 
-          const getStockStatus = (item) => {
-            if (item.current < item.min) return 'critical';
-            if (item.current < item.min * 1.2) return 'warning';
-            return 'good';
-          };
+function updateData(){
+    setKpi({
+        delivery: Math.floor(Math.random()*50)+250,
+        waiting: (Math.random()*2+2).toFixed(1),
+        stock: (Math.random()*2+4).toFixed(1)
+    });
+}
 
-          const getStatusColor = (status) => {
-            switch(status) {
-              case 'critical': return 'bg-red-100 text-red-800 border-red-300';
-              case 'warning': return 'bg-yellow-100 text-yellow-800 border-yellow-300';
-              default: return 'bg-green-100 text-green-800 border-green-300';
-            }
-          };
+return (
+<div className="max-w-5xl mx-auto p-6">
 
-          const onTimePercentage = deliveryData.reduce((acc, day) => acc + day.onTime, 0) / 
-                                   deliveryData.reduce((acc, day) => acc + day.onTime + day.delayed, 0) * 100;
+<h1 className="text-3xl font-bold mb-6">Niyata Consulting Dashboard</h1>
 
-          return (
-            <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 p-4 md:p-8 font-sans">
-              <div className="max-w-7xl mx-auto mb-4">
-                <a href="index.html" className="inline-flex items-center gap-2 text-gray-600 hover:text-gray-900 transition-colors">
-                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-                  </svg>
-                  Kembali ke Landing Page
-                </a>
-              </div>
+<div className="grid md:grid-cols-3 gap-4 mb-6">
 
-              <div className="max-w-7xl mx-auto mb-8">
-                <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-2">
-                  <div>
-                    <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-1">
-                      Operational Dashboard
-                    </h1>
-                    <p className="text-gray-600">Real-time monitoring & analytics</p>
-                  </div>
-                  <div className="mt-4 md:mt-0 flex items-center gap-2">
-                    <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
-                    <span className="text-sm text-gray-600">
-                      Live • {currentTime.toLocaleTimeString()}
-                    </span>
-                  </div>
-                </div>
-              </div>
+<div className="bg-white p-5 rounded-xl shadow">
+<p className="text-gray-500">Total Deliveries</p>
+<p className="text-2xl font-bold">{kpi.delivery}</p>
+</div>
 
-              <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6 mb-8">
-                <div className="bg-white rounded-2xl shadow-lg p-6 border border-gray-200 hover:shadow-xl transition-shadow">
-                  <div className="flex items-start justify-between mb-4">
-                    <div className="w-12 h-12 bg-green-100 rounded-xl flex items-center justify-center">
-                      <svg className="w-6 h-6 text-green-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4" />
-                      </svg>
-                    </div>
-                    <span className={`px-3 py-1 rounded-full text-xs font-semibold ${
-                      onTimePercentage >= 85 ? 'bg-green-100 text-green-800' : 
-                      onTimePercentage >= 70 ? 'bg-yellow-100 text-yellow-800' : 
-                      'bg-red-100 text-red-800'
-                    }`}>
-                      {onTimePercentage.toFixed(0)}% On-time
-                    </span>
-                  </div>
-                  <div className="text-3xl font-bold text-gray-900 mb-1">{kpiData.totalDeliveries}</div>
-                  <div className="text-sm text-gray-600">Total Deliveries (7 days)</div>
-                  <div className="mt-3 flex items-center text-sm">
-                    <span className="text-green-600 font-semibold">↑ 12%</span>
-                    <span className="text-gray-500 ml-1">vs last week</span>
-                  </div>
-                </div>
+<div className="bg-white p-5 rounded-xl shadow">
+<p className="text-gray-500">Avg Waiting Time</p>
+<p className="text-2xl font-bold">{kpi.waiting} h</p>
+</div>
 
-                <div className="bg-white rounded-2xl shadow-lg p-6 border border-gray-200 hover:shadow-xl transition-shadow">
-                  <div className="flex items-start justify-between mb-4">
-                    <div className="w-12 h-12 bg-blue-100 rounded-xl flex items-center justify-center">
-                      <svg className="w-6 h-6 text-blue-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-                      </svg>
-                    </div>
-                    <span className="px-3 py-1 rounded-full text-xs font-semibold bg-blue-100 text-blue-800">
-                      Hours
-                    </span>
-                  </div>
-                  <div className="text-3xl font-bold text-gray-900 mb-1">{kpiData.avgWaitingTime}h</div>
-                  <div className="text-sm text-gray-600">Avg Waiting Time</div>
-                  <div className="mt-3 flex items-center text-sm">
-                    <span className="text-green-600 font-semibold">↓ 8%</span>
-                    <span className="text-gray-500 ml-1">vs last week</span>
-                  </div>
-                </div>
+<div className="bg-white p-5 rounded-xl shadow">
+<p className="text-gray-500">Stock Turnover</p>
+<p className="text-2xl font-bold">{kpi.stock}</p>
+</div>
 
-                <div className="bg-white rounded-2xl shadow-lg p-6 border border-gray-200 hover:shadow-xl transition-shadow">
-                  <div className="flex items-start justify-between mb-4">
-                    <div className="w-12 h-12 bg-purple-100 rounded-xl flex items-center justify-center">
-                      <svg className="w-6 h-6 text-purple-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 12l3-3 3 3 4-4M8 21l4-4 4 4M3 4h18M4 4h16v12a1 1 0 01-1 1H5a1 1 0 01-1-1V4z" />
-                      </svg>
-                    </div>
-                    <span className="px-3 py-1 rounded-full text-xs font-semibold bg-purple-100 text-purple-800">
-                      Days
-                    </span>
-                  </div>
-                  <div className="text-3xl font-bold text-gray-900 mb-1">{kpiData.stockTurnover}</div>
-                  <div className="text-sm text-gray-600">Stock Turnover Rate</div>
-                  <div className="mt-3 flex items-center text-sm">
-                    <span className="text-green-600 font-semibold">↑ 5%</span>
-                    <span className="text-gray-500 ml-1">vs last week</span>
-                  </div>
-                </div>
-              </div>
+</div>
 
-              <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
-                <div className="bg-white rounded-2xl shadow-lg p-6 border border-gray-200">
-                  <div className="mb-6">
-                    <h2 className="text-xl font-bold text-gray-900 mb-1">Delivery Performance</h2>
-                    <p className="text-sm text-gray-600">Last 7 days - On-time vs Delayed</p>
-                  </div>
-                  <ResponsiveContainer width="100%" height={280}>
-                    <LineChart data={deliveryData}>
-                      <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" />
-                      <XAxis dataKey="day" stroke="#6b7280" style={{ fontSize: '12px' }} />
-                      <YAxis stroke="#6b7280" style={{ fontSize: '12px' }} />
-                      <Tooltip 
-                        contentStyle={{ 
-                          backgroundColor: '#fff', 
-                          border: '1px solid #e5e7eb',
-                          borderRadius: '8px',
-                          boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)'
-                        }} 
-                      />
-                      <Legend />
-                      <Line 
-                        type="monotone" 
-                        dataKey="onTime" 
-                        stroke="#065f46" 
-                        strokeWidth={3}
-                        name="On-time"
-                        dot={{ fill: '#065f46', r: 5 }}
-                      />
-                      <Line 
-                        type="monotone" 
-                        dataKey="delayed" 
-                        stroke="#dc2626" 
-                        strokeWidth={3}
-                        name="Delayed"
-                        dot={{ fill: '#dc2626', r: 5 }}
-                      />
-                    </LineChart>
-                  </ResponsiveContainer>
-                </div>
+<div className="bg-white p-6 rounded-xl shadow">
+<h2 className="font-bold mb-3">Insight</h2>
+<p>
+{
+kpi.waiting > 3
+? "Waiting time tinggi, potensi bottleneck di transport."
+: "Operasi relatif stabil."
+}
+</p>
+</div>
 
-                <div className="bg-white rounded-2xl shadow-lg p-6 border border-gray-200">
-                  <div className="mb-6">
-                    <h2 className="text-xl font-bold text-gray-900 mb-1">Waiting Time Analysis</h2>
-                    <p className="text-sm text-gray-600">By location and stage (hours)</p>
-                  </div>
-                  <ResponsiveContainer width="100%" height={280}>
-                    <BarChart data={waitingTimeData}>
-                      <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" />
-                      <XAxis dataKey="location" stroke="#6b7280" style={{ fontSize: '11px' }} angle={-15} textAnchor="end" height={80} />
-                      <YAxis stroke="#6b7280" style={{ fontSize: '12px' }} />
-                      <Tooltip 
-                        contentStyle={{ 
-                          backgroundColor: '#fff', 
-                          border: '1px solid #e5e7eb',
-                          borderRadius: '8px',
-                          boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)'
-                        }} 
-                      />
-                      <Legend />
-                      <Bar dataKey="loading" stackId="a" fill="#3b82f6" name="Loading" />
-                      <Bar dataKey="transport" stackId="a" fill="#f59e0b" name="Transport" />
-                      <Bar dataKey="unloading" stackId="a" fill="#065f46" name="Unloading" />
-                    </BarChart>
-                  </ResponsiveContainer>
-                </div>
-              </div>
+<div className="mt-6">
+<a href="index.html" className="text-blue-600 underline">← Kembali</a>
+</div>
 
-              <div className="max-w-7xl mx-auto">
-                <div className="bg-white rounded-2xl shadow-lg p-6 border border-gray-200">
-                  <div className="mb-6">
-                    <h2 className="text-xl font-bold text-gray-900 mb-1">Stock Levels</h2>
-                    <p className="text-sm text-gray-600">Current inventory status with alerts</p>
-                  </div>
-                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                    {stockData.map((item, index) => {
-                      const status = getStockStatus(item);
-                      const percentage = (item.current / item.max) * 100;
-                      
-                      return (
-                        <div key={index} className={`border-2 rounded-xl p-4 ${getStatusColor(status)} transition-all hover:shadow-md`}>
-                          <div className="flex items-start justify-between mb-3">
-                            <div>
-                              <h3 className="font-bold text-gray-900">{item.name}</h3>
-                              <p className="text-sm text-gray-600 mt-1">
-                                {item.current} {item.unit}
-                              </p>
-                            </div>
-                            {status === 'critical' && (
-                              <svg className="w-5 h-5 text-red-600" fill="currentColor" viewBox="0 0 20 20">
-                                <path fillRule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
-                              </svg>
-                            )}
-                          </div>
-                          
-                          <div className="mb-2">
-                            <div className="w-full bg-gray-200 rounded-full h-2">
-                              <div 
-                                className={`h-2 rounded-full transition-all duration-500 ${
-                                  status === 'critical' ? 'bg-red-600' :
-                                  status === 'warning' ? 'bg-yellow-600' :
-                                  'bg-green-600'
-                                }`}
-                                style={{ width: `${Math.min(percentage, 100)}%` }}
-                              ></div>
-                            </div>
-                          </div>
-                          
-                          <div className="flex justify-between text-xs text-gray-600">
-                            <span>Min: {item.min}</span>
-                            <span>Max: {item.max}</span>
-                          </div>
-                          
-                          {status === 'critical' && (
-                            <div className="mt-3 pt-3 border-t border-red-200">
-                              <p className="text-xs font-semibold text-red-800 flex items-center gap-1">
-                                <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
-                                  <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
-                                </svg>
-                                LOW STOCK ALERT
-                              </p>
-                            </div>
-                          )}
-                        </div>
-                      );
-                    })}
-                  </div>
-                </div>
-              </div>
+</div>
+);
+}
 
-              <div className="max-w-7xl mx-auto mt-8 text-center">
-                <div className="bg-blue-50 border border-blue-200 rounded-xl p-6 mb-4">
-                  <p className="text-sm text-blue-900 mb-2">
-                    <strong>Demo Mode:</strong> Dashboard ini menggunakan data simulasi yang diperbarui setiap 3 detik untuk mendemonstrasikan kemampuan monitoring real-time.
-                  </p>
-                  <p className="text-sm text-blue-800">
-                    Dashboard production dapat disesuaikan dengan sumber data Anda (ERP, WMS, IoT sensors, manual input, dll.)
-                  </p>
-                </div>
-                <a href="index.html#cta" className="inline-block bg-green-700 text-white px-8 py-3 rounded-lg font-semibold hover:bg-green-800 transition-colors">
-                  Tertarik? Konsultasi Gratis 1 Jam
-                </a>
-              </div>
-            </div>
-          );
-        }
+ReactDOM.createRoot(document.getElementById("root")).render(<Dashboard/>);
 
-        const root = ReactDOM.createRoot(document.getElementById('root'));
-        root.render(<OperationalDashboard />);
-    </script>
+</script>
+
 </body>
 </html>
