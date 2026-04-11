@@ -1000,12 +1000,465 @@ footer {
   .dispatch-recommend { flex-direction: column; text-align: center; }
   .drec-reason { text-align: center; }
   .drec-facts { align-items: center; }
+  .try-grid { grid-template-columns: 1fr !important; }
+  .try-output-grid { grid-template-columns: 1fr !important; }
+  .fb-grid { grid-template-columns: 1fr !important; }
 }
 
 @media (max-width: 480px) {
   h1 { font-size: 2rem; }
   h2 { font-size: 1.6rem; }
   .route-cards { grid-template-columns: 1fr; }
+}
+
+/* ── TRY DEMO SECTION ── */
+#try { background: var(--gray-bg); }
+
+.try-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.25rem;
+  margin-top: 2.5rem;
+}
+
+.try-input-card {
+  background: var(--white);
+  border: 1px solid var(--gray-border);
+  border-radius: 16px;
+  padding: 1.75rem;
+}
+
+.try-label {
+  display: block;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  color: var(--gray);
+  margin-bottom: 0.4rem;
+}
+
+.try-select, .try-input {
+  width: 100%;
+  padding: 0.65rem 0.9rem;
+  border: 1px solid var(--gray-border);
+  border-radius: 10px;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 0.875rem;
+  color: var(--black);
+  background: var(--white);
+  outline: none;
+  appearance: none;
+  transition: border-color 0.15s, box-shadow 0.15s;
+  margin-bottom: 1rem;
+}
+
+.try-select:focus, .try-input:focus {
+  border-color: var(--black);
+  box-shadow: 0 0 0 3px rgba(17,17,17,0.05);
+}
+
+.try-select option { color: var(--black); }
+
+.try-btn {
+  width: 100%;
+  padding: 0.8rem 1.5rem;
+  background: var(--black);
+  color: var(--white);
+  border: none;
+  border-radius: 100px;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 0.875rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: opacity 0.2s, transform 0.2s;
+  letter-spacing: -0.01em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+}
+
+.try-btn:hover { opacity: 0.75; transform: translateY(-1px); }
+.try-btn:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+
+/* Output panel */
+.try-output-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+  opacity: 0;
+  transform: translateY(10px);
+  transition: opacity 0.4s ease, transform 0.4s ease;
+  pointer-events: none;
+}
+
+.try-output-panel.visible {
+  opacity: 1;
+  transform: none;
+  pointer-events: auto;
+}
+
+/* Empty state */
+.try-empty {
+  background: var(--white);
+  border: 1px solid var(--gray-border);
+  border-radius: 16px;
+  padding: 2.5rem 1.5rem;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  opacity: 1;
+  transition: opacity 0.3s;
+}
+
+.try-empty.hidden { opacity: 0; pointer-events: none; display: none; }
+
+.try-empty-icon {
+  font-size: 1.75rem;
+  margin-bottom: 0.25rem;
+  opacity: 0.35;
+}
+
+.try-empty-text {
+  font-size: 0.825rem;
+  color: var(--gray-light);
+  font-weight: 300;
+  line-height: 1.6;
+}
+
+/* Score card */
+.demo-score-card {
+  background: var(--white);
+  border: 1px solid var(--gray-border);
+  border-radius: 14px;
+  padding: 1.25rem 1.5rem;
+}
+
+.demo-card-eyebrow {
+  font-size: 0.62rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--gray-light);
+  margin-bottom: 0.85rem;
+  display: block;
+}
+
+.demo-score-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.demo-score-num {
+  font-size: 2.6rem;
+  font-weight: 700;
+  letter-spacing: -0.04em;
+  line-height: 1;
+}
+
+.demo-score-num.low  { color: var(--accent); }
+.demo-score-num.medium { color: var(--accent-amber); }
+.demo-score-num.high { color: var(--accent-red); }
+
+.demo-score-badge {
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 0.3rem 0.85rem;
+  border-radius: 100px;
+}
+
+.demo-score-badge.low    { background: var(--accent-light); color: var(--accent); border: 1px solid rgba(45,90,61,0.15); }
+.demo-score-badge.medium { background: var(--accent-amber-bg); color: var(--accent-amber); border: 1px solid rgba(138,108,42,0.15); }
+.demo-score-badge.high   { background: var(--accent-red-bg); color: var(--accent-red); border: 1px solid rgba(138,45,45,0.15); }
+
+.demo-score-bar-wrap {
+  height: 5px;
+  background: var(--gray-bg2);
+  border-radius: 100px;
+  margin-top: 0.85rem;
+  overflow: hidden;
+}
+
+.demo-score-bar {
+  height: 100%;
+  border-radius: 100px;
+  width: 0;
+  transition: width 0.9s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.demo-score-bar.low    { background: var(--accent); }
+.demo-score-bar.medium { background: var(--accent-amber); }
+.demo-score-bar.high   { background: var(--accent-red); }
+
+.demo-score-meta {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.6rem;
+  color: var(--gray-light);
+  margin-top: 0.35rem;
+  letter-spacing: 0.02em;
+}
+
+/* Dispatch card */
+.demo-dispatch-card {
+  background: var(--accent-light);
+  border: 1px solid rgba(45,90,61,0.18);
+  border-radius: 14px;
+  padding: 1.25rem 1.5rem;
+}
+
+.demo-dispatch-label {
+  font-size: 0.62rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(45,90,61,0.6);
+  margin-bottom: 0.5rem;
+  display: block;
+}
+
+.demo-dispatch-time {
+  font-size: 1.4rem;
+  font-weight: 700;
+  letter-spacing: -0.025em;
+  color: var(--accent);
+  line-height: 1;
+  margin-bottom: 0.3rem;
+}
+
+.demo-dispatch-note {
+  font-size: 0.75rem;
+  color: rgba(45,90,61,0.65);
+  font-weight: 300;
+}
+
+/* Alert feed */
+.demo-alerts-card {
+  background: var(--white);
+  border: 1px solid var(--gray-border);
+  border-radius: 14px;
+  padding: 1.25rem 1.5rem;
+}
+
+.demo-alert-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  margin-top: 0.75rem;
+}
+
+.demo-alert-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  padding: 0.65rem 0.85rem;
+  background: var(--gray-bg);
+  border-radius: 9px;
+  font-size: 0.8rem;
+}
+
+.demo-alert-dot {
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  margin-top: 0.35rem;
+}
+
+.demo-alert-dot.high   { background: var(--accent-red); }
+.demo-alert-dot.medium { background: var(--accent-amber); }
+.demo-alert-dot.low    { background: var(--accent); }
+
+.demo-alert-text { color: var(--gray-dark); font-weight: 400; line-height: 1.45; }
+.demo-alert-time { color: var(--gray-light); font-size: 0.7rem; margin-top: 2px; }
+
+/* Demo CTA nudge */
+.demo-nudge {
+  background: var(--white);
+  border: 1px solid var(--gray-border);
+  border-radius: 14px;
+  padding: 1.1rem 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.demo-nudge-text {
+  font-size: 0.8rem;
+  color: var(--gray);
+  font-weight: 300;
+  line-height: 1.5;
+}
+
+.demo-nudge-text strong { color: var(--black); font-weight: 600; }
+
+.demo-nudge-btn {
+  display: inline-block;
+  background: var(--black);
+  color: var(--white);
+  padding: 0.55rem 1.15rem;
+  border-radius: 100px;
+  font-size: 0.775rem;
+  font-weight: 600;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: opacity 0.2s;
+  flex-shrink: 0;
+}
+
+.demo-nudge-btn:hover { opacity: 0.75; }
+
+/* Loading spinner */
+.try-spinner {
+  width: 14px; height: 14px;
+  border: 2px solid rgba(255,255,255,0.35);
+  border-top-color: #fff;
+  border-radius: 50%;
+  animation: spin 0.6s linear infinite;
+  display: none;
+}
+
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* ── FEEDBACK SECTION ── */
+#feedback { background: var(--white); }
+
+.fb-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.25rem;
+  margin-top: 2.5rem;
+}
+
+.fb-card {
+  background: var(--gray-bg);
+  border: 1px solid var(--gray-border);
+  border-radius: 16px;
+  padding: 1.75rem;
+}
+
+.fb-label {
+  display: block;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  color: var(--gray);
+  margin-bottom: 0.4rem;
+}
+
+.fb-input, .fb-select, .fb-textarea {
+  width: 100%;
+  padding: 0.65rem 0.9rem;
+  border: 1px solid var(--gray-border);
+  border-radius: 10px;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 0.875rem;
+  color: var(--black);
+  background: var(--white);
+  outline: none;
+  appearance: none;
+  transition: border-color 0.15s, box-shadow 0.15s;
+  margin-bottom: 1rem;
+}
+
+.fb-textarea {
+  resize: vertical;
+  min-height: 90px;
+  line-height: 1.6;
+}
+
+.fb-input:focus, .fb-select:focus, .fb-textarea:focus {
+  border-color: var(--black);
+  box-shadow: 0 0 0 3px rgba(17,17,17,0.05);
+}
+
+.fb-input::placeholder, .fb-textarea::placeholder { color: var(--gray-light); }
+
+.fb-btn {
+  width: 100%;
+  padding: 0.8rem 1.5rem;
+  background: var(--black);
+  color: var(--white);
+  border: none;
+  border-radius: 100px;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 0.875rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: opacity 0.2s, transform 0.2s;
+  letter-spacing: -0.01em;
+}
+
+.fb-btn:hover { opacity: 0.75; transform: translateY(-1px); }
+
+.fb-success {
+  display: none;
+  background: var(--accent-light);
+  border: 1px solid rgba(45,90,61,0.2);
+  border-radius: 10px;
+  padding: 1rem 1.25rem;
+  margin-top: 1rem;
+  font-size: 0.825rem;
+  color: var(--accent);
+  font-weight: 500;
+  text-align: center;
+}
+
+/* Feedback info panel */
+.fb-info-card {
+  background: var(--gray-bg);
+  border: 1px solid var(--gray-border);
+  border-radius: 16px;
+  padding: 1.75rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.fb-point {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.85rem;
+  padding: 0.85rem 0;
+  border-bottom: 1px solid var(--gray-border);
+}
+
+.fb-point:last-of-type { border-bottom: none; }
+
+.fb-point-icon {
+  width: 32px; height: 32px;
+  background: var(--white);
+  border: 1px solid var(--gray-border);
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.9rem;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.fb-point-title {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--black);
+  margin-bottom: 2px;
+  letter-spacing: -0.01em;
+}
+
+.fb-point-desc {
+  font-size: 0.775rem;
+  color: var(--gray);
+  font-weight: 300;
+  line-height: 1.55;
 }
 </style>
 </head>
@@ -1021,6 +1474,7 @@ footer {
     <li><a href="#problem">Why RouteRisk</a></li>
     <li><a href="#dashboard">Dashboard</a></li>
     <li><a href="#insights">Insights</a></li>
+    <li><a href="#try">Try Demo</a></li>
     <li><a href="#cta" class="nav-btn">Get Early Access</a></li>
   </ul>
 </nav>
@@ -1385,6 +1839,211 @@ footer {
 
 <div class="divider"></div>
 
+<!-- ══════════════ TRY DEMO ══════════════ -->
+<section id="try">
+  <div class="container">
+
+    <div class="reveal">
+      <div class="eyebrow">Interactive Demo</div>
+      <h2>Try it now — no signup,<br>no setup required.</h2>
+      <p class="section-sub">Select any Indonesia corridor and see a risk score, dispatch window, and active alerts — instantly. Uses mock data for demo purposes.</p>
+    </div>
+
+    <div class="try-grid reveal">
+
+      <!-- Input card -->
+      <div class="try-input-card">
+        <span class="demo-card-eyebrow">Select Your Route</span>
+
+        <label class="try-label" for="try-origin">Origin City</label>
+        <select class="try-select" id="try-origin">
+          <option value="">Choose origin city...</option>
+          <option value="jakarta">Jakarta</option>
+          <option value="surabaya">Surabaya</option>
+          <option value="medan">Medan</option>
+          <option value="balikpapan">Balikpapan</option>
+          <option value="makassar">Makassar</option>
+          <option value="semarang">Semarang</option>
+          <option value="bandung">Bandung</option>
+          <option value="palembang">Palembang</option>
+          <option value="pontianak">Pontianak</option>
+        </select>
+
+        <label class="try-label" for="try-dest">Destination City</label>
+        <select class="try-select" id="try-dest">
+          <option value="">Choose destination...</option>
+          <option value="surabaya">Surabaya</option>
+          <option value="jakarta">Jakarta</option>
+          <option value="pekanbaru">Pekanbaru</option>
+          <option value="banjarmasin">Banjarmasin</option>
+          <option value="semarang">Semarang</option>
+          <option value="makassar">Makassar</option>
+          <option value="yogyakarta">Yogyakarta</option>
+          <option value="pontianak">Pontianak</option>
+          <option value="manado">Manado</option>
+          <option value="samarinda">Samarinda</option>
+        </select>
+
+        <label class="try-label">Truck Type</label>
+        <select class="try-select" id="try-truck">
+          <option value="tronton">Tronton (20 ton)</option>
+          <option value="engkel">Engkel (8 ton)</option>
+          <option value="fuso">Fuso (15 ton)</option>
+        </select>
+
+        <button class="try-btn" id="try-btn" onclick="runDemo()">
+          <div class="try-spinner" id="try-spinner"></div>
+          <span id="try-btn-text">Check Risk →</span>
+        </button>
+
+        <p style="font-size:0.7rem;color:var(--gray-light);text-align:center;margin-top:0.85rem;font-weight:300;">
+          Demo uses simulated data &mdash; no real API calls
+        </p>
+      </div>
+
+      <!-- Output panel -->
+      <div style="display:flex;flex-direction:column;gap:0.85rem;">
+
+        <!-- Empty state -->
+        <div class="try-empty" id="try-empty">
+          <div class="try-empty-icon">◎</div>
+          <div class="try-empty-text">Select a route on the left<br>and click <strong style="color:var(--gray-dark)">Check Risk</strong> to see results</div>
+        </div>
+
+        <!-- Results (hidden until check) -->
+        <div class="try-output-panel" id="try-output">
+
+          <!-- Score card -->
+          <div class="demo-score-card">
+            <span class="demo-card-eyebrow">Route Risk Score</span>
+            <div class="demo-score-row">
+              <div>
+                <div class="demo-score-num" id="demo-score-num">—</div>
+                <div style="font-size:0.72rem;color:var(--gray);margin-top:4px;font-weight:300" id="demo-route-label">—</div>
+              </div>
+              <div class="demo-score-badge" id="demo-score-badge">—</div>
+            </div>
+            <div class="demo-score-bar-wrap">
+              <div class="demo-score-bar" id="demo-score-bar"></div>
+            </div>
+            <div class="demo-score-meta">
+              <span>0 — Minimal risk</span>
+              <span>100 — Critical</span>
+            </div>
+          </div>
+
+          <!-- Dispatch card -->
+          <div class="demo-dispatch-card">
+            <span class="demo-dispatch-label">Recommended Dispatch Window</span>
+            <div class="demo-dispatch-time" id="demo-dispatch-time">—</div>
+            <div class="demo-dispatch-note" id="demo-dispatch-note">—</div>
+          </div>
+
+          <!-- Alerts card -->
+          <div class="demo-alerts-card">
+            <span class="demo-card-eyebrow">Active Alerts on This Route</span>
+            <div class="demo-alert-list" id="demo-alert-list"></div>
+          </div>
+
+          <!-- Nudge CTA -->
+          <div class="demo-nudge">
+            <div class="demo-nudge-text">
+              <strong>Want real-time data for your corridors?</strong><br>
+              Full access includes live BMKG weather, BPBD alerts, and 72-hour forecasts.
+            </div>
+            <a href="#cta" class="demo-nudge-btn">Join Waitlist →</a>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ══════════════ FEEDBACK ══════════════ -->
+<section id="feedback">
+  <div class="container">
+
+    <div class="reveal">
+      <div class="eyebrow">Help Us Build Better</div>
+      <h2>Tell us your biggest<br>logistics challenge.</h2>
+      <p class="section-sub">RouteRisk is in early beta. Your feedback directly shapes what we build next. Takes 2 minutes.</p>
+    </div>
+
+    <div class="fb-grid reveal">
+
+      <!-- Form -->
+      <div class="fb-card">
+        <div id="fb-form-wrap">
+          <label class="fb-label" for="fb-name">Your Name</label>
+          <input type="text" class="fb-input" id="fb-name" placeholder="Budi Santoso">
+
+          <label class="fb-label" for="fb-role">Your Role</label>
+          <select class="fb-select" id="fb-role">
+            <option value="">Select your role...</option>
+            <option>Fleet Dispatcher</option>
+            <option>Logistics Planner</option>
+            <option>Supply Chain Manager</option>
+            <option>Fleet Owner / Operator</option>
+            <option>3PL Coordinator</option>
+            <option>Other</option>
+          </select>
+
+          <label class="fb-label" for="fb-email">Email Address</label>
+          <input type="email" class="fb-input" id="fb-email" placeholder="you@company.com">
+
+          <label class="fb-label" for="fb-problem">What is your biggest logistics challenge today?</label>
+          <textarea class="fb-textarea" id="fb-problem" placeholder="e.g. Sulit mengetahui apakah cuaca berdampak ke pengiriman hari ini. Sering dapat complaint dari customer karena delay yang tidak terprediksi..."></textarea>
+
+          <button class="fb-btn" onclick="submitFeedback()">Submit Feedback →</button>
+        </div>
+        <div class="fb-success" id="fb-success">
+          ✓ &nbsp;Thank you! Your feedback has been recorded. We'll be in touch soon.
+        </div>
+      </div>
+
+      <!-- Info panel -->
+      <div class="fb-info-card">
+        <div>
+          <span class="demo-card-eyebrow" style="margin-bottom:1rem;">Why this matters</span>
+          <div class="fb-point">
+            <div class="fb-point-icon">◎</div>
+            <div>
+              <div class="fb-point-title">Early users get priority access</div>
+              <div class="fb-point-desc">Everyone who submits feedback is first in line when we open full access — with an extended free trial.</div>
+            </div>
+          </div>
+          <div class="fb-point">
+            <div class="fb-point-icon">◈</div>
+            <div>
+              <div class="fb-point-title">We build what you actually need</div>
+              <div class="fb-point-desc">RouteRisk is shaped by real dispatchers and planners — not assumptions. Your input determines our roadmap.</div>
+            </div>
+          </div>
+          <div class="fb-point">
+            <div class="fb-point-icon">◷</div>
+            <div>
+              <div class="fb-point-title">No spam. Ever.</div>
+              <div class="fb-point-desc">We only email when there's something genuinely useful to share. Unsubscribe anytime, no questions asked.</div>
+            </div>
+          </div>
+        </div>
+        <div style="margin-top:1.5rem;padding-top:1.25rem;border-top:1px solid var(--gray-border);">
+          <div style="font-size:0.72rem;color:var(--gray-light);font-weight:300;line-height:1.65;">
+            RouteRisk is built by a team with direct experience in supply chain digitalization, trucking, and tugboat logistics across Indonesia.
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
 <!-- ══════════════ CTA ══════════════ -->
 <section id="cta">
   <div class="cta-inner reveal">
@@ -1434,16 +2093,202 @@ footer {
 </footer>
 
 <script>
-// Scroll reveal
+// ── SCROLL REVEAL ──
 const observer = new IntersectionObserver((entries) => {
-  entries.forEach(e => {
-    if (e.isIntersecting) {
-      e.target.classList.add('in');
-    }
-  });
+  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('in'); });
 }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
-
 document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+// ── MOCK DATA ENGINE ──
+const CITY_RAIN = {
+  jakarta:8, surabaya:6, medan:74, balikpapan:88, makassar:22,
+  semarang:14, bandung:20, palembang:48, pontianak:62, pekanbaru:70,
+  banjarmasin:91, yogyakarta:11, manado:57, samarinda:80
+};
+
+const CITY_TRAFFIC = {
+  jakarta:0.72, surabaya:0.52, medan:0.46, balikpapan:0.31, makassar:0.42,
+  semarang:0.47, bandung:0.63, palembang:0.37, pontianak:0.28, pekanbaru:0.32,
+  banjarmasin:0.36, yogyakarta:0.41, manado:0.22, samarinda:0.29
+};
+
+const CITY_ROAD = {
+  jakarta:0.12, surabaya:0.14, medan:0.38, balikpapan:0.55, makassar:0.28,
+  semarang:0.15, bandung:0.18, palembang:0.33, pontianak:0.50, pekanbaru:0.40,
+  banjarmasin:0.58, yogyakarta:0.16, manado:0.35, samarinda:0.52
+};
+
+const DISPATCH_WINDOWS = [
+  { window: '05:00 – 08:00', note: 'Lowest traffic and rainfall overlap — ideal for long-haul departure.' },
+  { window: '06:00 – 10:00', note: 'Off-peak window with minimal congestion and stable weather forecast.' },
+  { window: '05:30 – 09:00', note: 'Early window avoids peak congestion; light rain expected after 10:00.' },
+  { window: '07:00 – 09:30', note: 'Narrow safe window — rainfall increases significantly after 10:00.' },
+  { window: '20:00 – 23:00', note: 'Night window recommended — daytime risk too high on this corridor.' },
+];
+
+const ALERT_POOL = {
+  high: [
+    { text: 'Flood alert active — BPBD monitoring elevated water levels on Trans-Kalimantan highway.', time: '1 hour ago' },
+    { text: 'Heavy rainfall warning (80mm+) in East Kalimantan — BMKG 24-hour forecast.', time: '2 hours ago' },
+    { text: 'Flash flood risk in Riau lowlands — road closures possible on Lintas Sumatra km 145–210.', time: '3 hours ago' },
+    { text: 'Severe weather advisory for South Sulawesi corridor — wind gusts up to 60km/h.', time: '45 min ago' },
+  ],
+  medium: [
+    { text: 'Moderate rain expected this afternoon — allow +1.5hr buffer on Pantura corridor.', time: '4 hours ago' },
+    { text: 'Road maintenance — one lane closed on Cipali Toll km 78–92 until 18:00 today.', time: '6 hours ago' },
+    { text: 'Traffic congestion spike — Cikampek interchange up 55% vs baseline.', time: '30 min ago' },
+    { text: 'Harvest season surge — CPO transport volumes up 28% on Kalimantan routes.', time: '8 hours ago' },
+  ],
+  low: [
+    { text: 'Seasonal signal: dry season transition expected in 2 weeks — road conditions improving.', time: '12 hours ago' },
+    { text: 'BPS data: freight volume forecast stable on Java corridors through next month.', time: 'Yesterday' },
+    { text: 'Tol Cipularang maintenance complete — both lanes now open, time savings ~18 min.', time: '1 day ago' },
+  ]
+};
+
+function pickRandom(arr) { return arr[Math.floor(Math.random() * arr.length)]; }
+
+function getAlerts(level, origin, dest) {
+  const alerts = [];
+  if (level === 'high') {
+    alerts.push({ sev: 'high',   ...pickRandom(ALERT_POOL.high) });
+    alerts.push({ sev: 'medium', ...pickRandom(ALERT_POOL.medium) });
+    alerts.push({ sev: 'low',    ...pickRandom(ALERT_POOL.low) });
+  } else if (level === 'medium') {
+    alerts.push({ sev: 'medium', ...pickRandom(ALERT_POOL.medium) });
+    alerts.push({ sev: 'low',    ...pickRandom(ALERT_POOL.low) });
+  } else {
+    alerts.push({ sev: 'low',    ...pickRandom(ALERT_POOL.low) });
+  }
+  return alerts;
+}
+
+function animateNum(el, target, duration) {
+  const start = performance.now();
+  const update = (now) => {
+    const p = Math.min((now - start) / duration, 1);
+    const ease = 1 - Math.pow(1 - p, 3);
+    el.textContent = Math.round(target * ease);
+    if (p < 1) requestAnimationFrame(update);
+  };
+  requestAnimationFrame(update);
+}
+
+function runDemo() {
+  const origin = document.getElementById('try-origin').value;
+  const dest   = document.getElementById('try-dest').value;
+
+  if (!origin || !dest) {
+    // shake the selects
+    ['try-origin','try-dest'].forEach(id => {
+      const el = document.getElementById(id);
+      if (!el.value) { el.style.borderColor = 'var(--accent-red)'; setTimeout(() => el.style.borderColor = '', 1500); }
+    });
+    return;
+  }
+  if (origin === dest) {
+    document.getElementById('try-dest').style.borderColor = 'var(--accent-red)';
+    setTimeout(() => document.getElementById('try-dest').style.borderColor = '', 1500);
+    return;
+  }
+
+  // Loading state
+  const btn      = document.getElementById('try-btn');
+  const spinner  = document.getElementById('try-spinner');
+  const btnText  = document.getElementById('try-btn-text');
+  btn.disabled   = true;
+  spinner.style.display = 'block';
+  btnText.textContent   = 'Analysing...';
+
+  setTimeout(() => {
+    // Calculate score
+    const rain    = (CITY_RAIN[origin]    || 20) * 0.4 + (CITY_RAIN[dest]    || 20) * 0.6;
+    const traffic = (CITY_TRAFFIC[origin] || 0.4) * 0.4 + (CITY_TRAFFIC[dest] || 0.4) * 0.6;
+    const road    = (CITY_ROAD[origin]    || 0.3) * 0.4 + (CITY_ROAD[dest]    || 0.3) * 0.6;
+    const score   = Math.min(99, Math.round(rain * 0.40 + traffic * 100 * 0.30 + road * 100 * 0.30));
+    const level   = score < 30 ? 'low' : score < 65 ? 'medium' : 'high';
+    const labelMap = { low: 'LOW RISK', medium: 'MODERATE RISK', high: 'HIGH RISK' };
+
+    const originName = origin.charAt(0).toUpperCase() + origin.slice(1);
+    const destName   = dest.charAt(0).toUpperCase() + dest.slice(1);
+    const dispatchInfo = score < 30
+      ? DISPATCH_WINDOWS[Math.floor(Math.random() * 3)]
+      : score < 65
+      ? DISPATCH_WINDOWS[3]
+      : DISPATCH_WINDOWS[4];
+
+    // Update DOM
+    const numEl = document.getElementById('demo-score-num');
+    numEl.className = 'demo-score-num ' + level;
+    animateNum(numEl, score, 800);
+
+    document.getElementById('demo-route-label').textContent = originName + ' → ' + destName;
+
+    const badge = document.getElementById('demo-score-badge');
+    badge.className = 'demo-score-badge ' + level;
+    badge.textContent = labelMap[level];
+
+    const bar = document.getElementById('demo-score-bar');
+    bar.className = 'demo-score-bar ' + level;
+    setTimeout(() => { bar.style.width = score + '%'; }, 80);
+
+    document.getElementById('demo-dispatch-time').textContent = dispatchInfo.window;
+    document.getElementById('demo-dispatch-note').textContent = dispatchInfo.note;
+
+    const alerts = getAlerts(level, origin, dest);
+    document.getElementById('demo-alert-list').innerHTML = alerts.map(a => `
+      <div class="demo-alert-item">
+        <div class="demo-alert-dot ${a.sev}"></div>
+        <div>
+          <div class="demo-alert-text">${a.text}</div>
+          <div class="demo-alert-time">${a.time}</div>
+        </div>
+      </div>
+    `).join('');
+
+    // Show output, hide empty
+    document.getElementById('try-empty').classList.add('hidden');
+    const output = document.getElementById('try-output');
+    output.classList.add('visible');
+
+    // Reset button
+    btn.disabled = false;
+    spinner.style.display = 'none';
+    btnText.textContent = 'Recalculate →';
+
+  }, 900);
+}
+
+// ── FEEDBACK FORM ──
+function submitFeedback() {
+  const name    = document.getElementById('fb-name').value.trim();
+  const role    = document.getElementById('fb-role').value;
+  const email   = document.getElementById('fb-email').value.trim();
+  const problem = document.getElementById('fb-problem').value.trim();
+
+  if (!name || !role || !email || !problem) {
+    const fields = [
+      { id:'fb-name',    val:name },
+      { id:'fb-role',    val:role },
+      { id:'fb-email',   val:email },
+      { id:'fb-problem', val:problem },
+    ];
+    fields.forEach(f => {
+      if (!f.val) {
+        const el = document.getElementById(f.id);
+        el.style.borderColor = 'var(--accent-red)';
+        setTimeout(() => el.style.borderColor = '', 1800);
+      }
+    });
+    return;
+  }
+
+  // Log to console (mock store)
+  console.log('[RouteRisk Feedback]', { name, role, email, problem, ts: new Date().toISOString() });
+
+  document.getElementById('fb-form-wrap').style.display = 'none';
+  document.getElementById('fb-success').style.display   = 'block';
+}
 </script>
 </body>
 </html>
