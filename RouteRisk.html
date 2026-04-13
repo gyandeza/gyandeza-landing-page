@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -12,716 +13,716 @@
 html { scroll-behavior: smooth; font-size: 16px; }
 
 body {
-  font-family: 'Plus Jakarta Sans', sans-serif;
-  background: #ffffff;
-  color: #1a1a1a;
-  line-height: 1.6;
-  -webkit-font-smoothing: antialiased;
+font-family: ‘Plus Jakarta Sans’, sans-serif;
+background: #ffffff;
+color: #1a1a1a;
+line-height: 1.6;
+-webkit-font-smoothing: antialiased;
 }
 
 :root {
-  --black: #111111;
-  --gray-dark: #444444;
-  --gray: #777777;
-  --gray-light: #aaaaaa;
-  --gray-border: #e8e8e8;
-  --gray-bg: #f7f7f5;
-  --gray-bg2: #f2f2ef;
-  --accent: #2d5a3d;
-  --accent-light: #e8f0eb;
-  --accent-amber: #8a6c2a;
-  --accent-amber-bg: #faf5e8;
-  --accent-red: #8a2d2d;
-  --accent-red-bg: #faf0f0;
-  --white: #ffffff;
-  --max: 860px;
-  --max-wide: 1060px;
+–black: #111111;
+–gray-dark: #444444;
+–gray: #777777;
+–gray-light: #aaaaaa;
+–gray-border: #e8e8e8;
+–gray-bg: #f7f7f5;
+–gray-bg2: #f2f2ef;
+–accent: #2d5a3d;
+–accent-light: #e8f0eb;
+–accent-amber: #8a6c2a;
+–accent-amber-bg: #faf5e8;
+–accent-red: #8a2d2d;
+–accent-red-bg: #faf0f0;
+–white: #ffffff;
+–max: 860px;
+–max-wide: 1060px;
 }
 
 /* ── NAV ── */
 nav {
-  position: fixed;
-  top: 0; left: 0; right: 0;
-  z-index: 100;
-  background: rgba(255,255,255,0.92);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border-bottom: 1px solid var(--gray-border);
-  height: 60px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 0 2rem;
+position: fixed;
+top: 0; left: 0; right: 0;
+z-index: 100;
+background: rgba(255,255,255,0.92);
+backdrop-filter: blur(12px);
+-webkit-backdrop-filter: blur(12px);
+border-bottom: 1px solid var(–gray-border);
+height: 60px;
+display: flex;
+align-items: center;
+justify-content: space-between;
+padding: 0 2rem;
 }
 
 .nav-logo {
-  font-size: 1rem;
-  font-weight: 700;
-  letter-spacing: -0.02em;
-  color: var(--black);
-  text-decoration: none;
-  display: flex;
-  align-items: center;
-  gap: 8px;
+font-size: 1rem;
+font-weight: 700;
+letter-spacing: -0.02em;
+color: var(–black);
+text-decoration: none;
+display: flex;
+align-items: center;
+gap: 8px;
 }
 
 .nav-logo-mark {
-  width: 28px; height: 28px;
-  background: var(--black);
-  border-radius: 6px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: white;
-  font-size: 13px;
-  font-weight: 700;
+width: 28px; height: 28px;
+background: var(–black);
+border-radius: 6px;
+display: flex;
+align-items: center;
+justify-content: center;
+color: white;
+font-size: 13px;
+font-weight: 700;
 }
 
 .nav-links {
-  display: flex;
-  align-items: center;
-  gap: 2rem;
-  list-style: none;
+display: flex;
+align-items: center;
+gap: 2rem;
+list-style: none;
 }
 
 .nav-links a {
-  font-size: 0.875rem;
-  color: var(--gray);
-  text-decoration: none;
-  font-weight: 400;
-  transition: color 0.2s;
+font-size: 0.875rem;
+color: var(–gray);
+text-decoration: none;
+font-weight: 400;
+transition: color 0.2s;
 }
 
-.nav-links a:hover { color: var(--black); }
+.nav-links a:hover { color: var(–black); }
 
 .nav-btn {
-  font-size: 0.8rem;
-  font-weight: 600;
-  color: var(--white) !important;
-  background: var(--black);
-  padding: 0.45rem 1.1rem;
-  border-radius: 100px;
-  transition: opacity 0.2s !important;
+font-size: 0.8rem;
+font-weight: 600;
+color: var(–white) !important;
+background: var(–black);
+padding: 0.45rem 1.1rem;
+border-radius: 100px;
+transition: opacity 0.2s !important;
 }
 
 .nav-btn:hover { opacity: 0.75 !important; }
 
 /* ── SECTION BASE ── */
 section { padding: 6rem 2rem; }
-.container { max-width: var(--max); margin: 0 auto; }
-.container-wide { max-width: var(--max-wide); margin: 0 auto; }
+.container { max-width: var(–max); margin: 0 auto; }
+.container-wide { max-width: var(–max-wide); margin: 0 auto; }
 
 /* ── LABELS ── */
 .eyebrow {
-  display: inline-block;
-  font-size: 0.7rem;
-  font-weight: 600;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: var(--gray);
-  margin-bottom: 1.25rem;
+display: inline-block;
+font-size: 0.7rem;
+font-weight: 600;
+letter-spacing: 0.14em;
+text-transform: uppercase;
+color: var(–gray);
+margin-bottom: 1.25rem;
 }
 
 /* ── HERO ── */
 #hero {
-  padding-top: 9rem;
-  padding-bottom: 5rem;
-  text-align: center;
-  background: var(--white);
+padding-top: 9rem;
+padding-bottom: 5rem;
+text-align: center;
+background: var(–white);
 }
 
 .hero-tag {
-  display: inline-flex;
-  align-items: center;
-  gap: 7px;
-  font-size: 0.72rem;
-  font-weight: 500;
-  color: var(--gray-dark);
-  background: var(--gray-bg);
-  border: 1px solid var(--gray-border);
-  padding: 0.3rem 0.85rem;
-  border-radius: 100px;
-  margin-bottom: 2rem;
-  letter-spacing: 0.02em;
+display: inline-flex;
+align-items: center;
+gap: 7px;
+font-size: 0.72rem;
+font-weight: 500;
+color: var(–gray-dark);
+background: var(–gray-bg);
+border: 1px solid var(–gray-border);
+padding: 0.3rem 0.85rem;
+border-radius: 100px;
+margin-bottom: 2rem;
+letter-spacing: 0.02em;
 }
 
 .hero-tag-dot {
-  width: 5px; height: 5px;
-  background: var(--accent);
-  border-radius: 50%;
+width: 5px; height: 5px;
+background: var(–accent);
+border-radius: 50%;
 }
 
 h1 {
-  font-size: clamp(2.4rem, 5vw, 3.6rem);
-  font-weight: 700;
-  line-height: 1.12;
-  letter-spacing: -0.035em;
-  color: var(--black);
-  max-width: 640px;
-  margin: 0 auto 1.25rem;
+font-size: clamp(2.4rem, 5vw, 3.6rem);
+font-weight: 700;
+line-height: 1.12;
+letter-spacing: -0.035em;
+color: var(–black);
+max-width: 640px;
+margin: 0 auto 1.25rem;
 }
 
 .hero-sub {
-  font-size: 1.05rem;
-  color: var(--gray);
-  font-weight: 300;
-  max-width: 500px;
-  margin: 0 auto 2.25rem;
-  line-height: 1.75;
+font-size: 1.05rem;
+color: var(–gray);
+font-weight: 300;
+max-width: 500px;
+margin: 0 auto 2.25rem;
+line-height: 1.75;
 }
 
 .btn-primary {
-  display: inline-block;
-  background: var(--black);
-  color: var(--white);
-  padding: 0.8rem 1.75rem;
-  border-radius: 100px;
-  font-size: 0.875rem;
-  font-weight: 600;
-  text-decoration: none;
-  letter-spacing: -0.01em;
-  transition: opacity 0.2s, transform 0.2s;
-  border: none;
-  cursor: pointer;
-  font-family: 'Plus Jakarta Sans', sans-serif;
+display: inline-block;
+background: var(–black);
+color: var(–white);
+padding: 0.8rem 1.75rem;
+border-radius: 100px;
+font-size: 0.875rem;
+font-weight: 600;
+text-decoration: none;
+letter-spacing: -0.01em;
+transition: opacity 0.2s, transform 0.2s;
+border: none;
+cursor: pointer;
+font-family: ‘Plus Jakarta Sans’, sans-serif;
 }
 
 .btn-primary:hover { opacity: 0.75; transform: translateY(-1px); }
 
 .btn-ghost {
-  display: inline-block;
-  background: transparent;
-  color: var(--gray);
-  padding: 0.8rem 1.5rem;
-  border-radius: 100px;
-  font-size: 0.875rem;
-  font-weight: 500;
-  text-decoration: none;
-  transition: color 0.2s;
-  cursor: pointer;
-  font-family: 'Plus Jakarta Sans', sans-serif;
-  border: none;
+display: inline-block;
+background: transparent;
+color: var(–gray);
+padding: 0.8rem 1.5rem;
+border-radius: 100px;
+font-size: 0.875rem;
+font-weight: 500;
+text-decoration: none;
+transition: color 0.2s;
+cursor: pointer;
+font-family: ‘Plus Jakarta Sans’, sans-serif;
+border: none;
 }
 
-.btn-ghost:hover { color: var(--black); }
+.btn-ghost:hover { color: var(–black); }
 
 .hero-actions {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.25rem;
-  flex-wrap: wrap;
+display: flex;
+align-items: center;
+justify-content: center;
+gap: 0.25rem;
+flex-wrap: wrap;
 }
 
 .hero-note {
-  font-size: 0.75rem;
-  color: var(--gray-light);
-  margin-top: 1rem;
-  letter-spacing: 0.01em;
+font-size: 0.75rem;
+color: var(–gray-light);
+margin-top: 1rem;
+letter-spacing: 0.01em;
 }
 
 /* Hero mockup */
 .hero-mockup {
-  margin: 4rem auto 0;
-  max-width: 680px;
-  background: var(--white);
-  border: 1px solid var(--gray-border);
-  border-radius: 18px;
-  box-shadow: 0 4px 6px rgba(0,0,0,0.04), 0 20px 60px rgba(0,0,0,0.07);
-  overflow: hidden;
+margin: 4rem auto 0;
+max-width: 680px;
+background: var(–white);
+border: 1px solid var(–gray-border);
+border-radius: 18px;
+box-shadow: 0 4px 6px rgba(0,0,0,0.04), 0 20px 60px rgba(0,0,0,0.07);
+overflow: hidden;
 }
 
 .mockup-bar {
-  background: var(--gray-bg);
-  border-bottom: 1px solid var(--gray-border);
-  padding: 0.85rem 1.25rem;
-  display: flex;
-  align-items: center;
-  gap: 0.6rem;
+background: var(–gray-bg);
+border-bottom: 1px solid var(–gray-border);
+padding: 0.85rem 1.25rem;
+display: flex;
+align-items: center;
+gap: 0.6rem;
 }
 
 .mb-dot {
-  width: 10px; height: 10px;
-  border-radius: 50%;
-  background: var(--gray-border);
+width: 10px; height: 10px;
+border-radius: 50%;
+background: var(–gray-border);
 }
 
 .mockup-url {
-  font-size: 0.7rem;
-  color: var(--gray-light);
-  margin-left: 6px;
-  font-weight: 400;
-  letter-spacing: 0.02em;
+font-size: 0.7rem;
+color: var(–gray-light);
+margin-left: 6px;
+font-weight: 400;
+letter-spacing: 0.02em;
 }
 
 .mockup-body {
-  padding: 1.5rem;
+padding: 1.5rem;
 }
 
 .mockup-label {
-  font-size: 0.65rem;
-  font-weight: 600;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: var(--gray-light);
-  margin-bottom: 1rem;
+font-size: 0.65rem;
+font-weight: 600;
+letter-spacing: 0.12em;
+text-transform: uppercase;
+color: var(–gray-light);
+margin-bottom: 1rem;
 }
 
 .route-cards {
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-  gap: 0.75rem;
-  margin-bottom: 1.25rem;
+display: grid;
+grid-template-columns: 1fr 1fr 1fr;
+gap: 0.75rem;
+margin-bottom: 1.25rem;
 }
 
 .route-card {
-  background: var(--gray-bg);
-  border: 1px solid var(--gray-border);
-  border-radius: 12px;
-  padding: 1rem;
+background: var(–gray-bg);
+border: 1px solid var(–gray-border);
+border-radius: 12px;
+padding: 1rem;
 }
 
 .rc-route {
-  font-size: 0.7rem;
-  color: var(--gray);
-  margin-bottom: 0.5rem;
-  font-weight: 400;
+font-size: 0.7rem;
+color: var(–gray);
+margin-bottom: 0.5rem;
+font-weight: 400;
 }
 
 .rc-score {
-  font-size: 1.5rem;
-  font-weight: 700;
-  line-height: 1;
-  letter-spacing: -0.04em;
-  margin-bottom: 0.35rem;
+font-size: 1.5rem;
+font-weight: 700;
+line-height: 1;
+letter-spacing: -0.04em;
+margin-bottom: 0.35rem;
 }
 
 .rc-label {
-  font-size: 0.65rem;
-  font-weight: 600;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  padding: 2px 8px;
-  border-radius: 100px;
-  display: inline-block;
+font-size: 0.65rem;
+font-weight: 600;
+letter-spacing: 0.08em;
+text-transform: uppercase;
+padding: 2px 8px;
+border-radius: 100px;
+display: inline-block;
 }
 
-.rc-low .rc-score { color: var(--accent); }
-.rc-low .rc-label { background: var(--accent-light); color: var(--accent); }
-.rc-medium .rc-score { color: var(--accent-amber); }
-.rc-medium .rc-label { background: var(--accent-amber-bg); color: var(--accent-amber); }
-.rc-high .rc-score { color: var(--accent-red); }
-.rc-high .rc-label { background: var(--accent-red-bg); color: var(--accent-red); }
+.rc-low .rc-score { color: var(–accent); }
+.rc-low .rc-label { background: var(–accent-light); color: var(–accent); }
+.rc-medium .rc-score { color: var(–accent-amber); }
+.rc-medium .rc-label { background: var(–accent-amber-bg); color: var(–accent-amber); }
+.rc-high .rc-score { color: var(–accent-red); }
+.rc-high .rc-label { background: var(–accent-red-bg); color: var(–accent-red); }
 
 .dispatch-row {
-  background: var(--accent-light);
-  border: 1px solid rgba(45,90,61,0.15);
-  border-radius: 12px;
-  padding: 1rem 1.25rem;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
+background: var(–accent-light);
+border: 1px solid rgba(45,90,61,0.15);
+border-radius: 12px;
+padding: 1rem 1.25rem;
+display: flex;
+align-items: center;
+justify-content: space-between;
 }
 
 .dr-label {
-  font-size: 0.7rem;
-  color: var(--accent);
-  font-weight: 500;
-  margin-bottom: 3px;
-  letter-spacing: 0.02em;
+font-size: 0.7rem;
+color: var(–accent);
+font-weight: 500;
+margin-bottom: 3px;
+letter-spacing: 0.02em;
 }
 
 .dr-time {
-  font-size: 1.1rem;
-  font-weight: 700;
-  color: var(--accent);
-  letter-spacing: -0.02em;
+font-size: 1.1rem;
+font-weight: 700;
+color: var(–accent);
+letter-spacing: -0.02em;
 }
 
 .dr-badge {
-  font-size: 0.65rem;
-  font-weight: 600;
-  color: var(--accent);
-  background: rgba(45,90,61,0.12);
-  padding: 0.3rem 0.75rem;
-  border-radius: 100px;
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
+font-size: 0.65rem;
+font-weight: 600;
+color: var(–accent);
+background: rgba(45,90,61,0.12);
+padding: 0.3rem 0.75rem;
+border-radius: 100px;
+text-transform: uppercase;
+letter-spacing: 0.08em;
 }
 
 /* ── DIVIDER ── */
 .divider {
-  max-width: var(--max);
-  margin: 0 auto;
-  height: 1px;
-  background: var(--gray-border);
+max-width: var(–max);
+margin: 0 auto;
+height: 1px;
+background: var(–gray-border);
 }
 
 /* ── PROBLEM ── */
 #problem {
-  background: var(--white);
+background: var(–white);
 }
 
 .problem-intro {
-  max-width: var(--max);
-  margin: 0 auto 3.5rem;
+max-width: var(–max);
+margin: 0 auto 3.5rem;
 }
 
 .pain-list {
-  max-width: var(--max);
-  margin: 0 auto;
-  display: flex;
-  flex-direction: column;
-  gap: 0;
-  border: 1px solid var(--gray-border);
-  border-radius: 16px;
-  overflow: hidden;
+max-width: var(–max);
+margin: 0 auto;
+display: flex;
+flex-direction: column;
+gap: 0;
+border: 1px solid var(–gray-border);
+border-radius: 16px;
+overflow: hidden;
 }
 
 .pain-item {
-  padding: 1.5rem 2rem;
-  display: flex;
-  align-items: flex-start;
-  gap: 1.25rem;
-  border-bottom: 1px solid var(--gray-border);
-  transition: background 0.2s;
+padding: 1.5rem 2rem;
+display: flex;
+align-items: flex-start;
+gap: 1.25rem;
+border-bottom: 1px solid var(–gray-border);
+transition: background 0.2s;
 }
 
 .pain-item:last-child { border-bottom: none; }
-.pain-item:hover { background: var(--gray-bg); }
+.pain-item:hover { background: var(–gray-bg); }
 
 .pain-num {
-  font-size: 0.7rem;
-  font-weight: 600;
-  color: var(--gray-light);
-  padding-top: 3px;
-  flex-shrink: 0;
-  width: 20px;
-  font-variant-numeric: tabular-nums;
-  letter-spacing: 0.04em;
+font-size: 0.7rem;
+font-weight: 600;
+color: var(–gray-light);
+padding-top: 3px;
+flex-shrink: 0;
+width: 20px;
+font-variant-numeric: tabular-nums;
+letter-spacing: 0.04em;
 }
 
 .pain-content {}
 
 .pain-title {
-  font-size: 0.95rem;
-  font-weight: 600;
-  color: var(--black);
-  margin-bottom: 4px;
-  letter-spacing: -0.01em;
+font-size: 0.95rem;
+font-weight: 600;
+color: var(–black);
+margin-bottom: 4px;
+letter-spacing: -0.01em;
 }
 
 .pain-desc {
-  font-size: 0.85rem;
-  color: var(--gray);
-  font-weight: 300;
-  line-height: 1.65;
+font-size: 0.85rem;
+color: var(–gray);
+font-weight: 300;
+line-height: 1.65;
 }
 
 .pain-cost {
-  margin-left: auto;
-  flex-shrink: 0;
-  font-size: 0.7rem;
-  color: var(--accent-red);
-  background: var(--accent-red-bg);
-  padding: 0.25rem 0.7rem;
-  border-radius: 100px;
-  font-weight: 500;
-  white-space: nowrap;
-  align-self: center;
+margin-left: auto;
+flex-shrink: 0;
+font-size: 0.7rem;
+color: var(–accent-red);
+background: var(–accent-red-bg);
+padding: 0.25rem 0.7rem;
+border-radius: 100px;
+font-weight: 500;
+white-space: nowrap;
+align-self: center;
 }
 
 .problem-close {
-  max-width: var(--max);
-  margin: 2rem auto 0;
-  font-size: 0.875rem;
-  color: var(--gray);
-  font-style: italic;
-  font-weight: 300;
+max-width: var(–max);
+margin: 2rem auto 0;
+font-size: 0.875rem;
+color: var(–gray);
+font-style: italic;
+font-weight: 300;
 }
 
 /* ── SOLUTION ── */
 #solution {
-  background: var(--gray-bg);
+background: var(–gray-bg);
 }
 
 h2 {
-  font-size: clamp(1.7rem, 3vw, 2.4rem);
-  font-weight: 700;
-  letter-spacing: -0.03em;
-  line-height: 1.2;
-  color: var(--black);
-  margin-bottom: 0.75rem;
+font-size: clamp(1.7rem, 3vw, 2.4rem);
+font-weight: 700;
+letter-spacing: -0.03em;
+line-height: 1.2;
+color: var(–black);
+margin-bottom: 0.75rem;
 }
 
 .section-sub {
-  font-size: 0.95rem;
-  color: var(--gray);
-  font-weight: 300;
-  line-height: 1.75;
-  max-width: 480px;
-  margin-bottom: 3rem;
+font-size: 0.95rem;
+color: var(–gray);
+font-weight: 300;
+line-height: 1.75;
+max-width: 480px;
+margin-bottom: 3rem;
 }
 
 .solution-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-  gap: 1rem;
+display: grid;
+grid-template-columns: 1fr 1fr 1fr;
+gap: 1rem;
 }
 
 .sol-card {
-  background: var(--white);
-  border: 1px solid var(--gray-border);
-  border-radius: 14px;
-  padding: 1.75rem 1.5rem;
-  transition: box-shadow 0.25s, transform 0.25s;
+background: var(–white);
+border: 1px solid var(–gray-border);
+border-radius: 14px;
+padding: 1.75rem 1.5rem;
+transition: box-shadow 0.25s, transform 0.25s;
 }
 
 .sol-card:hover {
-  box-shadow: 0 8px 28px rgba(0,0,0,0.07);
-  transform: translateY(-3px);
+box-shadow: 0 8px 28px rgba(0,0,0,0.07);
+transform: translateY(-3px);
 }
 
 .sol-num {
-  font-size: 0.65rem;
-  font-weight: 600;
-  letter-spacing: 0.14em;
-  color: var(--gray-light);
-  text-transform: uppercase;
-  margin-bottom: 1.25rem;
+font-size: 0.65rem;
+font-weight: 600;
+letter-spacing: 0.14em;
+color: var(–gray-light);
+text-transform: uppercase;
+margin-bottom: 1.25rem;
 }
 
 .sol-icon {
-  font-size: 1.5rem;
-  margin-bottom: 1rem;
-  display: block;
+font-size: 1.5rem;
+margin-bottom: 1rem;
+display: block;
 }
 
 .sol-title {
-  font-size: 1rem;
-  font-weight: 700;
-  color: var(--black);
-  margin-bottom: 0.5rem;
-  letter-spacing: -0.015em;
+font-size: 1rem;
+font-weight: 700;
+color: var(–black);
+margin-bottom: 0.5rem;
+letter-spacing: -0.015em;
 }
 
 .sol-desc {
-  font-size: 0.825rem;
-  color: var(--gray);
-  line-height: 1.7;
-  font-weight: 300;
+font-size: 0.825rem;
+color: var(–gray);
+line-height: 1.7;
+font-weight: 300;
 }
 
 /* ── DASHBOARD ── */
 #dashboard {
-  background: var(--white);
+background: var(–white);
 }
 
 .db-wrapper {
-  background: var(--gray-bg);
-  border: 1px solid var(--gray-border);
-  border-radius: 20px;
-  overflow: hidden;
-  margin-top: 3rem;
+background: var(–gray-bg);
+border: 1px solid var(–gray-border);
+border-radius: 20px;
+overflow: hidden;
+margin-top: 3rem;
 }
 
 .db-topbar {
-  background: var(--white);
-  border-bottom: 1px solid var(--gray-border);
-  padding: 0.85rem 1.5rem;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
+background: var(–white);
+border-bottom: 1px solid var(–gray-border);
+padding: 0.85rem 1.5rem;
+display: flex;
+align-items: center;
+justify-content: space-between;
 }
 
 .db-title {
-  font-size: 0.75rem;
-  font-weight: 600;
-  color: var(--black);
-  letter-spacing: -0.01em;
+font-size: 0.75rem;
+font-weight: 600;
+color: var(–black);
+letter-spacing: -0.01em;
 }
 
 .db-live {
-  display: flex;
-  align-items: center;
-  gap: 5px;
-  font-size: 0.65rem;
-  color: var(--accent);
-  font-weight: 500;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
+display: flex;
+align-items: center;
+gap: 5px;
+font-size: 0.65rem;
+color: var(–accent);
+font-weight: 500;
+letter-spacing: 0.06em;
+text-transform: uppercase;
 }
 
 .live-dot {
-  width: 6px; height: 6px;
-  background: var(--accent);
-  border-radius: 50%;
-  animation: livepulse 2s infinite;
+width: 6px; height: 6px;
+background: var(–accent);
+border-radius: 50%;
+animation: livepulse 2s infinite;
 }
 
 @keyframes livepulse {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0.4; }
+0%, 100% { opacity: 1; }
+50% { opacity: 0.4; }
 }
 
 .db-body {
-  padding: 1.5rem;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 1rem;
+padding: 1.5rem;
+display: grid;
+grid-template-columns: 1fr 1fr;
+gap: 1rem;
 }
 
 .db-card {
-  background: var(--white);
-  border: 1px solid var(--gray-border);
-  border-radius: 14px;
-  padding: 1.25rem;
+background: var(–white);
+border: 1px solid var(–gray-border);
+border-radius: 14px;
+padding: 1.25rem;
 }
 
 .db-card-label {
-  font-size: 0.65rem;
-  font-weight: 600;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: var(--gray-light);
-  margin-bottom: 1rem;
+font-size: 0.65rem;
+font-weight: 600;
+letter-spacing: 0.12em;
+text-transform: uppercase;
+color: var(–gray-light);
+margin-bottom: 1rem;
 }
 
 /* Risk gauge */
 .risk-row {
-  display: flex;
-  flex-direction: column;
-  gap: 0.6rem;
+display: flex;
+flex-direction: column;
+gap: 0.6rem;
 }
 
 .risk-item {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 0.75rem;
+display: flex;
+align-items: center;
+justify-content: space-between;
+gap: 0.75rem;
 }
 
 .ri-route {
-  font-size: 0.8rem;
-  color: var(--gray-dark);
-  font-weight: 400;
-  flex: 1;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+font-size: 0.8rem;
+color: var(–gray-dark);
+font-weight: 400;
+flex: 1;
+white-space: nowrap;
+overflow: hidden;
+text-overflow: ellipsis;
 }
 
 .ri-bar-wrap {
-  flex: 1;
-  height: 5px;
-  background: var(--gray-bg2);
-  border-radius: 100px;
-  overflow: hidden;
+flex: 1;
+height: 5px;
+background: var(–gray-bg2);
+border-radius: 100px;
+overflow: hidden;
 }
 
 .ri-bar {
-  height: 100%;
-  border-radius: 100px;
-  transition: width 1s ease;
+height: 100%;
+border-radius: 100px;
+transition: width 1s ease;
 }
 
 .ri-badge {
-  font-size: 0.62rem;
-  font-weight: 600;
-  padding: 2px 8px;
-  border-radius: 100px;
-  text-transform: uppercase;
-  letter-spacing: 0.06em;
-  white-space: nowrap;
+font-size: 0.62rem;
+font-weight: 600;
+padding: 2px 8px;
+border-radius: 100px;
+text-transform: uppercase;
+letter-spacing: 0.06em;
+white-space: nowrap;
 }
 
-.badge-low { background: var(--accent-light); color: var(--accent); }
-.badge-medium { background: var(--accent-amber-bg); color: var(--accent-amber); }
-.badge-high { background: var(--accent-red-bg); color: var(--accent-red); }
+.badge-low { background: var(–accent-light); color: var(–accent); }
+.badge-medium { background: var(–accent-amber-bg); color: var(–accent-amber); }
+.badge-high { background: var(–accent-red-bg); color: var(–accent-red); }
 
-.bar-low { background: var(--accent); width: 15%; }
-.bar-medium { background: var(--accent-amber); width: 62%; }
-.bar-high { background: var(--accent-red); width: 89%; }
+.bar-low { background: var(–accent); width: 15%; }
+.bar-medium { background: var(–accent-amber); width: 62%; }
+.bar-high { background: var(–accent-red); width: 89%; }
 
 /* Dispatch card */
 .dispatch-card {
-  grid-column: 1 / -1;
+grid-column: 1 / -1;
 }
 
 .dispatch-recommend {
-  background: var(--accent-light);
-  border: 1px solid rgba(45,90,61,0.15);
-  border-radius: 12px;
-  padding: 1.25rem 1.5rem;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 1rem;
+background: var(–accent-light);
+border: 1px solid rgba(45,90,61,0.15);
+border-radius: 12px;
+padding: 1.25rem 1.5rem;
+display: flex;
+align-items: center;
+justify-content: space-between;
+gap: 1rem;
 }
 
 .drec-label {
-  font-size: 0.7rem;
-  font-weight: 500;
-  color: var(--accent);
-  margin-bottom: 4px;
-  letter-spacing: 0.02em;
+font-size: 0.7rem;
+font-weight: 500;
+color: var(–accent);
+margin-bottom: 4px;
+letter-spacing: 0.02em;
 }
 
 .drec-time {
-  font-size: 1.4rem;
-  font-weight: 700;
-  color: var(--accent);
-  letter-spacing: -0.025em;
+font-size: 1.4rem;
+font-weight: 700;
+color: var(–accent);
+letter-spacing: -0.025em;
 }
 
 .drec-note {
-  font-size: 0.75rem;
-  color: rgba(45,90,61,0.7);
-  font-weight: 300;
-  margin-top: 4px;
+font-size: 0.75rem;
+color: rgba(45,90,61,0.7);
+font-weight: 300;
+margin-top: 4px;
 }
 
 .drec-reason {
-  text-align: right;
-  flex-shrink: 0;
+text-align: right;
+flex-shrink: 0;
 }
 
 .drec-reason-label {
-  font-size: 0.65rem;
-  color: rgba(45,90,61,0.6);
-  font-weight: 500;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  margin-bottom: 4px;
+font-size: 0.65rem;
+color: rgba(45,90,61,0.6);
+font-weight: 500;
+letter-spacing: 0.06em;
+text-transform: uppercase;
+margin-bottom: 4px;
 }
 
 .drec-facts {
-  display: flex;
-  flex-direction: column;
-  gap: 3px;
-  align-items: flex-end;
+display: flex;
+flex-direction: column;
+gap: 3px;
+align-items: flex-end;
 }
 
 .drec-fact {
-  font-size: 0.72rem;
-  color: var(--accent);
-  font-weight: 400;
+font-size: 0.72rem;
+color: var(–accent);
+font-weight: 400;
 }
 
 /* Weather/traffic indicators */
 .indicators {
-  display: flex;
-  flex-direction: column;
-  gap: 0.6rem;
+display: flex;
+flex-direction: column;
+gap: 0.6rem;
 }
 
 .ind-item {
-  display: flex;
-  align-items: center;
-  gap: 0.75rem;
-  padding: 0.6rem 0.85rem;
-  background: var(--gray-bg);
-  border-radius: 10px;
+display: flex;
+align-items: center;
+gap: 0.75rem;
+padding: 0.6rem 0.85rem;
+background: var(–gray-bg);
+border-radius: 10px;
 }
 
 .ind-icon { font-size: 1rem; flex-shrink: 0; }
@@ -729,251 +730,251 @@ h2 {
 .ind-text {}
 
 .ind-name {
-  font-size: 0.72rem;
-  font-weight: 600;
-  color: var(--black);
-  letter-spacing: -0.01em;
+font-size: 0.72rem;
+font-weight: 600;
+color: var(–black);
+letter-spacing: -0.01em;
 }
 
 .ind-val {
-  font-size: 0.7rem;
-  color: var(--gray);
-  font-weight: 300;
-  margin-top: 1px;
+font-size: 0.7rem;
+color: var(–gray);
+font-weight: 300;
+margin-top: 1px;
 }
 
 /* ── INSIGHTS ── */
 #insights {
-  background: var(--gray-bg);
+background: var(–gray-bg);
 }
 
 .insights-list {
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-  margin-top: 3rem;
+display: flex;
+flex-direction: column;
+gap: 1rem;
+margin-top: 3rem;
 }
 
 .insight-row {
-  background: var(--white);
-  border: 1px solid var(--gray-border);
-  border-radius: 14px;
-  padding: 1.25rem 1.5rem;
-  display: flex;
-  align-items: flex-start;
-  gap: 1.25rem;
-  transition: box-shadow 0.2s;
+background: var(–white);
+border: 1px solid var(–gray-border);
+border-radius: 14px;
+padding: 1.25rem 1.5rem;
+display: flex;
+align-items: flex-start;
+gap: 1.25rem;
+transition: box-shadow 0.2s;
 }
 
 .insight-row:hover {
-  box-shadow: 0 4px 16px rgba(0,0,0,0.06);
+box-shadow: 0 4px 16px rgba(0,0,0,0.06);
 }
 
 .ins-tag {
-  flex-shrink: 0;
-  padding: 0.25rem 0.7rem;
-  border-radius: 100px;
-  font-size: 0.62rem;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.07em;
-  margin-top: 2px;
-  white-space: nowrap;
+flex-shrink: 0;
+padding: 0.25rem 0.7rem;
+border-radius: 100px;
+font-size: 0.62rem;
+font-weight: 600;
+text-transform: uppercase;
+letter-spacing: 0.07em;
+margin-top: 2px;
+white-space: nowrap;
 }
 
 .ins-content {}
 
 .ins-title {
-  font-size: 0.95rem;
-  font-weight: 600;
-  color: var(--black);
-  letter-spacing: -0.015em;
-  margin-bottom: 4px;
+font-size: 0.95rem;
+font-weight: 600;
+color: var(–black);
+letter-spacing: -0.015em;
+margin-bottom: 4px;
 }
 
 .ins-desc {
-  font-size: 0.825rem;
-  color: var(--gray);
-  font-weight: 300;
-  line-height: 1.65;
+font-size: 0.825rem;
+color: var(–gray);
+font-weight: 300;
+line-height: 1.65;
 }
 
 .ins-meta {
-  margin-left: auto;
-  flex-shrink: 0;
-  font-size: 0.7rem;
-  color: var(--gray-light);
-  font-weight: 400;
-  align-self: center;
-  white-space: nowrap;
+margin-left: auto;
+flex-shrink: 0;
+font-size: 0.7rem;
+color: var(–gray-light);
+font-weight: 400;
+align-self: center;
+white-space: nowrap;
 }
 
 /* ── TRUST ── */
 #trust {
-  background: var(--white);
+background: var(–white);
 }
 
 .trust-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 1.25rem;
-  margin-top: 3rem;
+display: grid;
+grid-template-columns: 1fr 1fr;
+gap: 1.25rem;
+margin-top: 3rem;
 }
 
 .trust-card {
-  background: var(--gray-bg);
-  border: 1px solid var(--gray-border);
-  border-radius: 16px;
-  padding: 2rem;
+background: var(–gray-bg);
+border: 1px solid var(–gray-border);
+border-radius: 16px;
+padding: 2rem;
 }
 
 .tc-icon {
-  font-size: 1.5rem;
-  display: block;
-  margin-bottom: 1rem;
+font-size: 1.5rem;
+display: block;
+margin-bottom: 1rem;
 }
 
 .tc-title {
-  font-size: 1rem;
-  font-weight: 700;
-  color: var(--black);
-  letter-spacing: -0.015em;
-  margin-bottom: 0.5rem;
+font-size: 1rem;
+font-weight: 700;
+color: var(–black);
+letter-spacing: -0.015em;
+margin-bottom: 0.5rem;
 }
 
 .tc-desc {
-  font-size: 0.85rem;
-  color: var(--gray);
-  font-weight: 300;
-  line-height: 1.7;
+font-size: 0.85rem;
+color: var(–gray);
+font-weight: 300;
+line-height: 1.7;
 }
 
 .sources-row {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.5rem;
-  margin-top: 1rem;
+display: flex;
+flex-wrap: wrap;
+gap: 0.5rem;
+margin-top: 1rem;
 }
 
 .src-tag {
-  font-size: 0.65rem;
-  font-weight: 500;
-  color: var(--gray-dark);
-  background: var(--white);
-  border: 1px solid var(--gray-border);
-  padding: 0.25rem 0.65rem;
-  border-radius: 100px;
-  letter-spacing: 0.03em;
+font-size: 0.65rem;
+font-weight: 500;
+color: var(–gray-dark);
+background: var(–white);
+border: 1px solid var(–gray-border);
+padding: 0.25rem 0.65rem;
+border-radius: 100px;
+letter-spacing: 0.03em;
 }
 
 /* ── CTA ── */
 #cta {
-  background: var(--gray-bg);
-  text-align: center;
+background: var(–gray-bg);
+text-align: center;
 }
 
 .cta-inner {
-  max-width: 520px;
-  margin: 0 auto;
+max-width: 520px;
+margin: 0 auto;
 }
 
 .email-form {
-  display: flex;
-  gap: 0.5rem;
-  justify-content: center;
-  margin-top: 2rem;
-  flex-wrap: wrap;
+display: flex;
+gap: 0.5rem;
+justify-content: center;
+margin-top: 2rem;
+flex-wrap: wrap;
 }
 
 .email-input {
-  flex: 1;
-  min-width: 220px;
-  max-width: 300px;
-  padding: 0.75rem 1.25rem;
-  border: 1px solid var(--gray-border);
-  border-radius: 100px;
-  font-family: 'Plus Jakarta Sans', sans-serif;
-  font-size: 0.875rem;
-  color: var(--black);
-  background: var(--white);
-  outline: none;
-  transition: border-color 0.2s;
+flex: 1;
+min-width: 220px;
+max-width: 300px;
+padding: 0.75rem 1.25rem;
+border: 1px solid var(–gray-border);
+border-radius: 100px;
+font-family: ‘Plus Jakarta Sans’, sans-serif;
+font-size: 0.875rem;
+color: var(–black);
+background: var(–white);
+outline: none;
+transition: border-color 0.2s;
 }
 
-.email-input:focus { border-color: var(--black); }
-.email-input::placeholder { color: var(--gray-light); }
+.email-input:focus { border-color: var(–black); }
+.email-input::placeholder { color: var(–gray-light); }
 
 .cta-trust {
-  margin-top: 1.25rem;
-  font-size: 0.75rem;
-  color: var(--gray-light);
-  font-weight: 300;
+margin-top: 1.25rem;
+font-size: 0.75rem;
+color: var(–gray-light);
+font-weight: 300;
 }
 
 .cta-features {
-  display: flex;
-  justify-content: center;
-  gap: 1.75rem;
-  margin-top: 2.5rem;
-  flex-wrap: wrap;
+display: flex;
+justify-content: center;
+gap: 1.75rem;
+margin-top: 2.5rem;
+flex-wrap: wrap;
 }
 
 .cf-item {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  font-size: 0.8rem;
-  color: var(--gray);
-  font-weight: 400;
+display: flex;
+align-items: center;
+gap: 6px;
+font-size: 0.8rem;
+color: var(–gray);
+font-weight: 400;
 }
 
 .cf-check {
-  font-size: 0.7rem;
-  color: var(--accent);
+font-size: 0.7rem;
+color: var(–accent);
 }
 
 /* ── FOOTER ── */
 footer {
-  border-top: 1px solid var(--gray-border);
-  padding: 1.75rem 2rem;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  max-width: 100%;
+border-top: 1px solid var(–gray-border);
+padding: 1.75rem 2rem;
+display: flex;
+align-items: center;
+justify-content: space-between;
+max-width: 100%;
 }
 
 .footer-logo {
-  font-size: 0.875rem;
-  font-weight: 700;
-  color: var(--black);
-  letter-spacing: -0.02em;
+font-size: 0.875rem;
+font-weight: 700;
+color: var(–black);
+letter-spacing: -0.02em;
 }
 
 .footer-note {
-  font-size: 0.75rem;
-  color: var(--gray-light);
-  font-weight: 300;
+font-size: 0.75rem;
+color: var(–gray-light);
+font-weight: 300;
 }
 
 .footer-links {
-  display: flex;
-  gap: 1.5rem;
+display: flex;
+gap: 1.5rem;
 }
 
 .footer-links a {
-  font-size: 0.75rem;
-  color: var(--gray-light);
-  text-decoration: none;
-  transition: color 0.2s;
+font-size: 0.75rem;
+color: var(–gray-light);
+text-decoration: none;
+transition: color 0.2s;
 }
 
-.footer-links a:hover { color: var(--gray-dark); }
+.footer-links a:hover { color: var(–gray-dark); }
 
 /* ── SCROLL REVEALS ── */
 .reveal {
-  opacity: 0;
-  transform: translateY(18px);
-  transition: opacity 0.65s ease, transform 0.65s ease;
+opacity: 0;
+transform: translateY(18px);
+transition: opacity 0.65s ease, transform 0.65s ease;
 }
 
 .reveal.in { opacity: 1; transform: none; }
@@ -985,97 +986,97 @@ footer {
 
 /* ── RESPONSIVE ── */
 @media (max-width: 700px) {
-  section { padding: 4rem 1.25rem; }
-  .solution-grid { grid-template-columns: 1fr; }
-  .route-cards { grid-template-columns: 1fr 1fr; }
-  .route-cards .rc-low { display: none; }
-  .db-body { grid-template-columns: 1fr; }
-  .trust-grid { grid-template-columns: 1fr; }
-  .pain-cost { display: none; }
-  nav .nav-links { display: none; }
-  .hero-actions { flex-direction: column; gap: 0.5rem; }
-  .insight-row { flex-wrap: wrap; }
-  .ins-meta { display: none; }
-  footer { flex-direction: column; gap: 1rem; text-align: center; }
-  .dispatch-recommend { flex-direction: column; text-align: center; }
-  .drec-reason { text-align: center; }
-  .drec-facts { align-items: center; }
-  .try-grid { grid-template-columns: 1fr !important; }
-  .try-output-grid { grid-template-columns: 1fr !important; }
-  .fb-grid { grid-template-columns: 1fr !important; }
+section { padding: 4rem 1.25rem; }
+.solution-grid { grid-template-columns: 1fr; }
+.route-cards { grid-template-columns: 1fr 1fr; }
+.route-cards .rc-low { display: none; }
+.db-body { grid-template-columns: 1fr; }
+.trust-grid { grid-template-columns: 1fr; }
+.pain-cost { display: none; }
+nav .nav-links { display: none; }
+.hero-actions { flex-direction: column; gap: 0.5rem; }
+.insight-row { flex-wrap: wrap; }
+.ins-meta { display: none; }
+footer { flex-direction: column; gap: 1rem; text-align: center; }
+.dispatch-recommend { flex-direction: column; text-align: center; }
+.drec-reason { text-align: center; }
+.drec-facts { align-items: center; }
+.try-grid { grid-template-columns: 1fr !important; }
+.try-output-grid { grid-template-columns: 1fr !important; }
+.fb-grid { grid-template-columns: 1fr !important; }
 }
 
 @media (max-width: 480px) {
-  h1 { font-size: 2rem; }
-  h2 { font-size: 1.6rem; }
-  .route-cards { grid-template-columns: 1fr; }
+h1 { font-size: 2rem; }
+h2 { font-size: 1.6rem; }
+.route-cards { grid-template-columns: 1fr; }
 }
 
 /* ── TRY DEMO SECTION ── */
-#try { background: var(--gray-bg); }
+#try { background: var(–gray-bg); }
 
 .try-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 1.25rem;
-  margin-top: 2.5rem;
+display: grid;
+grid-template-columns: 1fr 1fr;
+gap: 1.25rem;
+margin-top: 2.5rem;
 }
 
 .try-input-card {
-  background: var(--white);
-  border: 1px solid var(--gray-border);
-  border-radius: 16px;
-  padding: 1.75rem;
+background: var(–white);
+border: 1px solid var(–gray-border);
+border-radius: 16px;
+padding: 1.75rem;
 }
 
 .try-label {
-  display: block;
-  font-size: 0.72rem;
-  font-weight: 600;
-  letter-spacing: 0.04em;
-  color: var(--gray);
-  margin-bottom: 0.4rem;
+display: block;
+font-size: 0.72rem;
+font-weight: 600;
+letter-spacing: 0.04em;
+color: var(–gray);
+margin-bottom: 0.4rem;
 }
 
 .try-select, .try-input {
-  width: 100%;
-  padding: 0.65rem 0.9rem;
-  border: 1px solid var(--gray-border);
-  border-radius: 10px;
-  font-family: 'Plus Jakarta Sans', sans-serif;
-  font-size: 0.875rem;
-  color: var(--black);
-  background: var(--white);
-  outline: none;
-  appearance: none;
-  transition: border-color 0.15s, box-shadow 0.15s;
-  margin-bottom: 1rem;
+width: 100%;
+padding: 0.65rem 0.9rem;
+border: 1px solid var(–gray-border);
+border-radius: 10px;
+font-family: ‘Plus Jakarta Sans’, sans-serif;
+font-size: 0.875rem;
+color: var(–black);
+background: var(–white);
+outline: none;
+appearance: none;
+transition: border-color 0.15s, box-shadow 0.15s;
+margin-bottom: 1rem;
 }
 
 .try-select:focus, .try-input:focus {
-  border-color: var(--black);
-  box-shadow: 0 0 0 3px rgba(17,17,17,0.05);
+border-color: var(–black);
+box-shadow: 0 0 0 3px rgba(17,17,17,0.05);
 }
 
-.try-select option { color: var(--black); }
+.try-select option { color: var(–black); }
 
 .try-btn {
-  width: 100%;
-  padding: 0.8rem 1.5rem;
-  background: var(--black);
-  color: var(--white);
-  border: none;
-  border-radius: 100px;
-  font-family: 'Plus Jakarta Sans', sans-serif;
-  font-size: 0.875rem;
-  font-weight: 600;
-  cursor: pointer;
-  transition: opacity 0.2s, transform 0.2s;
-  letter-spacing: -0.01em;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.4rem;
+width: 100%;
+padding: 0.8rem 1.5rem;
+background: var(–black);
+color: var(–white);
+border: none;
+border-radius: 100px;
+font-family: ‘Plus Jakarta Sans’, sans-serif;
+font-size: 0.875rem;
+font-weight: 600;
+cursor: pointer;
+transition: opacity 0.2s, transform 0.2s;
+letter-spacing: -0.01em;
+display: flex;
+align-items: center;
+justify-content: center;
+gap: 0.4rem;
 }
 
 .try-btn:hover { opacity: 0.75; transform: translateY(-1px); }
@@ -1083,388 +1084,390 @@ footer {
 
 /* Output panel */
 .try-output-panel {
-  display: flex;
-  flex-direction: column;
-  gap: 0.85rem;
-  opacity: 0;
-  transform: translateY(10px);
-  transition: opacity 0.4s ease, transform 0.4s ease;
-  pointer-events: none;
+display: flex;
+flex-direction: column;
+gap: 0.85rem;
+opacity: 0;
+transform: translateY(10px);
+transition: opacity 0.4s ease, transform 0.4s ease;
+pointer-events: none;
 }
 
 .try-output-panel.visible {
-  opacity: 1;
-  transform: none;
-  pointer-events: auto;
+opacity: 1;
+transform: none;
+pointer-events: auto;
 }
 
 /* Empty state */
 .try-empty {
-  background: var(--white);
-  border: 1px solid var(--gray-border);
-  border-radius: 16px;
-  padding: 2.5rem 1.5rem;
-  text-align: center;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 0.5rem;
-  opacity: 1;
-  transition: opacity 0.3s;
+background: var(–white);
+border: 1px solid var(–gray-border);
+border-radius: 16px;
+padding: 2.5rem 1.5rem;
+text-align: center;
+display: flex;
+flex-direction: column;
+align-items: center;
+justify-content: center;
+gap: 0.5rem;
+opacity: 1;
+transition: opacity 0.3s;
 }
 
 .try-empty.hidden { opacity: 0; pointer-events: none; display: none; }
 
 .try-empty-icon {
-  font-size: 1.75rem;
-  margin-bottom: 0.25rem;
-  opacity: 0.35;
+font-size: 1.75rem;
+margin-bottom: 0.25rem;
+opacity: 0.35;
 }
 
 .try-empty-text {
-  font-size: 0.825rem;
-  color: var(--gray-light);
-  font-weight: 300;
-  line-height: 1.6;
+font-size: 0.825rem;
+color: var(–gray-light);
+font-weight: 300;
+line-height: 1.6;
 }
 
 /* Score card */
 .demo-score-card {
-  background: var(--white);
-  border: 1px solid var(--gray-border);
-  border-radius: 14px;
-  padding: 1.25rem 1.5rem;
+background: var(–white);
+border: 1px solid var(–gray-border);
+border-radius: 14px;
+padding: 1.25rem 1.5rem;
 }
 
 .demo-card-eyebrow {
-  font-size: 0.62rem;
-  font-weight: 600;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: var(--gray-light);
-  margin-bottom: 0.85rem;
-  display: block;
+font-size: 0.62rem;
+font-weight: 600;
+letter-spacing: 0.12em;
+text-transform: uppercase;
+color: var(–gray-light);
+margin-bottom: 0.85rem;
+display: block;
 }
 
 .demo-score-row {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 1rem;
+display: flex;
+align-items: center;
+justify-content: space-between;
+gap: 1rem;
 }
 
 .demo-score-num {
-  font-size: 2.6rem;
-  font-weight: 700;
-  letter-spacing: -0.04em;
-  line-height: 1;
+font-size: 2.6rem;
+font-weight: 700;
+letter-spacing: -0.04em;
+line-height: 1;
 }
 
-.demo-score-num.low  { color: var(--accent); }
-.demo-score-num.medium { color: var(--accent-amber); }
-.demo-score-num.high { color: var(--accent-red); }
+.demo-score-num.low  { color: var(–accent); }
+.demo-score-num.medium { color: var(–accent-amber); }
+.demo-score-num.high { color: var(–accent-red); }
 
 .demo-score-badge {
-  font-size: 0.65rem;
-  font-weight: 700;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  padding: 0.3rem 0.85rem;
-  border-radius: 100px;
+font-size: 0.65rem;
+font-weight: 700;
+letter-spacing: 0.1em;
+text-transform: uppercase;
+padding: 0.3rem 0.85rem;
+border-radius: 100px;
 }
 
-.demo-score-badge.low    { background: var(--accent-light); color: var(--accent); border: 1px solid rgba(45,90,61,0.15); }
-.demo-score-badge.medium { background: var(--accent-amber-bg); color: var(--accent-amber); border: 1px solid rgba(138,108,42,0.15); }
-.demo-score-badge.high   { background: var(--accent-red-bg); color: var(--accent-red); border: 1px solid rgba(138,45,45,0.15); }
+.demo-score-badge.low    { background: var(–accent-light); color: var(–accent); border: 1px solid rgba(45,90,61,0.15); }
+.demo-score-badge.medium { background: var(–accent-amber-bg); color: var(–accent-amber); border: 1px solid rgba(138,108,42,0.15); }
+.demo-score-badge.high   { background: var(–accent-red-bg); color: var(–accent-red); border: 1px solid rgba(138,45,45,0.15); }
 
 .demo-score-bar-wrap {
-  height: 5px;
-  background: var(--gray-bg2);
-  border-radius: 100px;
-  margin-top: 0.85rem;
-  overflow: hidden;
+height: 5px;
+background: var(–gray-bg2);
+border-radius: 100px;
+margin-top: 0.85rem;
+overflow: hidden;
 }
 
 .demo-score-bar {
-  height: 100%;
-  border-radius: 100px;
-  width: 0;
-  transition: width 0.9s cubic-bezier(0.4, 0, 0.2, 1);
+height: 100%;
+border-radius: 100px;
+width: 0;
+transition: width 0.9s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-.demo-score-bar.low    { background: var(--accent); }
-.demo-score-bar.medium { background: var(--accent-amber); }
-.demo-score-bar.high   { background: var(--accent-red); }
+.demo-score-bar.low    { background: var(–accent); }
+.demo-score-bar.medium { background: var(–accent-amber); }
+.demo-score-bar.high   { background: var(–accent-red); }
 
 .demo-score-meta {
-  display: flex;
-  justify-content: space-between;
-  font-size: 0.6rem;
-  color: var(--gray-light);
-  margin-top: 0.35rem;
-  letter-spacing: 0.02em;
+display: flex;
+justify-content: space-between;
+font-size: 0.6rem;
+color: var(–gray-light);
+margin-top: 0.35rem;
+letter-spacing: 0.02em;
 }
 
 /* Dispatch card */
 .demo-dispatch-card {
-  background: var(--accent-light);
-  border: 1px solid rgba(45,90,61,0.18);
-  border-radius: 14px;
-  padding: 1.25rem 1.5rem;
+background: var(–accent-light);
+border: 1px solid rgba(45,90,61,0.18);
+border-radius: 14px;
+padding: 1.25rem 1.5rem;
 }
 
 .demo-dispatch-label {
-  font-size: 0.62rem;
-  font-weight: 600;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: rgba(45,90,61,0.6);
-  margin-bottom: 0.5rem;
-  display: block;
+font-size: 0.62rem;
+font-weight: 600;
+letter-spacing: 0.12em;
+text-transform: uppercase;
+color: rgba(45,90,61,0.6);
+margin-bottom: 0.5rem;
+display: block;
 }
 
 .demo-dispatch-time {
-  font-size: 1.4rem;
-  font-weight: 700;
-  letter-spacing: -0.025em;
-  color: var(--accent);
-  line-height: 1;
-  margin-bottom: 0.3rem;
+font-size: 1.4rem;
+font-weight: 700;
+letter-spacing: -0.025em;
+color: var(–accent);
+line-height: 1;
+margin-bottom: 0.3rem;
 }
 
 .demo-dispatch-note {
-  font-size: 0.75rem;
-  color: rgba(45,90,61,0.65);
-  font-weight: 300;
+font-size: 0.75rem;
+color: rgba(45,90,61,0.65);
+font-weight: 300;
 }
 
 /* Alert feed */
 .demo-alerts-card {
-  background: var(--white);
-  border: 1px solid var(--gray-border);
-  border-radius: 14px;
-  padding: 1.25rem 1.5rem;
+background: var(–white);
+border: 1px solid var(–gray-border);
+border-radius: 14px;
+padding: 1.25rem 1.5rem;
 }
 
 .demo-alert-list {
-  display: flex;
-  flex-direction: column;
-  gap: 0.6rem;
-  margin-top: 0.75rem;
+display: flex;
+flex-direction: column;
+gap: 0.6rem;
+margin-top: 0.75rem;
 }
 
 .demo-alert-item {
-  display: flex;
-  align-items: flex-start;
-  gap: 0.75rem;
-  padding: 0.65rem 0.85rem;
-  background: var(--gray-bg);
-  border-radius: 9px;
-  font-size: 0.8rem;
+display: flex;
+align-items: flex-start;
+gap: 0.75rem;
+padding: 0.65rem 0.85rem;
+background: var(–gray-bg);
+border-radius: 9px;
+font-size: 0.8rem;
 }
 
 .demo-alert-dot {
-  width: 6px; height: 6px;
-  border-radius: 50%;
-  flex-shrink: 0;
-  margin-top: 0.35rem;
+width: 6px; height: 6px;
+border-radius: 50%;
+flex-shrink: 0;
+margin-top: 0.35rem;
 }
 
-.demo-alert-dot.high   { background: var(--accent-red); }
-.demo-alert-dot.medium { background: var(--accent-amber); }
-.demo-alert-dot.low    { background: var(--accent); }
+.demo-alert-dot.high   { background: var(–accent-red); }
+.demo-alert-dot.medium { background: var(–accent-amber); }
+.demo-alert-dot.low    { background: var(–accent); }
 
-.demo-alert-text { color: var(--gray-dark); font-weight: 400; line-height: 1.45; }
-.demo-alert-time { color: var(--gray-light); font-size: 0.7rem; margin-top: 2px; }
+.demo-alert-text { color: var(–gray-dark); font-weight: 400; line-height: 1.45; }
+.demo-alert-time { color: var(–gray-light); font-size: 0.7rem; margin-top: 2px; }
 
 /* Demo CTA nudge */
 .demo-nudge {
-  background: var(--white);
-  border: 1px solid var(--gray-border);
-  border-radius: 14px;
-  padding: 1.1rem 1.5rem;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 1rem;
-  flex-wrap: wrap;
+background: var(–white);
+border: 1px solid var(–gray-border);
+border-radius: 14px;
+padding: 1.1rem 1.5rem;
+display: flex;
+align-items: center;
+justify-content: space-between;
+gap: 1rem;
+flex-wrap: wrap;
 }
 
 .demo-nudge-text {
-  font-size: 0.8rem;
-  color: var(--gray);
-  font-weight: 300;
-  line-height: 1.5;
+font-size: 0.8rem;
+color: var(–gray);
+font-weight: 300;
+line-height: 1.5;
 }
 
-.demo-nudge-text strong { color: var(--black); font-weight: 600; }
+.demo-nudge-text strong { color: var(–black); font-weight: 600; }
 
 .demo-nudge-btn {
-  display: inline-block;
-  background: var(--black);
-  color: var(--white);
-  padding: 0.55rem 1.15rem;
-  border-radius: 100px;
-  font-size: 0.775rem;
-  font-weight: 600;
-  text-decoration: none;
-  white-space: nowrap;
-  transition: opacity 0.2s;
-  flex-shrink: 0;
+display: inline-block;
+background: var(–black);
+color: var(–white);
+padding: 0.55rem 1.15rem;
+border-radius: 100px;
+font-size: 0.775rem;
+font-weight: 600;
+text-decoration: none;
+white-space: nowrap;
+transition: opacity 0.2s;
+flex-shrink: 0;
 }
 
 .demo-nudge-btn:hover { opacity: 0.75; }
 
 /* Loading spinner */
 .try-spinner {
-  width: 14px; height: 14px;
-  border: 2px solid rgba(255,255,255,0.35);
-  border-top-color: #fff;
-  border-radius: 50%;
-  animation: spin 0.6s linear infinite;
-  display: none;
+width: 14px; height: 14px;
+border: 2px solid rgba(255,255,255,0.35);
+border-top-color: #fff;
+border-radius: 50%;
+animation: spin 0.6s linear infinite;
+display: none;
 }
 
 @keyframes spin { to { transform: rotate(360deg); } }
 
 /* ── FEEDBACK SECTION ── */
-#feedback { background: var(--white); }
+#feedback { background: var(–white); }
 
 .fb-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 1.25rem;
-  margin-top: 2.5rem;
+display: grid;
+grid-template-columns: 1fr 1fr;
+gap: 1.25rem;
+margin-top: 2.5rem;
 }
 
 .fb-card {
-  background: var(--gray-bg);
-  border: 1px solid var(--gray-border);
-  border-radius: 16px;
-  padding: 1.75rem;
+background: var(–gray-bg);
+border: 1px solid var(–gray-border);
+border-radius: 16px;
+padding: 1.75rem;
 }
 
 .fb-label {
-  display: block;
-  font-size: 0.72rem;
-  font-weight: 600;
-  letter-spacing: 0.04em;
-  color: var(--gray);
-  margin-bottom: 0.4rem;
+display: block;
+font-size: 0.72rem;
+font-weight: 600;
+letter-spacing: 0.04em;
+color: var(–gray);
+margin-bottom: 0.4rem;
 }
 
 .fb-input, .fb-select, .fb-textarea {
-  width: 100%;
-  padding: 0.65rem 0.9rem;
-  border: 1px solid var(--gray-border);
-  border-radius: 10px;
-  font-family: 'Plus Jakarta Sans', sans-serif;
-  font-size: 0.875rem;
-  color: var(--black);
-  background: var(--white);
-  outline: none;
-  appearance: none;
-  transition: border-color 0.15s, box-shadow 0.15s;
-  margin-bottom: 1rem;
+width: 100%;
+padding: 0.65rem 0.9rem;
+border: 1px solid var(–gray-border);
+border-radius: 10px;
+font-family: ‘Plus Jakarta Sans’, sans-serif;
+font-size: 0.875rem;
+color: var(–black);
+background: var(–white);
+outline: none;
+appearance: none;
+transition: border-color 0.15s, box-shadow 0.15s;
+margin-bottom: 1rem;
 }
 
 .fb-textarea {
-  resize: vertical;
-  min-height: 90px;
-  line-height: 1.6;
+resize: vertical;
+min-height: 90px;
+line-height: 1.6;
 }
 
 .fb-input:focus, .fb-select:focus, .fb-textarea:focus {
-  border-color: var(--black);
-  box-shadow: 0 0 0 3px rgba(17,17,17,0.05);
+border-color: var(–black);
+box-shadow: 0 0 0 3px rgba(17,17,17,0.05);
 }
 
-.fb-input::placeholder, .fb-textarea::placeholder { color: var(--gray-light); }
+.fb-input::placeholder, .fb-textarea::placeholder { color: var(–gray-light); }
 
 .fb-btn {
-  width: 100%;
-  padding: 0.8rem 1.5rem;
-  background: var(--black);
-  color: var(--white);
-  border: none;
-  border-radius: 100px;
-  font-family: 'Plus Jakarta Sans', sans-serif;
-  font-size: 0.875rem;
-  font-weight: 600;
-  cursor: pointer;
-  transition: opacity 0.2s, transform 0.2s;
-  letter-spacing: -0.01em;
+width: 100%;
+padding: 0.8rem 1.5rem;
+background: var(–black);
+color: var(–white);
+border: none;
+border-radius: 100px;
+font-family: ‘Plus Jakarta Sans’, sans-serif;
+font-size: 0.875rem;
+font-weight: 600;
+cursor: pointer;
+transition: opacity 0.2s, transform 0.2s;
+letter-spacing: -0.01em;
 }
 
 .fb-btn:hover { opacity: 0.75; transform: translateY(-1px); }
 
 .fb-success {
-  display: none;
-  background: var(--accent-light);
-  border: 1px solid rgba(45,90,61,0.2);
-  border-radius: 10px;
-  padding: 1rem 1.25rem;
-  margin-top: 1rem;
-  font-size: 0.825rem;
-  color: var(--accent);
-  font-weight: 500;
-  text-align: center;
+display: none;
+background: var(–accent-light);
+border: 1px solid rgba(45,90,61,0.2);
+border-radius: 10px;
+padding: 1rem 1.25rem;
+margin-top: 1rem;
+font-size: 0.825rem;
+color: var(–accent);
+font-weight: 500;
+text-align: center;
 }
 
 /* Feedback info panel */
 .fb-info-card {
-  background: var(--gray-bg);
-  border: 1px solid var(--gray-border);
-  border-radius: 16px;
-  padding: 1.75rem;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
+background: var(–gray-bg);
+border: 1px solid var(–gray-border);
+border-radius: 16px;
+padding: 1.75rem;
+display: flex;
+flex-direction: column;
+justify-content: space-between;
 }
 
 .fb-point {
-  display: flex;
-  align-items: flex-start;
-  gap: 0.85rem;
-  padding: 0.85rem 0;
-  border-bottom: 1px solid var(--gray-border);
+display: flex;
+align-items: flex-start;
+gap: 0.85rem;
+padding: 0.85rem 0;
+border-bottom: 1px solid var(–gray-border);
 }
 
 .fb-point:last-of-type { border-bottom: none; }
 
 .fb-point-icon {
-  width: 32px; height: 32px;
-  background: var(--white);
-  border: 1px solid var(--gray-border);
-  border-radius: 8px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 0.9rem;
-  flex-shrink: 0;
-  margin-top: 2px;
+width: 32px; height: 32px;
+background: var(–white);
+border: 1px solid var(–gray-border);
+border-radius: 8px;
+display: flex;
+align-items: center;
+justify-content: center;
+font-size: 0.9rem;
+flex-shrink: 0;
+margin-top: 2px;
 }
 
 .fb-point-title {
-  font-size: 0.85rem;
-  font-weight: 600;
-  color: var(--black);
-  margin-bottom: 2px;
-  letter-spacing: -0.01em;
+font-size: 0.85rem;
+font-weight: 600;
+color: var(–black);
+margin-bottom: 2px;
+letter-spacing: -0.01em;
 }
 
 .fb-point-desc {
-  font-size: 0.775rem;
-  color: var(--gray);
-  font-weight: 300;
-  line-height: 1.55;
+font-size: 0.775rem;
+color: var(–gray);
+font-weight: 300;
+line-height: 1.55;
 }
 </style>
+
 </head>
 <body>
 
 <!-- NAV -->
+
 <nav>
   <a href="#" class="nav-logo">
     <div class="nav-logo-mark">R</div>
@@ -1480,65 +1483,68 @@ footer {
 </nav>
 
 <!-- ══════════════ HERO ══════════════ -->
+
 <section id="hero">
   <div class="container" style="text-align:center">
 
-    <div class="hero-tag reveal">
-      <div class="hero-tag-dot"></div>
-      Indonesia Logistics Intelligence · Now in Beta
-    </div>
+```
+<div class="hero-tag reveal">
+  <div class="hero-tag-dot"></div>
+  Indonesia Logistics Intelligence · Now in Beta
+</div>
 
-    <h1 class="reveal">
-      Know Your Route Risk<br>Before You Dispatch
-    </h1>
+<h1 class="reveal">
+  Know Your Route Risk<br>Before You Dispatch
+</h1>
 
-    <p class="hero-sub reveal">
-      RouteRisk turns public weather, traffic, road condition, and seasonal data into one clear risk score — so your fleet dispatches smarter, every time.
-    </p>
+<p class="hero-sub reveal">
+  RouteRisk turns public weather, traffic, road condition, and seasonal data into one clear risk score — so your fleet dispatches smarter, every time.
+</p>
 
-    <div class="hero-actions reveal">
-      <a href="#cta" class="btn-primary">See Today's Logistics Risk →</a>
-      <a href="#dashboard" class="btn-ghost">View sample dashboard</a>
-    </div>
+<div class="hero-actions reveal">
+  <a href="#cta" class="btn-primary">See Today's Logistics Risk →</a>
+  <a href="#dashboard" class="btn-ghost">View sample dashboard</a>
+</div>
 
-    <p class="hero-note reveal">No integration required &mdash; works in under 60 seconds</p>
+<p class="hero-note reveal">No integration required &mdash; works in under 60 seconds</p>
 
-    <!-- Mockup -->
-    <div class="hero-mockup reveal">
-      <div class="mockup-bar">
-        <div class="mb-dot"></div>
-        <div class="mb-dot"></div>
-        <div class="mb-dot"></div>
-        <span class="mockup-url">routerisk.id/dashboard</span>
+<!-- Mockup -->
+<div class="hero-mockup reveal">
+  <div class="mockup-bar">
+    <div class="mb-dot"></div>
+    <div class="mb-dot"></div>
+    <div class="mb-dot"></div>
+    <span class="mockup-url">routerisk.id/dashboard</span>
+  </div>
+  <div class="mockup-body">
+    <div class="mockup-label">Route Risk Overview — Today</div>
+    <div class="route-cards">
+      <div class="route-card rc-low">
+        <div class="rc-route">Jakarta → Surabaya</div>
+        <div class="rc-score">12</div>
+        <div class="rc-label">Low Risk</div>
       </div>
-      <div class="mockup-body">
-        <div class="mockup-label">Route Risk Overview — Today</div>
-        <div class="route-cards">
-          <div class="route-card rc-low">
-            <div class="rc-route">Jakarta → Surabaya</div>
-            <div class="rc-score">12</div>
-            <div class="rc-label">Low Risk</div>
-          </div>
-          <div class="route-card rc-medium">
-            <div class="rc-route">Medan → Pekanbaru</div>
-            <div class="rc-score">61</div>
-            <div class="rc-label">Moderate</div>
-          </div>
-          <div class="route-card rc-high">
-            <div class="rc-route">Balikpapan → Banjarmasin</div>
-            <div class="rc-score">89</div>
-            <div class="rc-label">High Risk</div>
-          </div>
-        </div>
-        <div class="dispatch-row">
-          <div>
-            <div class="dr-label">Recommended Dispatch Window</div>
-            <div class="dr-time">06:00 – 10:00</div>
-          </div>
-          <div class="dr-badge">Optimal Today</div>
-        </div>
+      <div class="route-card rc-medium">
+        <div class="rc-route">Medan → Pekanbaru</div>
+        <div class="rc-score">61</div>
+        <div class="rc-label">Moderate</div>
+      </div>
+      <div class="route-card rc-high">
+        <div class="rc-route">Balikpapan → Banjarmasin</div>
+        <div class="rc-score">89</div>
+        <div class="rc-label">High Risk</div>
       </div>
     </div>
+    <div class="dispatch-row">
+      <div>
+        <div class="dr-label">Recommended Dispatch Window</div>
+        <div class="dr-time">06:00 – 10:00</div>
+      </div>
+      <div class="dr-badge">Optimal Today</div>
+    </div>
+  </div>
+</div>
+```
 
   </div>
 </section>
@@ -1546,43 +1552,46 @@ footer {
 <div class="divider"></div>
 
 <!-- ══════════════ PROBLEM ══════════════ -->
+
 <section id="problem">
   <div class="container">
 
-    <div class="reveal">
-      <div class="eyebrow">The Problem</div>
-      <h2>Dispatchers are deciding blind.</h2>
-      <p class="section-sub">Route decisions get made on instinct, driver WhatsApp messages, and basic maps. There is no intelligence layer that connects weather, traffic, and road conditions before the truck leaves the yard.</p>
-    </div>
+```
+<div class="reveal">
+  <div class="eyebrow">The Problem</div>
+  <h2>Dispatchers are deciding blind.</h2>
+  <p class="section-sub">Route decisions get made on instinct, driver WhatsApp messages, and basic maps. There is no intelligence layer that connects weather, traffic, and road conditions before the truck leaves the yard.</p>
+</div>
 
-    <div class="pain-list reveal">
-      <div class="pain-item">
-        <div class="pain-num">01</div>
-        <div class="pain-content">
-          <div class="pain-title">Unpredictable weather delays</div>
-          <div class="pain-desc">Heavy rainfall on Pantura, flash floods in Sumatra — no one sees it coming at the route level before the truck is already stuck.</div>
-        </div>
-        <div class="pain-cost">Rp 2–5 juta per incident</div>
-      </div>
-      <div class="pain-item">
-        <div class="pain-num">02</div>
-        <div class="pain-content">
-          <div class="pain-title">Poor dispatch timing decisions</div>
-          <div class="pain-desc">Fleets dispatch at the worst possible window — when congestion and weather risk peak together — simply because no one knows the better alternative.</div>
-        </div>
-        <div class="pain-cost">+3–6 hrs wasted per trip</div>
-      </div>
-      <div class="pain-item">
-        <div class="pain-num">03</div>
-        <div class="pain-content">
-          <div class="pain-title">No route-level visibility</div>
-          <div class="pain-desc">Alternate routes that are faster today go unused. Road quality issues stay invisible until a driver calls in. Seasonal congestion spikes come as a surprise.</div>
-        </div>
-        <div class="pain-cost">8–15% fuel wasted</div>
-      </div>
+<div class="pain-list reveal">
+  <div class="pain-item">
+    <div class="pain-num">01</div>
+    <div class="pain-content">
+      <div class="pain-title">Unpredictable weather delays</div>
+      <div class="pain-desc">Heavy rainfall on Pantura, flash floods in Sumatra — no one sees it coming at the route level before the truck is already stuck.</div>
     </div>
+    <div class="pain-cost">Rp 2–5 juta per incident</div>
+  </div>
+  <div class="pain-item">
+    <div class="pain-num">02</div>
+    <div class="pain-content">
+      <div class="pain-title">Poor dispatch timing decisions</div>
+      <div class="pain-desc">Fleets dispatch at the worst possible window — when congestion and weather risk peak together — simply because no one knows the better alternative.</div>
+    </div>
+    <div class="pain-cost">+3–6 hrs wasted per trip</div>
+  </div>
+  <div class="pain-item">
+    <div class="pain-num">03</div>
+    <div class="pain-content">
+      <div class="pain-title">No route-level visibility</div>
+      <div class="pain-desc">Alternate routes that are faster today go unused. Road quality issues stay invisible until a driver calls in. Seasonal congestion spikes come as a surprise.</div>
+    </div>
+    <div class="pain-cost">8–15% fuel wasted</div>
+  </div>
+</div>
 
-    <p class="problem-close reveal">If 2 of these 3 situations feel familiar, your dispatch process needs better intelligence.</p>
+<p class="problem-close reveal">If 2 of these 3 situations feel familiar, your dispatch process needs better intelligence.</p>
+```
 
   </div>
 </section>
@@ -1590,35 +1599,38 @@ footer {
 <div class="divider"></div>
 
 <!-- ══════════════ SOLUTION ══════════════ -->
+
 <section id="solution">
   <div class="container">
 
-    <div class="reveal">
-      <div class="eyebrow">The Solution</div>
-      <h2>One score. One decision.<br>Fewer delays.</h2>
-      <p class="section-sub">RouteRisk aggregates fragmented public data into a single, processed intelligence layer — built specifically for Indonesia's logistics corridors.</p>
-    </div>
+```
+<div class="reveal">
+  <div class="eyebrow">The Solution</div>
+  <h2>One score. One decision.<br>Fewer delays.</h2>
+  <p class="section-sub">RouteRisk aggregates fragmented public data into a single, processed intelligence layer — built specifically for Indonesia's logistics corridors.</p>
+</div>
 
-    <div class="solution-grid">
-      <div class="sol-card reveal reveal-d1">
-        <div class="sol-num">Feature 01</div>
-        <span class="sol-icon">◎</span>
-        <div class="sol-title">Route Risk Score</div>
-        <p class="sol-desc">Every corridor gets a 0–100 risk score before you dispatch — combining weather, traffic congestion, road quality, and seasonal demand signals.</p>
-      </div>
-      <div class="sol-card reveal reveal-d2">
-        <div class="sol-num">Feature 02</div>
-        <span class="sol-icon">◷</span>
-        <div class="sol-title">Dispatch Window Recommender</div>
-        <p class="sol-desc">Know your optimal 2–4 hour dispatch window for the next 72 hours, based on BMKG forecasts and historical traffic patterns per corridor.</p>
-      </div>
-      <div class="sol-card reveal reveal-d3">
-        <div class="sol-num">Feature 03</div>
-        <span class="sol-icon">◈</span>
-        <div class="sol-title">Delay Prediction Alerts</div>
-        <p class="sol-desc">Receive proactive alerts before incidents affect your routes — flood events, toll closures, harvest season congestion — all from public sources.</p>
-      </div>
-    </div>
+<div class="solution-grid">
+  <div class="sol-card reveal reveal-d1">
+    <div class="sol-num">Feature 01</div>
+    <span class="sol-icon">◎</span>
+    <div class="sol-title">Route Risk Score</div>
+    <p class="sol-desc">Every corridor gets a 0–100 risk score before you dispatch — combining weather, traffic congestion, road quality, and seasonal demand signals.</p>
+  </div>
+  <div class="sol-card reveal reveal-d2">
+    <div class="sol-num">Feature 02</div>
+    <span class="sol-icon">◷</span>
+    <div class="sol-title">Dispatch Window Recommender</div>
+    <p class="sol-desc">Know your optimal 2–4 hour dispatch window for the next 72 hours, based on BMKG forecasts and historical traffic patterns per corridor.</p>
+  </div>
+  <div class="sol-card reveal reveal-d3">
+    <div class="sol-num">Feature 03</div>
+    <span class="sol-icon">◈</span>
+    <div class="sol-title">Delay Prediction Alerts</div>
+    <p class="sol-desc">Receive proactive alerts before incidents affect your routes — flood events, toll closures, harvest season congestion — all from public sources.</p>
+  </div>
+</div>
+```
 
   </div>
 </section>
@@ -1626,117 +1638,120 @@ footer {
 <div class="divider"></div>
 
 <!-- ══════════════ DASHBOARD ══════════════ -->
+
 <section id="dashboard">
   <div class="container">
 
-    <div class="reveal">
-      <div class="eyebrow">Dashboard Preview</div>
-      <h2>Your dispatch intelligence,<br>all in one view.</h2>
-      <p class="section-sub">A clean, focused command center for fleet dispatchers. No training required. No setup. No waiting.</p>
-    </div>
+```
+<div class="reveal">
+  <div class="eyebrow">Dashboard Preview</div>
+  <h2>Your dispatch intelligence,<br>all in one view.</h2>
+  <p class="section-sub">A clean, focused command center for fleet dispatchers. No training required. No setup. No waiting.</p>
+</div>
 
-    <div class="db-wrapper reveal">
-      <div class="db-topbar">
-        <div class="db-title">RouteRisk — Dispatch Intelligence</div>
-        <div class="db-live">
-          <div class="live-dot"></div>
-          Live Data
+<div class="db-wrapper reveal">
+  <div class="db-topbar">
+    <div class="db-title">RouteRisk — Dispatch Intelligence</div>
+    <div class="db-live">
+      <div class="live-dot"></div>
+      Live Data
+    </div>
+  </div>
+  <div class="db-body">
+
+    <!-- Risk scores card -->
+    <div class="db-card">
+      <div class="db-card-label">Route Risk Index</div>
+      <div class="risk-row">
+        <div class="risk-item">
+          <div class="ri-route">Jakarta → Surabaya</div>
+          <div class="ri-bar-wrap">
+            <div class="ri-bar bar-low"></div>
+          </div>
+          <div class="ri-badge badge-low">Low</div>
+        </div>
+        <div class="risk-item">
+          <div class="ri-route">Medan → Pekanbaru</div>
+          <div class="ri-bar-wrap">
+            <div class="ri-bar bar-medium"></div>
+          </div>
+          <div class="ri-badge badge-medium">Moderate</div>
+        </div>
+        <div class="risk-item">
+          <div class="ri-route">Balikpapan → Banjarmasin</div>
+          <div class="ri-bar-wrap">
+            <div class="ri-bar bar-high"></div>
+          </div>
+          <div class="ri-badge badge-high">High</div>
+        </div>
+        <div class="risk-item">
+          <div class="ri-route">Jakarta → Semarang</div>
+          <div class="ri-bar-wrap">
+            <div class="ri-bar bar-low" style="width:18%"></div>
+          </div>
+          <div class="ri-badge badge-low">Low</div>
         </div>
       </div>
-      <div class="db-body">
+    </div>
 
-        <!-- Risk scores card -->
-        <div class="db-card">
-          <div class="db-card-label">Route Risk Index</div>
-          <div class="risk-row">
-            <div class="risk-item">
-              <div class="ri-route">Jakarta → Surabaya</div>
-              <div class="ri-bar-wrap">
-                <div class="ri-bar bar-low"></div>
-              </div>
-              <div class="ri-badge badge-low">Low</div>
-            </div>
-            <div class="risk-item">
-              <div class="ri-route">Medan → Pekanbaru</div>
-              <div class="ri-bar-wrap">
-                <div class="ri-bar bar-medium"></div>
-              </div>
-              <div class="ri-badge badge-medium">Moderate</div>
-            </div>
-            <div class="risk-item">
-              <div class="ri-route">Balikpapan → Banjarmasin</div>
-              <div class="ri-bar-wrap">
-                <div class="ri-bar bar-high"></div>
-              </div>
-              <div class="ri-badge badge-high">High</div>
-            </div>
-            <div class="risk-item">
-              <div class="ri-route">Jakarta → Semarang</div>
-              <div class="ri-bar-wrap">
-                <div class="ri-bar bar-low" style="width:18%"></div>
-              </div>
-              <div class="ri-badge badge-low">Low</div>
-            </div>
+    <!-- Indicators -->
+    <div class="db-card">
+      <div class="db-card-label">Live Conditions</div>
+      <div class="indicators">
+        <div class="ind-item">
+          <div class="ind-icon">🌧</div>
+          <div class="ind-text">
+            <div class="ind-name">Weather — East Kalimantan</div>
+            <div class="ind-val">Heavy rain forecast · 80mm+ next 24hr · BMKG</div>
           </div>
         </div>
-
-        <!-- Indicators -->
-        <div class="db-card">
-          <div class="db-card-label">Live Conditions</div>
-          <div class="indicators">
-            <div class="ind-item">
-              <div class="ind-icon">🌧</div>
-              <div class="ind-text">
-                <div class="ind-name">Weather — East Kalimantan</div>
-                <div class="ind-val">Heavy rain forecast · 80mm+ next 24hr · BMKG</div>
-              </div>
-            </div>
-            <div class="ind-item">
-              <div class="ind-icon">🚛</div>
-              <div class="ind-text">
-                <div class="ind-name">Traffic — Pantura Corridor</div>
-                <div class="ind-val">+12% above baseline · manageable · HERE Maps</div>
-              </div>
-            </div>
-            <div class="ind-item">
-              <div class="ind-icon">⚠️</div>
-              <div class="ind-text">
-                <div class="ind-name">Flood Alert — Demak–Kudus</div>
-                <div class="ind-val">Active monitoring · BPBD Jateng · 2h ago</div>
-              </div>
-            </div>
-            <div class="ind-item">
-              <div class="ind-icon">📦</div>
-              <div class="ind-text">
-                <div class="ind-name">Seasonal Signal — South Kalimantan</div>
-                <div class="ind-val">CPO harvest surge expected · BPS data</div>
-              </div>
-            </div>
+        <div class="ind-item">
+          <div class="ind-icon">🚛</div>
+          <div class="ind-text">
+            <div class="ind-name">Traffic — Pantura Corridor</div>
+            <div class="ind-val">+12% above baseline · manageable · HERE Maps</div>
           </div>
         </div>
-
-        <!-- Dispatch recommendation full width -->
-        <div class="db-card dispatch-card">
-          <div class="db-card-label">Recommended Dispatch Window · Jakarta → Surabaya</div>
-          <div class="dispatch-recommend">
-            <div>
-              <div class="drec-label">Optimal window today</div>
-              <div class="drec-time">06:00 – 10:00</div>
-              <div class="drec-note">Next best window: 20:00 – 23:00</div>
-            </div>
-            <div class="drec-reason">
-              <div class="drec-reason-label">Based on</div>
-              <div class="drec-facts">
-                <div class="drec-fact">↓ 40% traffic vs afternoon</div>
-                <div class="drec-fact">No active flood alerts</div>
-                <div class="drec-fact">Light rain forecast only</div>
-              </div>
-            </div>
+        <div class="ind-item">
+          <div class="ind-icon">⚠️</div>
+          <div class="ind-text">
+            <div class="ind-name">Flood Alert — Demak–Kudus</div>
+            <div class="ind-val">Active monitoring · BPBD Jateng · 2h ago</div>
           </div>
         </div>
-
+        <div class="ind-item">
+          <div class="ind-icon">📦</div>
+          <div class="ind-text">
+            <div class="ind-name">Seasonal Signal — South Kalimantan</div>
+            <div class="ind-val">CPO harvest surge expected · BPS data</div>
+          </div>
+        </div>
       </div>
     </div>
+
+    <!-- Dispatch recommendation full width -->
+    <div class="db-card dispatch-card">
+      <div class="db-card-label">Recommended Dispatch Window · Jakarta → Surabaya</div>
+      <div class="dispatch-recommend">
+        <div>
+          <div class="drec-label">Optimal window today</div>
+          <div class="drec-time">06:00 – 10:00</div>
+          <div class="drec-note">Next best window: 20:00 – 23:00</div>
+        </div>
+        <div class="drec-reason">
+          <div class="drec-reason-label">Based on</div>
+          <div class="drec-facts">
+            <div class="drec-fact">↓ 40% traffic vs afternoon</div>
+            <div class="drec-fact">No active flood alerts</div>
+            <div class="drec-fact">Light rain forecast only</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+```
 
   </div>
 </section>
@@ -1744,95 +1759,102 @@ footer {
 <div class="divider"></div>
 
 <!-- ══════════════ INSIGHTS ══════════════ -->
+
 <section id="insights">
   <div class="container">
 
-    <div class="reveal">
-      <div class="eyebrow">Sample Insights</div>
-      <h2>The kind of intelligence<br>that changes decisions.</h2>
-      <p class="section-sub">These are real insights generated purely from public data — delivered before dispatch, not after the delay.</p>
+```
+<div class="reveal">
+  <div class="eyebrow">Sample Insights</div>
+  <h2>The kind of intelligence<br>that changes decisions.</h2>
+  <p class="section-sub">These are real insights generated purely from public data — delivered before dispatch, not after the delay.</p>
+</div>
+
+<div class="insights-list">
+
+  <div class="insight-row reveal reveal-d1">
+    <div class="ins-tag badge-high">Alert</div>
+    <div class="ins-content">
+      <div class="ins-title">High delay risk this afternoon on Trans-Kalimantan Highway</div>
+      <div class="ins-desc">BMKG forecasts 80mm+ rainfall in East Kalimantan. 2 active BPBD flood monitoring points on route. Recommend delaying departure or switching to sea via Makassar Strait.</div>
     </div>
+    <div class="ins-meta">2 hours ago</div>
+  </div>
 
-    <div class="insights-list">
-
-      <div class="insight-row reveal reveal-d1">
-        <div class="ins-tag badge-high">Alert</div>
-        <div class="ins-content">
-          <div class="ins-title">High delay risk this afternoon on Trans-Kalimantan Highway</div>
-          <div class="ins-desc">BMKG forecasts 80mm+ rainfall in East Kalimantan. 2 active BPBD flood monitoring points on route. Recommend delaying departure or switching to sea via Makassar Strait.</div>
-        </div>
-        <div class="ins-meta">2 hours ago</div>
-      </div>
-
-      <div class="insight-row reveal reveal-d2">
-        <div class="ins-tag badge-low">Optimal</div>
-        <div class="ins-content">
-          <div class="ins-title">Best dispatch window: 06:00–10:00 for Pantura corridor</div>
-          <div class="ins-desc">Traffic index drops 40% versus afternoon peak. No active flood alerts along Jakarta–Surabaya route. Road quality index on this segment: normal.</div>
-        </div>
-        <div class="ins-meta">Updated today</div>
-      </div>
-
-      <div class="insight-row reveal reveal-d3">
-        <div class="ins-tag badge-medium">Compare</div>
-        <div class="ins-content">
-          <div class="ins-title">Route A (Lintas Barat) is 18% faster than Route B today</div>
-          <div class="ins-desc">Road quality index (PUPR BMS) shows degradation on eastern Sumatra segment. Current conditions favor the western alternate route for transit time and fuel efficiency.</div>
-        </div>
-        <div class="ins-meta">Route analysis</div>
-      </div>
-
-      <div class="insight-row reveal reveal-d4">
-        <div class="ins-tag badge-medium">Forecast</div>
-        <div class="ins-content">
-          <div class="ins-title">Seasonal volume surge expected in South Kalimantan next 3–4 weeks</div>
-          <div class="ins-desc">BPS production data shows October–November is peak CPO export season. Expect 25–35% volume increase on Banjarmasin corridor. Pre-book slots now to avoid congestion premium.</div>
-        </div>
-        <div class="ins-meta">Seasonal signal</div>
-      </div>
-
+  <div class="insight-row reveal reveal-d2">
+    <div class="ins-tag badge-low">Optimal</div>
+    <div class="ins-content">
+      <div class="ins-title">Best dispatch window: 06:00–10:00 for Pantura corridor</div>
+      <div class="ins-desc">Traffic index drops 40% versus afternoon peak. No active flood alerts along Jakarta–Surabaya route. Road quality index on this segment: normal.</div>
     </div>
+    <div class="ins-meta">Updated today</div>
+  </div>
+
+  <div class="insight-row reveal reveal-d3">
+    <div class="ins-tag badge-medium">Compare</div>
+    <div class="ins-content">
+      <div class="ins-title">Route A (Lintas Barat) is 18% faster than Route B today</div>
+      <div class="ins-desc">Road quality index (PUPR BMS) shows degradation on eastern Sumatra segment. Current conditions favor the western alternate route for transit time and fuel efficiency.</div>
+    </div>
+    <div class="ins-meta">Route analysis</div>
+  </div>
+
+  <div class="insight-row reveal reveal-d4">
+    <div class="ins-tag badge-medium">Forecast</div>
+    <div class="ins-content">
+      <div class="ins-title">Seasonal volume surge expected in South Kalimantan next 3–4 weeks</div>
+      <div class="ins-desc">BPS production data shows October–November is peak CPO export season. Expect 25–35% volume increase on Banjarmasin corridor. Pre-book slots now to avoid congestion premium.</div>
+    </div>
+    <div class="ins-meta">Seasonal signal</div>
+  </div>
+
+</div>
+```
+
   </div>
 </section>
 
 <div class="divider"></div>
 
 <!-- ══════════════ TRUST ══════════════ -->
+
 <section id="trust">
   <div class="container">
 
-    <div class="reveal">
-      <div class="eyebrow">How It Works</div>
-      <h2>Powered by public data.<br>Requires nothing from you.</h2>
-      <p class="section-sub">RouteRisk aggregates nine public data sources into one processed intelligence layer. You get the insight. We do the aggregation.</p>
-    </div>
+```
+<div class="reveal">
+  <div class="eyebrow">How It Works</div>
+  <h2>Powered by public data.<br>Requires nothing from you.</h2>
+  <p class="section-sub">RouteRisk aggregates nine public data sources into one processed intelligence layer. You get the insight. We do the aggregation.</p>
+</div>
 
-    <div class="trust-grid">
-      <div class="trust-card reveal reveal-d1">
-        <span class="tc-icon">◎</span>
-        <div class="tc-title">Powered by public data only</div>
-        <div class="tc-desc">We source from government open data, public APIs, and open geospatial systems — then process them into actionable insights for your specific corridors.</div>
-        <div class="sources-row">
-          <span class="src-tag">BMKG Weather</span>
-          <span class="src-tag">BPBD Alerts</span>
-          <span class="src-tag">PUPR Road Index</span>
-          <span class="src-tag">BPS Statistics</span>
-          <span class="src-tag">OpenStreetMap</span>
-          <span class="src-tag">HERE Maps</span>
-        </div>
-      </div>
-      <div class="trust-card reveal reveal-d2">
-        <span class="tc-icon">◈</span>
-        <div class="tc-title">No integration. No data sharing.</div>
-        <div class="tc-desc">RouteRisk requires nothing from your systems. No ERP connection, no GPS feed, no fleet data. Zero IT involvement, zero security risk. Sign up and get your first risk score in under 60 seconds.</div>
-        <div class="sources-row" style="margin-top:1.5rem">
-          <span class="src-tag">✓ No ERP needed</span>
-          <span class="src-tag">✓ No TMS needed</span>
-          <span class="src-tag">✓ No GPS needed</span>
-          <span class="src-tag">✓ Works instantly</span>
-        </div>
-      </div>
+<div class="trust-grid">
+  <div class="trust-card reveal reveal-d1">
+    <span class="tc-icon">◎</span>
+    <div class="tc-title">Powered by public data only</div>
+    <div class="tc-desc">We source from government open data, public APIs, and open geospatial systems — then process them into actionable insights for your specific corridors.</div>
+    <div class="sources-row">
+      <span class="src-tag">BMKG Weather</span>
+      <span class="src-tag">BPBD Alerts</span>
+      <span class="src-tag">PUPR Road Index</span>
+      <span class="src-tag">BPS Statistics</span>
+      <span class="src-tag">OpenStreetMap</span>
+      <span class="src-tag">HERE Maps</span>
     </div>
+  </div>
+  <div class="trust-card reveal reveal-d2">
+    <span class="tc-icon">◈</span>
+    <div class="tc-title">No integration. No data sharing.</div>
+    <div class="tc-desc">RouteRisk requires nothing from your systems. No ERP connection, no GPS feed, no fleet data. Zero IT involvement, zero security risk. Sign up and get your first risk score in under 60 seconds.</div>
+    <div class="sources-row" style="margin-top:1.5rem">
+      <span class="src-tag">✓ No ERP needed</span>
+      <span class="src-tag">✓ No TMS needed</span>
+      <span class="src-tag">✓ No GPS needed</span>
+      <span class="src-tag">✓ Works instantly</span>
+    </div>
+  </div>
+</div>
+```
 
   </div>
 </section>
@@ -1840,207 +1862,210 @@ footer {
 <div class="divider"></div>
 
 <!-- ══════════════ TRY DEMO ══════════════ -->
+
 <section id="try">
   <div class="container">
 
-    <div class="reveal">
-      <div class="eyebrow">Live Intelligence Demo</div>
-      <h2>Try it now — real public data,<br>no signup required.</h2>
-      <p class="section-sub">Select any Indonesia corridor. RouteRisk detects the route type, fetches live weather data from BMKG, and calculates a risk score in seconds.</p>
-    </div>
+```
+<div class="reveal">
+  <div class="eyebrow">Live Intelligence Demo</div>
+  <h2>Try it now — real public data,<br>no signup required.</h2>
+  <p class="section-sub">Select any Indonesia corridor. RouteRisk detects the route type, fetches live weather data from BMKG, and calculates a risk score in seconds.</p>
+</div>
 
-    <div class="try-grid reveal">
+<div class="try-grid reveal">
 
-      <!-- ── INPUT CARD ── -->
-      <div class="try-input-card">
-        <span class="demo-card-eyebrow">Select Your Route</span>
+  <!-- ── INPUT CARD ── -->
+  <div class="try-input-card">
+    <span class="demo-card-eyebrow">Select Your Route</span>
 
-        <label class="try-label" for="try-origin">Origin City / Port</label>
-        <select class="try-select" id="try-origin" onchange="onCityChange()">
-          <option value="">Choose origin...</option>
-          <optgroup label="── Java">
-            <option value="jakarta">Jakarta (Tanjung Priok)</option>
-            <option value="surabaya">Surabaya (Tanjung Perak)</option>
-            <option value="semarang">Semarang (Tanjung Emas)</option>
-            <option value="bandung">Bandung</option>
-            <option value="yogyakarta">Yogyakarta</option>
-            <option value="merak">Merak Port</option>
-          </optgroup>
-          <optgroup label="── Sumatra">
-            <option value="medan">Medan (Belawan Port)</option>
-            <option value="palembang">Palembang</option>
-            <option value="pekanbaru">Pekanbaru</option>
-            <option value="batam">Batam Port</option>
-            <option value="dumai">Dumai Port</option>
-            <option value="bakauheni">Bakauheni Port</option>
-          </optgroup>
-          <optgroup label="── Kalimantan">
-            <option value="balikpapan">Balikpapan (Kariangau Port)</option>
-            <option value="banjarmasin">Banjarmasin (Trisakti Port)</option>
-            <option value="samarinda">Samarinda</option>
-            <option value="pontianak">Pontianak</option>
-          </optgroup>
-          <optgroup label="── Sulawesi & Timur">
-            <option value="makassar">Makassar (Soekarno-Hatta Port)</option>
-            <option value="manado">Manado</option>
-            <option value="palu">Palu</option>
-            <option value="sorong">Sorong</option>
-          </optgroup>
-        </select>
+    <label class="try-label" for="try-origin">Origin City / Port</label>
+    <select class="try-select" id="try-origin" onchange="onCityChange()">
+      <option value="">Choose origin...</option>
+      <optgroup label="── Java">
+        <option value="jakarta">Jakarta (Tanjung Priok)</option>
+        <option value="surabaya">Surabaya (Tanjung Perak)</option>
+        <option value="semarang">Semarang (Tanjung Emas)</option>
+        <option value="bandung">Bandung</option>
+        <option value="yogyakarta">Yogyakarta</option>
+        <option value="merak">Merak Port</option>
+      </optgroup>
+      <optgroup label="── Sumatra">
+        <option value="medan">Medan (Belawan Port)</option>
+        <option value="palembang">Palembang</option>
+        <option value="pekanbaru">Pekanbaru</option>
+        <option value="batam">Batam Port</option>
+        <option value="dumai">Dumai Port</option>
+        <option value="bakauheni">Bakauheni Port</option>
+      </optgroup>
+      <optgroup label="── Kalimantan">
+        <option value="balikpapan">Balikpapan (Kariangau Port)</option>
+        <option value="banjarmasin">Banjarmasin (Trisakti Port)</option>
+        <option value="samarinda">Samarinda</option>
+        <option value="pontianak">Pontianak</option>
+      </optgroup>
+      <optgroup label="── Sulawesi & Timur">
+        <option value="makassar">Makassar (Soekarno-Hatta Port)</option>
+        <option value="manado">Manado</option>
+        <option value="palu">Palu</option>
+        <option value="sorong">Sorong</option>
+      </optgroup>
+    </select>
 
-        <label class="try-label" for="try-dest">Destination City / Port</label>
-        <select class="try-select" id="try-dest" onchange="onCityChange()">
-          <option value="">Choose destination...</option>
-          <optgroup label="── Java">
-            <option value="jakarta">Jakarta (Tanjung Priok)</option>
-            <option value="surabaya">Surabaya (Tanjung Perak)</option>
-            <option value="semarang">Semarang (Tanjung Emas)</option>
-            <option value="bandung">Bandung</option>
-            <option value="yogyakarta">Yogyakarta</option>
-            <option value="merak">Merak Port</option>
-          </optgroup>
-          <optgroup label="── Sumatra">
-            <option value="medan">Medan (Belawan Port)</option>
-            <option value="palembang">Palembang</option>
-            <option value="pekanbaru">Pekanbaru</option>
-            <option value="batam">Batam Port</option>
-            <option value="dumai">Dumai Port</option>
-            <option value="bakauheni">Bakauheni Port</option>
-          </optgroup>
-          <optgroup label="── Kalimantan">
-            <option value="balikpapan">Balikpapan (Kariangau Port)</option>
-            <option value="banjarmasin">Banjarmasin (Trisakti Port)</option>
-            <option value="samarinda">Samarinda</option>
-            <option value="pontianak">Pontianak</option>
-          </optgroup>
-          <optgroup label="── Sulawesi & Timur">
-            <option value="makassar">Makassar (Soekarno-Hatta Port)</option>
-            <option value="manado">Manado</option>
-            <option value="palu">Palu</option>
-            <option value="sorong">Sorong</option>
-          </optgroup>
-        </select>
+    <label class="try-label" for="try-dest">Destination City / Port</label>
+    <select class="try-select" id="try-dest" onchange="onCityChange()">
+      <option value="">Choose destination...</option>
+      <optgroup label="── Java">
+        <option value="jakarta">Jakarta (Tanjung Priok)</option>
+        <option value="surabaya">Surabaya (Tanjung Perak)</option>
+        <option value="semarang">Semarang (Tanjung Emas)</option>
+        <option value="bandung">Bandung</option>
+        <option value="yogyakarta">Yogyakarta</option>
+        <option value="merak">Merak Port</option>
+      </optgroup>
+      <optgroup label="── Sumatra">
+        <option value="medan">Medan (Belawan Port)</option>
+        <option value="palembang">Palembang</option>
+        <option value="pekanbaru">Pekanbaru</option>
+        <option value="batam">Batam Port</option>
+        <option value="dumai">Dumai Port</option>
+        <option value="bakauheni">Bakauheni Port</option>
+      </optgroup>
+      <optgroup label="── Kalimantan">
+        <option value="balikpapan">Balikpapan (Kariangau Port)</option>
+        <option value="banjarmasin">Banjarmasin (Trisakti Port)</option>
+        <option value="samarinda">Samarinda</option>
+        <option value="pontianak">Pontianak</option>
+      </optgroup>
+      <optgroup label="── Sulawesi & Timur">
+        <option value="makassar">Makassar (Soekarno-Hatta Port)</option>
+        <option value="manado">Manado</option>
+        <option value="palu">Palu</option>
+        <option value="sorong">Sorong</option>
+      </optgroup>
+    </select>
 
-        <!-- Route type preview badge -->
-        <div id="route-type-preview" style="display:none;margin-bottom:1rem;">
-          <div style="display:flex;align-items:center;gap:0.5rem;padding:0.6rem 0.85rem;background:var(--gray-bg);border:1px solid var(--gray-border);border-radius:9px;">
-            <span style="font-size:0.65rem;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:var(--gray-light);">Detected Route Type</span>
-            <span id="route-type-badge" style="font-size:0.65rem;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;padding:0.2rem 0.65rem;border-radius:100px;"></span>
-          </div>
-        </div>
-
-        <label class="try-label">Transport Type</label>
-        <select class="try-select" id="try-truck">
-          <option value="tronton">Tronton 20T (Land)</option>
-          <option value="fuso">Fuso 15T (Land)</option>
-          <option value="engkel">Engkel 8T (Land)</option>
-          <option value="barge">Barge / Tongkang (Sea)</option>
-          <option value="roro">Ro-Ro Ferry (Sea)</option>
-          <option value="container">Container Vessel (Sea)</option>
-        </select>
-
-        <button class="try-btn" id="try-btn" onclick="runDemo()">
-          <div class="try-spinner" id="try-spinner"></div>
-          <span id="try-btn-text">Check Risk →</span>
-        </button>
-
-        <!-- Data source indicator -->
-        <div id="data-source-indicator" style="margin-top:0.85rem;display:none;">
-          <div style="display:flex;align-items:center;gap:0.5rem;font-size:0.68rem;color:var(--gray-light);">
-            <span id="data-source-dot" style="width:6px;height:6px;border-radius:50%;background:var(--accent);flex-shrink:0;"></span>
-            <span id="data-source-text">Fetching real-time data...</span>
-          </div>
-        </div>
-
-        <p style="font-size:0.68rem;color:var(--gray-light);text-align:center;margin-top:0.75rem;font-weight:300;line-height:1.55;">
-          Weather via BMKG · Road index via PUPR · Alerts via BPBD proxy<br>Sea data via open maritime sources
-        </p>
-      </div>
-
-      <!-- ── OUTPUT PANEL ── -->
-      <div style="display:flex;flex-direction:column;gap:0.85rem;">
-
-        <!-- Empty state -->
-        <div class="try-empty" id="try-empty">
-          <div class="try-empty-icon">◎</div>
-          <div class="try-empty-text">Select a route and click <strong style="color:var(--gray-dark)">Check Risk</strong><br>to see live intelligence for your corridor</div>
-        </div>
-
-        <!-- Results panel -->
-        <div class="try-output-panel" id="try-output">
-
-          <!-- Route header -->
-          <div style="background:var(--white);border:1px solid var(--gray-border);border-radius:14px;padding:1rem 1.25rem;">
-            <div style="display:flex;align-items:center;justify-content:space-between;gap:0.75rem;flex-wrap:wrap;">
-              <div>
-                <div style="font-size:0.65rem;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;color:var(--gray-light);margin-bottom:3px;">Analysed Route</div>
-                <div style="font-size:0.95rem;font-weight:700;color:var(--black);letter-spacing:-0.015em;" id="res-route-label">—</div>
-              </div>
-              <div style="display:flex;align-items:center;gap:0.5rem;flex-wrap:wrap;">
-                <span id="res-route-type-badge" style="font-size:0.62rem;font-weight:700;letter-spacing:0.09em;text-transform:uppercase;padding:0.25rem 0.7rem;border-radius:100px;"></span>
-                <span id="res-data-freshness" style="font-size:0.65rem;color:var(--gray-light);font-weight:300;"></span>
-              </div>
-            </div>
-          </div>
-
-          <!-- Score card -->
-          <div class="demo-score-card">
-            <span class="demo-card-eyebrow">Total Risk Score</span>
-            <div class="demo-score-row">
-              <div>
-                <div class="demo-score-num" id="demo-score-num">—</div>
-                <div style="font-size:0.72rem;color:var(--gray);margin-top:4px;font-weight:300" id="demo-score-sub">—</div>
-              </div>
-              <div class="demo-score-badge" id="demo-score-badge">—</div>
-            </div>
-            <div class="demo-score-bar-wrap">
-              <div class="demo-score-bar" id="demo-score-bar"></div>
-            </div>
-            <div class="demo-score-meta">
-              <span>0 — Minimal risk</span><span>50</span><span>100 — Critical</span>
-            </div>
-          </div>
-
-          <!-- Risk breakdown -->
-          <div style="background:var(--white);border:1px solid var(--gray-border);border-radius:14px;padding:1.25rem 1.5rem;" id="res-breakdown-card">
-            <span class="demo-card-eyebrow">Risk Factor Breakdown</span>
-            <div id="res-breakdown-list" style="display:flex;flex-direction:column;gap:0.55rem;"></div>
-          </div>
-
-          <!-- Sea / Port card (only for sea/hybrid) -->
-          <div id="res-sea-card" style="display:none;background:var(--white);border:1px solid var(--gray-border);border-radius:14px;padding:1.25rem 1.5rem;">
-            <span class="demo-card-eyebrow">Sea & Port Conditions</span>
-            <div id="res-sea-body" style="display:flex;flex-direction:column;gap:0.55rem;margin-top:0.25rem;"></div>
-          </div>
-
-          <!-- Dispatch card -->
-          <div class="demo-dispatch-card">
-            <span class="demo-dispatch-label">Recommended Dispatch Window</span>
-            <div class="demo-dispatch-time" id="demo-dispatch-time">—</div>
-            <div class="demo-dispatch-note" id="demo-dispatch-note">—</div>
-          </div>
-
-          <!-- Alerts card -->
-          <div class="demo-alerts-card">
-            <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:0.75rem;">
-              <span class="demo-card-eyebrow" style="margin-bottom:0;">Active Alerts</span>
-              <span id="res-alert-source" style="font-size:0.62rem;color:var(--gray-light);font-weight:300;"></span>
-            </div>
-            <div class="demo-alert-list" id="demo-alert-list"></div>
-          </div>
-
-          <!-- Nudge CTA -->
-          <div class="demo-nudge">
-            <div class="demo-nudge-text">
-              <strong>Want continuous monitoring for your routes?</strong><br>
-              Real-time alerts, 72-hour forecasts, and daily email digests — all from public data.
-            </div>
-            <a href="#cta" class="demo-nudge-btn">Get Early Access →</a>
-          </div>
-
-        </div><!-- /try-output -->
+    <!-- Route type preview badge -->
+    <div id="route-type-preview" style="display:none;margin-bottom:1rem;">
+      <div style="display:flex;align-items:center;gap:0.5rem;padding:0.6rem 0.85rem;background:var(--gray-bg);border:1px solid var(--gray-border);border-radius:9px;">
+        <span style="font-size:0.65rem;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:var(--gray-light);">Detected Route Type</span>
+        <span id="route-type-badge" style="font-size:0.65rem;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;padding:0.2rem 0.65rem;border-radius:100px;"></span>
       </div>
     </div>
+
+    <label class="try-label">Transport Type</label>
+    <select class="try-select" id="try-truck">
+      <option value="tronton">Tronton 20T (Land)</option>
+      <option value="fuso">Fuso 15T (Land)</option>
+      <option value="engkel">Engkel 8T (Land)</option>
+      <option value="barge">Barge / Tongkang (Sea)</option>
+      <option value="roro">Ro-Ro Ferry (Sea)</option>
+      <option value="container">Container Vessel (Sea)</option>
+    </select>
+
+    <button class="try-btn" id="try-btn" onclick="runDemo()">
+      <div class="try-spinner" id="try-spinner"></div>
+      <span id="try-btn-text">Check Risk →</span>
+    </button>
+
+    <!-- Data source indicator -->
+    <div id="data-source-indicator" style="margin-top:0.85rem;display:none;">
+      <div style="display:flex;align-items:center;gap:0.5rem;font-size:0.68rem;color:var(--gray-light);">
+        <span id="data-source-dot" style="width:6px;height:6px;border-radius:50%;background:var(--accent);flex-shrink:0;"></span>
+        <span id="data-source-text">Fetching real-time data...</span>
+      </div>
+    </div>
+
+    <p style="font-size:0.68rem;color:var(--gray-light);text-align:center;margin-top:0.75rem;font-weight:300;line-height:1.55;">
+      Weather via BMKG · Road index via PUPR · Alerts via BPBD proxy<br>Sea data via open maritime sources
+    </p>
+  </div>
+
+  <!-- ── OUTPUT PANEL ── -->
+  <div style="display:flex;flex-direction:column;gap:0.85rem;">
+
+    <!-- Empty state -->
+    <div class="try-empty" id="try-empty">
+      <div class="try-empty-icon">◎</div>
+      <div class="try-empty-text">Select a route and click <strong style="color:var(--gray-dark)">Check Risk</strong><br>to see live intelligence for your corridor</div>
+    </div>
+
+    <!-- Results panel -->
+    <div class="try-output-panel" id="try-output">
+
+      <!-- Route header -->
+      <div style="background:var(--white);border:1px solid var(--gray-border);border-radius:14px;padding:1rem 1.25rem;">
+        <div style="display:flex;align-items:center;justify-content:space-between;gap:0.75rem;flex-wrap:wrap;">
+          <div>
+            <div style="font-size:0.65rem;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;color:var(--gray-light);margin-bottom:3px;">Analysed Route</div>
+            <div style="font-size:0.95rem;font-weight:700;color:var(--black);letter-spacing:-0.015em;" id="res-route-label">—</div>
+          </div>
+          <div style="display:flex;align-items:center;gap:0.5rem;flex-wrap:wrap;">
+            <span id="res-route-type-badge" style="font-size:0.62rem;font-weight:700;letter-spacing:0.09em;text-transform:uppercase;padding:0.25rem 0.7rem;border-radius:100px;"></span>
+            <span id="res-data-freshness" style="font-size:0.65rem;color:var(--gray-light);font-weight:300;"></span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Score card -->
+      <div class="demo-score-card">
+        <span class="demo-card-eyebrow">Total Risk Score</span>
+        <div class="demo-score-row">
+          <div>
+            <div class="demo-score-num" id="demo-score-num">—</div>
+            <div style="font-size:0.72rem;color:var(--gray);margin-top:4px;font-weight:300" id="demo-score-sub">—</div>
+          </div>
+          <div class="demo-score-badge" id="demo-score-badge">—</div>
+        </div>
+        <div class="demo-score-bar-wrap">
+          <div class="demo-score-bar" id="demo-score-bar"></div>
+        </div>
+        <div class="demo-score-meta">
+          <span>0 — Minimal risk</span><span>50</span><span>100 — Critical</span>
+        </div>
+      </div>
+
+      <!-- Risk breakdown -->
+      <div style="background:var(--white);border:1px solid var(--gray-border);border-radius:14px;padding:1.25rem 1.5rem;" id="res-breakdown-card">
+        <span class="demo-card-eyebrow">Risk Factor Breakdown</span>
+        <div id="res-breakdown-list" style="display:flex;flex-direction:column;gap:0.55rem;"></div>
+      </div>
+
+      <!-- Sea / Port card (only for sea/hybrid) -->
+      <div id="res-sea-card" style="display:none;background:var(--white);border:1px solid var(--gray-border);border-radius:14px;padding:1.25rem 1.5rem;">
+        <span class="demo-card-eyebrow">Sea & Port Conditions</span>
+        <div id="res-sea-body" style="display:flex;flex-direction:column;gap:0.55rem;margin-top:0.25rem;"></div>
+      </div>
+
+      <!-- Dispatch card -->
+      <div class="demo-dispatch-card">
+        <span class="demo-dispatch-label">Recommended Dispatch Window</span>
+        <div class="demo-dispatch-time" id="demo-dispatch-time">—</div>
+        <div class="demo-dispatch-note" id="demo-dispatch-note">—</div>
+      </div>
+
+      <!-- Alerts card -->
+      <div class="demo-alerts-card">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:0.75rem;">
+          <span class="demo-card-eyebrow" style="margin-bottom:0;">Active Alerts</span>
+          <span id="res-alert-source" style="font-size:0.62rem;color:var(--gray-light);font-weight:300;"></span>
+        </div>
+        <div class="demo-alert-list" id="demo-alert-list"></div>
+      </div>
+
+      <!-- Nudge CTA -->
+      <div class="demo-nudge">
+        <div class="demo-nudge-text">
+          <strong>Want continuous monitoring for your routes?</strong><br>
+          Real-time alerts, 72-hour forecasts, and daily email digests — all from public data.
+        </div>
+        <a href="#cta" class="demo-nudge-btn">Get Early Access →</a>
+      </div>
+
+    </div><!-- /try-output -->
+  </div>
+</div>
+```
 
   </div>
 </section>
@@ -2048,87 +2073,92 @@ footer {
 <div class="divider"></div>
 
 <!-- ══════════════ FEEDBACK ══════════════ -->
+
 <section id="feedback">
   <div class="container">
 
-    <div class="reveal">
-      <div class="eyebrow">Help Us Build Better</div>
-      <h2>Tell us your biggest<br>logistics challenge.</h2>
-      <p class="section-sub">RouteRisk is in early beta. Your feedback directly shapes what we build next. Takes 2 minutes.</p>
+```
+<div class="reveal">
+  <div class="eyebrow">Help Us Build Better</div>
+  <h2>Tell us your biggest<br>logistics challenge.</h2>
+  <p class="section-sub">RouteRisk is in early beta. Your feedback directly shapes what we build next. Takes 2 minutes.</p>
+</div>
+
+<div class="fb-grid reveal">
+
+  <!-- Form -->
+  <div class="fb-card">
+    <div id="fb-form-wrap">
+      <label class="fb-label" for="fb-name">Your Name</label>
+      <input type="text" class="fb-input" id="fb-name" placeholder="Budi Santoso">
+
+      <label class="fb-label" for="fb-role">Your Role</label>
+      <select class="fb-select" id="fb-role">
+        <option value="">Select your role...</option>
+        <option>Fleet Dispatcher</option>
+        <option>Logistics Planner</option>
+        <option>Supply Chain Manager</option>
+        <option>Fleet Owner / Operator</option>
+        <option>3PL Coordinator</option>
+        <option>Other</option>
+      </select>
+
+      <label class="fb-label" for="fb-email">Email Address</label>
+      <input type="email" class="fb-input" id="fb-email" placeholder="you@company.com">
+
+      <label class="fb-label" for="fb-problem">What is your biggest logistics challenge today?</label>
+      <textarea class="fb-textarea" id="fb-problem" placeholder="e.g. Sulit mengetahui apakah cuaca berdampak ke pengiriman hari ini. Sering dapat complaint dari customer karena delay yang tidak terprediksi..."></textarea>
+
+      <button class="fb-btn" onclick="submitFeedback()">Submit Feedback →</button>
     </div>
+    <div class="fb-success" id="fb-success">
+      ✓ &nbsp;Thank you! Your feedback has been recorded. We'll be in touch soon.
+    </div>
+  </div>
 
-    <div class="fb-grid reveal">
-
-      <!-- Form -->
-      <div class="fb-card">
-        <div id="fb-form-wrap">
-          <label class="fb-label" for="fb-name">Your Name</label>
-          <input type="text" class="fb-input" id="fb-name" placeholder="Budi Santoso">
-
-          <label class="fb-label" for="fb-role">Your Role</label>
-          <select class="fb-select" id="fb-role">
-            <option value="">Select your role...</option>
-            <option>Fleet Dispatcher</option>
-            <option>Logistics Planner</option>
-            <option>Supply Chain Manager</option>
-            <option>Fleet Owner / Operator</option>
-            <option>3PL Coordinator</option>
-            <option>Other</option>
-          </select>
-
-          <label class="fb-label" for="fb-email">Email Address</label>
-          <input type="email" class="fb-input" id="fb-email" placeholder="you@company.com">
-
-          <label class="fb-label" for="fb-problem">What is your biggest logistics challenge today?</label>
-          <textarea class="fb-textarea" id="fb-problem" placeholder="e.g. Sulit mengetahui apakah cuaca berdampak ke pengiriman hari ini. Sering dapat complaint dari customer karena delay yang tidak terprediksi..."></textarea>
-
-          <button class="fb-btn" onclick="submitFeedback()">Submit Feedback →</button>
-        </div>
-        <div class="fb-success" id="fb-success">
-          ✓ &nbsp;Thank you! Your feedback has been recorded. We'll be in touch soon.
-        </div>
-      </div>
-
-      <!-- Info panel -->
-      <div class="fb-info-card">
+  <!-- Info panel -->
+  <div class="fb-info-card">
+    <div>
+      <span class="demo-card-eyebrow" style="margin-bottom:1rem;">Why this matters</span>
+      <div class="fb-point">
+        <div class="fb-point-icon">◎</div>
         <div>
-          <span class="demo-card-eyebrow" style="margin-bottom:1rem;">Why this matters</span>
-          <div class="fb-point">
-            <div class="fb-point-icon">◎</div>
-            <div>
-              <div class="fb-point-title">Early users get priority access</div>
-              <div class="fb-point-desc">Everyone who submits feedback is first in line when we open full access — with an extended free trial.</div>
-            </div>
-          </div>
-          <div class="fb-point">
-            <div class="fb-point-icon">◈</div>
-            <div>
-              <div class="fb-point-title">We build what you actually need</div>
-              <div class="fb-point-desc">RouteRisk is shaped by real dispatchers and planners — not assumptions. Your input determines our roadmap.</div>
-            </div>
-          </div>
-          <div class="fb-point">
-            <div class="fb-point-icon">◷</div>
-            <div>
-              <div class="fb-point-title">No spam. Ever.</div>
-              <div class="fb-point-desc">We only email when there's something genuinely useful to share. Unsubscribe anytime, no questions asked.</div>
-            </div>
-          </div>
-        </div>
-        <div style="margin-top:1.5rem;padding-top:1.25rem;border-top:1px solid var(--gray-border);">
-          <div style="font-size:0.72rem;color:var(--gray-light);font-weight:300;line-height:1.65;">
-            RouteRisk is built by a team with direct experience in supply chain digitalization, trucking, and tugboat logistics across Indonesia.
-          </div>
+          <div class="fb-point-title">Early users get priority access</div>
+          <div class="fb-point-desc">Everyone who submits feedback is first in line when we open full access — with an extended free trial.</div>
         </div>
       </div>
-
+      <div class="fb-point">
+        <div class="fb-point-icon">◈</div>
+        <div>
+          <div class="fb-point-title">We build what you actually need</div>
+          <div class="fb-point-desc">RouteRisk is shaped by real dispatchers and planners — not assumptions. Your input determines our roadmap.</div>
+        </div>
+      </div>
+      <div class="fb-point">
+        <div class="fb-point-icon">◷</div>
+        <div>
+          <div class="fb-point-title">No spam. Ever.</div>
+          <div class="fb-point-desc">We only email when there's something genuinely useful to share. Unsubscribe anytime, no questions asked.</div>
+        </div>
+      </div>
     </div>
+    <div style="margin-top:1.5rem;padding-top:1.25rem;border-top:1px solid var(--gray-border);">
+      <div style="font-size:0.72rem;color:var(--gray-light);font-weight:300;line-height:1.65;">
+        RouteRisk is built by a team with direct experience in supply chain digitalization, trucking, and tugboat logistics across Indonesia.
+      </div>
+    </div>
+  </div>
+
+</div>
+```
+
   </div>
 </section>
 
 <div class="divider"></div>
 
 <!-- ══════════════ CTA ══════════════ -->
+
 <section id="cta">
   <div class="cta-inner reveal">
     <div class="eyebrow" style="text-align:center;display:block">Early Access Open</div>
@@ -2137,35 +2167,39 @@ footer {
       Join logistics teams getting smarter dispatch decisions every morning. Free 30-day trial. No credit card.
     </p>
 
-    <div class="email-form">
-      <input type="email" class="email-input" placeholder="Work email address">
-      <button class="btn-primary">Get Early Access →</button>
-    </div>
+```
+<div class="email-form">
+  <input type="email" class="email-input" placeholder="Work email address">
+  <button class="btn-primary">Get Early Access →</button>
+</div>
 
-    <p class="cta-trust">Free 30-day trial &nbsp;·&nbsp; No credit card &nbsp;·&nbsp; No data sharing required</p>
+<p class="cta-trust">Free 30-day trial &nbsp;·&nbsp; No credit card &nbsp;·&nbsp; No data sharing required</p>
 
-    <div class="cta-features">
-      <div class="cf-item">
-        <span class="cf-check">✓</span>
-        Works in 60 seconds
-      </div>
-      <div class="cf-item">
-        <span class="cf-check">✓</span>
-        All Indonesia corridors
-      </div>
-      <div class="cf-item">
-        <span class="cf-check">✓</span>
-        72-hour risk forecast
-      </div>
-      <div class="cf-item">
-        <span class="cf-check">✓</span>
-        No integration needed
-      </div>
-    </div>
+<div class="cta-features">
+  <div class="cf-item">
+    <span class="cf-check">✓</span>
+    Works in 60 seconds
+  </div>
+  <div class="cf-item">
+    <span class="cf-check">✓</span>
+    All Indonesia corridors
+  </div>
+  <div class="cf-item">
+    <span class="cf-check">✓</span>
+    72-hour risk forecast
+  </div>
+  <div class="cf-item">
+    <span class="cf-check">✓</span>
+    No integration needed
+  </div>
+</div>
+```
+
   </div>
 </section>
 
 <!-- ══════════════ FOOTER ══════════════ -->
+
 <footer>
   <div class="footer-logo">RouteRisk</div>
   <div class="footer-note">© 2025 RouteRisk. Indonesia Logistics Intelligence.</div>
@@ -2606,5 +2640,6 @@ function submitFeedback() {
   document.getElementById('fb-success').style.display='block';
 }
 </script>
+
 </body>
 </html>
