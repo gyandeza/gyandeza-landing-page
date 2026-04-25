@@ -1,5 +1,5 @@
+Html
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -7,965 +7,474 @@
 <title>RouteRisk — Predict Logistics Delays Before They Happen</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300&display=swap" rel="stylesheet">
-
-<!-- Leaflet CSS -->
-
-<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
-
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
 <style>
-/* ═══════════════════════════════════════════════
-   ROUTERISK v3 — DESIGN SYSTEM
-   Clean, minimal, consulting-grade
-═══════════════════════════════════════════════ */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;font-size:16px}
+body{font-family:'Plus Jakarta Sans',sans-serif;background:#fff;color:#1a1a1a;line-height:1.6;-webkit-font-smoothing:antialiased}
 
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-html { scroll-behavior: smooth; font-size: 16px; }
-
-body {
-  font-family: 'Plus Jakarta Sans', sans-serif;
-  background: #ffffff; color: #1a1a1a;
-  line-height: 1.6; -webkit-font-smoothing: antialiased;
+:root{
+  --black:#111;--gray-dk:#444;--gray:#777;--gray-lt:#aaa;
+  --border:#e8e8e8;--bg:#f7f7f5;--bg2:#f0f0ec;--white:#fff;
+  --green:#2d5a3d;--green-bg:#e8f0eb;
+  --amber:#8a6c2a;--amber-bg:#faf5e8;
+  --red:#8a2d2d;--red-bg:#faf0f0;
+  --blue:#1e4d7a;--blue-bg:#eaf0fb;
+  --r:14px;--rs:9px;
 }
 
-:root {
-  --black:           #111111;
-  --gray-dark:       #444444;
-  --gray:            #777777;
-  --gray-light:      #aaaaaa;
-  --gray-border:     #e8e8e8;
-  --gray-bg:         #f7f7f5;
-  --gray-bg2:        #f0f0ec;
-  --accent:          #2d5a3d;
-  --accent-light:    #e8f0eb;
-  --accent-amber:    #8a6c2a;
-  --accent-amber-bg: #faf5e8;
-  --accent-red:      #8a2d2d;
-  --accent-red-bg:   #faf0f0;
-  --blue:            #1e4d7a;
-  --blue-bg:         #eaf0fb;
-  --white:           #ffffff;
-  --max:             860px;
-  --radius:          14px;
-  --radius-sm:       9px;
-  --shadow:          0 2px 8px rgba(0,0,0,0.05), 0 1px 2px rgba(0,0,0,0.03);
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:200;height:60px;
+  background:rgba(255,255,255,.93);backdrop-filter:blur(14px);
+  border-bottom:1px solid var(--border);
+  display:flex;align-items:center;justify-content:space-between;padding:0 2rem}
+.logo{display:flex;align-items:center;gap:8px;text-decoration:none;font-weight:700;font-size:.95rem;letter-spacing:-.02em;color:var(--black)}
+.logo-mark{width:28px;height:28px;background:var(--black);border-radius:6px;display:flex;align-items:center;justify-content:center;color:#fff;font-size:13px;font-weight:700}
+.nav-links{display:flex;align-items:center;gap:1.75rem;list-style:none}
+.nav-links a{font-size:.85rem;color:var(--gray);text-decoration:none;font-weight:400;transition:color .2s}
+.nav-links a:hover{color:var(--black)}
+.nav-cta{background:var(--black)!important;color:#fff!important;padding:.42rem 1rem;border-radius:100px}
+.nav-cta:hover{opacity:.75}
+
+/* LAYOUT */
+section{padding:5.5rem 2rem}
+.wrap{max-width:880px;margin:0 auto}
+.wrap-wide{max-width:1120px;margin:0 auto}
+.hr{max-width:880px;margin:0 auto;height:1px;background:var(--border)}
+
+/* TYPE */
+.label{display:inline-block;font-size:.68rem;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--gray-lt);margin-bottom:.9rem}
+h1{font-size:clamp(2.2rem,5vw,3.5rem);font-weight:700;line-height:1.12;letter-spacing:-.035em;color:var(--black);max-width:640px;margin:0 auto 1.2rem}
+h2{font-size:clamp(1.65rem,3vw,2.35rem);font-weight:700;letter-spacing:-.03em;line-height:1.2;color:var(--black);margin-bottom:.7rem}
+.sub{font-size:.95rem;color:var(--gray);font-weight:300;line-height:1.75;max-width:480px;margin-bottom:2.75rem}
+
+/* BUTTONS */
+.btn{display:inline-flex;align-items:center;gap:.4rem;background:var(--black);color:#fff;
+  padding:.78rem 1.65rem;border-radius:100px;font-size:.875rem;font-weight:600;
+  text-decoration:none;letter-spacing:-.01em;border:none;cursor:pointer;
+  font-family:'Plus Jakarta Sans',sans-serif;transition:opacity .2s,transform .18s}
+.btn:hover{opacity:.76;transform:translateY(-1px)}
+.btn:disabled{opacity:.48;cursor:not-allowed;transform:none}
+.btn-ghost{background:transparent;color:var(--gray);border:none;padding:.78rem 1.25rem;
+  cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;font-size:.875rem;font-weight:500;
+  border-radius:100px;transition:color .2s;text-decoration:none}
+.btn-ghost:hover{color:var(--black)}
+.spin{width:13px;height:13px;border:2px solid rgba(255,255,255,.3);border-top-color:#fff;
+  border-radius:50%;animation:spin .65s linear infinite;display:none;flex-shrink:0}
+@keyframes spin{to{transform:rotate(360deg)}}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
+
+/* FIELDS */
+.fl{display:block;font-size:.7rem;font-weight:600;letter-spacing:.02em;color:var(--gray);margin-bottom:.38rem}
+.fi{width:100%;padding:.62rem .88rem;border:1px solid var(--border);border-radius:var(--rs);
+  font-family:'Plus Jakarta Sans',sans-serif;font-size:.875rem;color:var(--black);
+  background:#fff;outline:none;appearance:none;-webkit-appearance:none;
+  transition:border-color .15s,box-shadow .15s;margin-bottom:.9rem;display:block}
+.fi:focus{border-color:var(--black);box-shadow:0 0 0 3px rgba(17,17,17,.05)}
+.fi::placeholder{color:var(--gray-lt)}
+textarea.fi{resize:vertical;min-height:88px;line-height:1.6}
+
+/* CARDS */
+.card{background:#fff;border:1px solid var(--border);border-radius:var(--r);padding:1.4rem}
+.card-muted{background:var(--bg);border:1px solid var(--border);border-radius:var(--r);padding:1.4rem}
+
+/* BADGES */
+.badge{display:inline-block;font-size:.6rem;font-weight:700;letter-spacing:.09em;text-transform:uppercase;padding:.23rem .72rem;border-radius:100px;white-space:nowrap}
+.b-low   {background:var(--green-bg);color:var(--green);border:1px solid rgba(45,90,61,.15)}
+.b-med   {background:var(--amber-bg);color:var(--amber);border:1px solid rgba(138,108,42,.15)}
+.b-high  {background:var(--red-bg);  color:var(--red);  border:1px solid rgba(138,45,45,.15)}
+.b-land  {background:var(--bg);color:var(--gray-dk);border:1px solid var(--border)}
+.b-sea   {background:var(--blue-bg); color:var(--blue); border:1px solid rgba(30,77,122,.2)}
+.b-hybrid{background:var(--amber-bg);color:var(--amber);border:1px solid rgba(138,108,42,.2)}
+.b-air   {background:#f0f4ff;color:#3b4fa8;border:1px solid rgba(59,79,168,.2)}
+
+/* REVEAL */
+.reveal{opacity:0;transform:translateY(14px);transition:opacity .6s ease,transform .6s ease}
+.reveal.in{opacity:1;transform:none}
+.d1{transition-delay:.06s}.d2{transition-delay:.13s}.d3{transition-delay:.2s}
+
+/* FLOAT CTA */
+.float-cta{position:fixed;bottom:1.65rem;right:1.65rem;z-index:150;
+  background:var(--black);color:#fff;padding:.72rem 1.2rem;border-radius:100px;
+  font-family:'Plus Jakarta Sans',sans-serif;font-size:.78rem;font-weight:600;
+  text-decoration:none;box-shadow:0 4px 18px rgba(0,0,0,.2);
+  transition:opacity .25s,transform .25s;opacity:0;transform:translateY(10px) scale(.96);pointer-events:none}
+.float-cta.show{opacity:1;transform:none;pointer-events:auto}
+.float-cta:hover{opacity:.8;transform:translateY(-2px)}
+
+/* ── HERO ── */
+#hero{padding-top:8.5rem;padding-bottom:4.5rem;text-align:center;background:#fff}
+.hero-pill{display:inline-flex;align-items:center;gap:7px;font-size:.7rem;font-weight:500;
+  color:var(--gray-dk);background:var(--bg);border:1px solid var(--border);
+  padding:.28rem .82rem;border-radius:100px;margin-bottom:1.85rem}
+.hero-dot{width:5px;height:5px;background:var(--green);border-radius:50%}
+.hero-sub{font-size:1rem;color:var(--gray);font-weight:300;max-width:490px;margin:0 auto 2.1rem;line-height:1.75}
+.hero-actions{display:flex;align-items:center;justify-content:center;gap:.2rem;flex-wrap:wrap}
+.hero-note{font-size:.72rem;color:var(--gray-lt);margin-top:.9rem}
+.mockup{margin:3.75rem auto 0;max-width:660px;background:#fff;border:1px solid var(--border);border-radius:18px;box-shadow:0 4px 6px rgba(0,0,0,.04),0 18px 55px rgba(0,0,0,.07);overflow:hidden}
+.m-bar{background:var(--bg);border-bottom:1px solid var(--border);padding:.82rem 1.2rem;display:flex;align-items:center;gap:.55rem}
+.m-dot{width:10px;height:10px;border-radius:50%;background:var(--border)}
+.m-url{font-size:.68rem;color:var(--gray-lt);margin-left:6px}
+.m-body{padding:1.4rem}
+.m-label{font-size:.6rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--gray-lt);margin-bottom:.9rem;display:block}
+.rc-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:.72rem;margin-bottom:1.1rem}
+.rc{background:var(--bg);border:1px solid var(--border);border-radius:11px;padding:.9rem}
+.rc-rt{font-size:.68rem;color:var(--gray);margin-bottom:.45rem}
+.rc-sc{font-size:1.45rem;font-weight:700;line-height:1;letter-spacing:-.04em;margin-bottom:.32rem}
+.rc-low .rc-sc{color:var(--green)}.rc-med .rc-sc{color:var(--amber)}.rc-high .rc-sc{color:var(--red)}
+.drow{background:var(--green-bg);border:1px solid rgba(45,90,61,.15);border-radius:11px;padding:.9rem 1.1rem;display:flex;align-items:center;justify-content:space-between}
+.drow-lbl{font-size:.68rem;font-weight:500;color:var(--green);margin-bottom:3px}
+.drow-time{font-size:1.05rem;font-weight:700;color:var(--green);letter-spacing:-.02em}
+.drow-badge{font-size:.6rem;font-weight:600;color:var(--green);background:rgba(45,90,61,.12);padding:.28rem .7rem;border-radius:100px;text-transform:uppercase;letter-spacing:.08em}
+
+/* ── PROBLEM ── */
+#problem{background:#fff}
+.pain-list{border:1px solid var(--border);border-radius:var(--r);overflow:hidden}
+.pain-item{padding:1.4rem 1.65rem;display:flex;align-items:flex-start;gap:1.15rem;border-bottom:1px solid var(--border);transition:background .15s}
+.pain-item:last-child{border-bottom:none}
+.pain-item:hover{background:var(--bg)}
+.pain-n{font-size:.62rem;font-weight:600;color:var(--gray-lt);padding-top:3px;flex-shrink:0;width:18px}
+.pain-t{font-size:.88rem;font-weight:600;color:var(--black);margin-bottom:4px}
+.pain-d{font-size:.8rem;color:var(--gray);font-weight:300;line-height:1.62}
+.pain-c{margin-left:auto;flex-shrink:0;font-size:.66rem;color:var(--red);background:var(--red-bg);padding:.22rem .68rem;border-radius:100px;font-weight:500;white-space:nowrap;align-self:center}
+
+/* ── SOLUTION ── */
+#solution{background:var(--bg)}
+.sol-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:1rem}
+.sol-card{background:#fff;border:1px solid var(--border);border-radius:var(--r);padding:1.65rem;transition:box-shadow .2s,transform .2s}
+.sol-card:hover{box-shadow:0 6px 22px rgba(0,0,0,.07);transform:translateY(-2px)}
+.sol-n{font-size:.6rem;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--gray-lt);margin-bottom:.9rem}
+.sol-icon{font-size:1.25rem;margin-bottom:.9rem;display:block}
+.sol-t{font-size:.92rem;font-weight:700;color:var(--black);margin-bottom:.45rem}
+.sol-d{font-size:.8rem;color:var(--gray);line-height:1.7;font-weight:300}
+
+/* ── DASHBOARD PREVIEW ── */
+#dashboard{background:#fff}
+.db-wrap{background:var(--bg);border:1px solid var(--border);border-radius:20px;overflow:hidden;margin-top:2.25rem}
+.db-top{background:#fff;border-bottom:1px solid var(--border);padding:.82rem 1.4rem;display:flex;align-items:center;justify-content:space-between}
+.db-title{font-size:.72rem;font-weight:600;color:var(--black)}
+.db-live{display:flex;align-items:center;gap:5px;font-size:.6rem;color:var(--green);font-weight:600;letter-spacing:.06em;text-transform:uppercase}
+.live-dot{width:6px;height:6px;background:var(--green);border-radius:50%;animation:pulse 2s infinite}
+.db-body{padding:1.15rem;display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+.db-card{background:#fff;border:1px solid var(--border);border-radius:var(--r);padding:1.15rem}
+.db-full{grid-column:1/-1}
+.risk-row{display:flex;flex-direction:column;gap:.55rem}
+.ri{display:flex;align-items:center;gap:.72rem}
+.ri-name{font-size:.76rem;color:var(--gray-dk);flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ri-bar-w{flex:1;height:4px;background:var(--bg2);border-radius:100px;overflow:hidden}
+.ri-bar{height:100%;border-radius:100px}
+.bar-low{background:var(--green);width:15%}.bar-med{background:var(--amber);width:62%}.bar-high{background:var(--red);width:89%}
+.ri-badge{font-size:.58rem;font-weight:600;padding:2px 7px;border-radius:100px;text-transform:uppercase;letter-spacing:.06em;white-space:nowrap}
+.ind-item{display:flex;align-items:center;gap:.72rem;padding:.58rem .82rem;background:var(--bg);border-radius:var(--rs)}
+.ind-icon{font-size:.9rem;flex-shrink:0}
+.ind-name{font-size:.7rem;font-weight:600;color:var(--black)}
+.ind-val{font-size:.65rem;color:var(--gray);font-weight:300;margin-top:1px}
+.inds{display:flex;flex-direction:column;gap:.5rem}
+.disp-rec{background:var(--green-bg);border:1px solid rgba(45,90,61,.15);border-radius:var(--rs);padding:1.15rem 1.4rem;display:flex;align-items:center;justify-content:space-between;gap:1rem}
+.dr-lbl{font-size:.62rem;font-weight:500;color:var(--green);margin-bottom:3px}
+.dr-time{font-size:1.3rem;font-weight:700;color:var(--green);letter-spacing:-.02em}
+.dr-note{font-size:.68rem;color:rgba(45,90,61,.65);font-weight:300;margin-top:4px}
+.dr-facts{display:flex;flex-direction:column;gap:3px;align-items:flex-end}
+.dr-fact{font-size:.68rem;color:var(--green)}
+
+/* ── INSIGHTS ── */
+#insights{background:var(--bg)}
+.ins-list{display:flex;flex-direction:column;gap:.82rem}
+.ins-row{background:#fff;border:1px solid var(--border);border-radius:var(--r);padding:1.15rem 1.4rem;display:flex;align-items:flex-start;gap:1.15rem;transition:box-shadow .2s}
+.ins-row:hover{box-shadow:0 3px 12px rgba(0,0,0,.06)}
+.ins-tag{flex-shrink:0;padding:.2rem .62rem;border-radius:100px;font-size:.58rem;font-weight:600;text-transform:uppercase;letter-spacing:.07em;margin-top:2px;white-space:nowrap}
+.ins-t{font-size:.88rem;font-weight:600;color:var(--black);letter-spacing:-.01em;margin-bottom:4px}
+.ins-d{font-size:.78rem;color:var(--gray);font-weight:300;line-height:1.62}
+.ins-m{margin-left:auto;flex-shrink:0;font-size:.66rem;color:var(--gray-lt);align-self:center;white-space:nowrap}
+
+/* ── TRUST ── */
+#trust{background:#fff}
+.trust-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.15rem;margin-top:2.25rem}
+.trust-card{background:var(--bg);border:1px solid var(--border);border-radius:var(--r);padding:1.65rem}
+.tc-icon{font-size:1.2rem;display:block;margin-bottom:.82rem}
+.tc-t{font-size:.92rem;font-weight:700;color:var(--black);margin-bottom:.45rem}
+.tc-d{font-size:.8rem;color:var(--gray);font-weight:300;line-height:1.7}
+.src-row{display:flex;flex-wrap:wrap;gap:.42rem;margin-top:.9rem}
+.src{font-size:.6rem;font-weight:500;color:var(--gray-dk);background:#fff;border:1px solid var(--border);padding:.2rem .58rem;border-radius:100px}
+
+/* ══ DEMO SECTION ══ */
+#try{background:var(--bg)}
+.demo-shell{display:grid;grid-template-columns:290px 1fr;gap:1.15rem;margin-top:2.25rem;align-items:start}
+
+/* LEFT */
+.demo-left{display:flex;flex-direction:column;gap:.95rem}
+.input-card{background:#fff;border:1px solid var(--border);border-radius:var(--r);padding:1.4rem}
+.try-btn{width:100%;padding:.76rem 1.2rem;background:var(--black);color:#fff;border:none;border-radius:100px;font-family:'Plus Jakarta Sans',sans-serif;font-size:.875rem;font-weight:600;cursor:pointer;transition:opacity .2s,transform .18s;display:flex;align-items:center;justify-content:center;gap:.42rem;margin-top:.5rem}
+.try-btn:hover{opacity:.76;transform:translateY(-1px)}
+.try-btn:disabled{opacity:.48;cursor:not-allowed;transform:none}
+.rt-pill{display:flex;align-items:center;gap:.48rem;padding:.48rem .82rem;background:var(--bg);border:1px solid var(--border);border-radius:var(--rs);margin-top:.72rem}
+.rt-pill-lbl{font-size:.58rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--gray-lt)}
+.wx-bar{display:none;align-items:center;gap:.48rem;padding:.48rem .78rem;border-radius:var(--rs);margin-top:.72rem;font-size:.67rem;font-weight:500;border:1px solid transparent;line-height:1.4}
+.wx-bar.live   {display:flex;background:rgba(45,90,61,.07);border-color:rgba(45,90,61,.2);color:var(--green)}
+.wx-bar.backup {display:flex;background:var(--amber-bg);border-color:rgba(138,108,42,.2);color:var(--amber)}
+.wx-bar.offline{display:flex;background:var(--red-bg);border-color:rgba(138,45,45,.2);color:var(--red)}
+.wx-dot{width:6px;height:6px;border-radius:50%;flex-shrink:0}
+.wx-bar.live    .wx-dot{background:var(--green);animation:pulse 2s infinite}
+.wx-bar.backup  .wx-dot{background:var(--amber)}
+.wx-bar.offline .wx-dot{background:var(--red)}
+.legend-card{background:#fff;border:1px solid var(--border);border-radius:var(--r);padding:1.05rem 1.2rem}
+.leg-title{font-size:.6rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--gray-lt);margin-bottom:.7rem}
+.leg-rows{display:flex;flex-direction:column;gap:.48rem}
+.leg-item{display:flex;align-items:center;gap:.58rem}
+.leg-line{width:26px;height:4px;border-radius:100px;flex-shrink:0}
+.leg-t{font-size:.72rem;color:var(--gray-dk)}
+.leg-s{font-size:.62rem;color:var(--gray-lt)}
+.sum-card{background:#fff;border:1px solid var(--border);border-radius:var(--r);padding:1.05rem 1.2rem;display:none}
+.sum-card.show{display:block}
+.pct-row{display:flex;justify-content:space-between;align-items:center;margin-bottom:3px;font-size:.72rem}
+.pct-bar{width:100%;height:3px;background:var(--bg2);border-radius:100px;overflow:hidden;margin-bottom:.58rem}
+.pct-fill{height:100%;border-radius:100px;transition:width .8s ease}
+
+/* RIGHT */
+.demo-right{display:flex;flex-direction:column;gap:.95rem}
+.demo-empty{background:#fff;border:1px solid var(--border);border-radius:var(--r);padding:3.25rem 2rem;text-align:center;display:flex;flex-direction:column;align-items:center;gap:.45rem}
+.demo-empty.hidden{display:none}
+.de-icon{font-size:1.75rem;opacity:.22;margin-bottom:.22rem}
+.de-text{font-size:.8rem;color:var(--gray-lt);font-weight:300;line-height:1.62}
+.demo-results{display:none;flex-direction:column;gap:.95rem}
+.demo-results.show{display:flex;animation:fadeUp .32s ease}
+@keyframes fadeUp{from{opacity:0;transform:translateY(7px)}to{opacity:1;transform:none}}
+.rh{background:#fff;border:1px solid var(--border);border-radius:var(--r);padding:.95rem 1.2rem;display:flex;align-items:center;justify-content:space-between;gap:.72rem;flex-wrap:wrap}
+.rh-name{font-size:.9rem;font-weight:700;color:var(--black);letter-spacing:-.01em}
+.rh-sub{font-size:.62rem;color:var(--gray-lt);margin-top:2px;font-weight:300}
+.rh-right{display:flex;align-items:center;gap:.48rem;flex-wrap:wrap}
+
+/* MAP EMBED */
+.map-wrap{background:#fff;border:1px solid var(--border);border-radius:var(--r);overflow:hidden;position:relative}
+#demo-map{height:370px;background:var(--bg2);z-index:1}
+.map-overlay{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;background:var(--bg);color:var(--gray-lt);z-index:2;transition:opacity .3s;pointer-events:none;gap:.45rem;font-size:.8rem;font-weight:300;text-align:center;line-height:1.62}
+.map-overlay.hidden{opacity:0;pointer-events:none}
+.mo-icon{font-size:1.65rem;opacity:.28;margin-bottom:.22rem}
+.map-toggle{position:absolute;top:.72rem;right:.72rem;z-index:10;background:rgba(255,255,255,.94);border:1px solid var(--border);border-radius:100px;padding:.32rem .8rem;font-family:'Plus Jakarta Sans',sans-serif;font-size:.66rem;font-weight:600;cursor:pointer;transition:all .15s;color:var(--gray-dk);display:none}
+.map-toggle:hover{border-color:var(--black);color:var(--black)}
+.map-toggle.show{display:block}
+
+/* Leaflet popup */
+.leaflet-popup-content-wrapper{border-radius:10px!important;border:1px solid var(--border)!important;box-shadow:0 4px 14px rgba(0,0,0,.11)!important;font-family:'Plus Jakarta Sans',sans-serif!important;padding:0!important}
+.leaflet-popup-content{margin:0!important;padding:0!important;min-width:185px}
+.leaflet-popup-tip-container{display:none}
+.mpop{padding:.78rem .95rem}
+.mpop-meta{font-size:.62rem;color:var(--gray-lt);margin-bottom:3px}
+.mpop-title{font-size:.8rem;font-weight:600;display:flex;align-items:center;gap:6px}
+.mpop-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+.mpop-detail{font-size:.68rem;color:var(--gray);font-weight:300;margin-top:3px;line-height:1.48}
+
+/* Score */
+.score-card{background:#fff;border:1px solid var(--border);border-radius:var(--r);padding:1.2rem 1.4rem}
+.score-row{display:flex;align-items:flex-start;justify-content:space-between;gap:.9rem;margin-bottom:.82rem}
+.score-num{font-size:2.7rem;font-weight:700;letter-spacing:-.04em;line-height:1}
+.score-num.low{color:var(--green)}.score-num.medium{color:var(--amber)}.score-num.high{color:var(--red)}
+.score-sub{font-size:.67rem;color:var(--gray);font-weight:300;margin-top:4px}
+.sbar-track{height:4px;background:var(--bg2);border-radius:100px;overflow:hidden;margin-bottom:.3rem}
+.sbar-fill{height:100%;border-radius:100px;width:0;transition:width .9s cubic-bezier(.4,0,.2,1)}
+.sbar-fill.low{background:var(--green)}.sbar-fill.medium{background:var(--amber)}.sbar-fill.high{background:var(--red)}
+.sbar-ends{display:flex;justify-content:space-between;font-size:.58rem;color:var(--gray-lt)}
+
+/* Factors */
+.factor-list{display:flex;flex-direction:column;gap:.48rem}
+.factor-row{display:flex;align-items:center;gap:.72rem;padding:.58rem .82rem;background:var(--bg);border-radius:var(--rs)}
+.fi-icon{font-size:.88rem;flex-shrink:0}
+.fi-body{flex:1;min-width:0}
+.fi-t{font-size:.72rem;font-weight:600;color:var(--black)}
+.fi-d{font-size:.65rem;color:var(--gray);font-weight:300;margin-top:1px}
+.fi-right{display:flex;align-items:center;gap:.4rem;flex-shrink:0}
+.fi-bar{width:46px;height:4px;background:var(--bg2);border-radius:100px;overflow:hidden}
+.fi-bar-fill{height:100%;border-radius:100px}
+.fi-score{font-size:.66rem;font-weight:700;font-variant-numeric:tabular-nums}
+
+/* Dispatch */
+.disp-out{background:var(--green-bg);border:1px solid rgba(45,90,61,.18);border-radius:var(--r);padding:1.2rem 1.4rem}
+.disp-lbl{font-size:.6rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:rgba(45,90,61,.6);margin-bottom:.38rem;display:block}
+.disp-time{font-size:1.35rem;font-weight:700;letter-spacing:-.025em;color:var(--green);line-height:1;margin-bottom:.28rem}
+.disp-note{font-size:.7rem;color:rgba(45,90,61,.65);font-weight:300}
+
+/* Sea */
+.sea-grid{display:grid;grid-template-columns:1fr 1fr;gap:.58rem;margin-bottom:.58rem}
+.sea-met{padding:.82rem;background:var(--bg);border-radius:var(--rs);text-align:center}
+.sea-met-lbl{font-size:.58rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--gray-lt);margin-bottom:4px}
+.sea-met-val{font-size:1.25rem;font-weight:700;letter-spacing:-.02em;line-height:1}
+.sea-met-sub{font-size:.62rem;color:var(--gray);font-weight:300;margin-top:3px}
+.port-row{display:flex;align-items:center;justify-content:space-between;padding:.5rem .82rem;background:var(--bg);border-radius:var(--rs);font-size:.76rem;margin-top:.48rem}
+.port-name{color:var(--gray-dk);font-weight:500}
+
+/* Alerts */
+.alert-item{display:flex;align-items:flex-start;gap:.72rem;padding:.58rem 0;border-bottom:1px solid var(--border)}
+.alert-item:last-child{border-bottom:none;padding-bottom:0}
+.al-dot{width:6px;height:6px;border-radius:50%;flex-shrink:0;margin-top:.32rem}
+.al-dot.high{background:var(--red)}.al-dot.medium{background:var(--amber)}.al-dot.low{background:var(--green)}
+.al-text{font-size:.76rem;color:var(--gray-dk);font-weight:400;line-height:1.48}
+.al-src{font-size:.62rem;color:var(--gray-lt);margin-top:2px}
+
+/* Nudge */
+.nudge{background:#fff;border:1px solid var(--border);border-radius:var(--r);padding:1.05rem 1.4rem;display:flex;align-items:center;justify-content:space-between;gap:.9rem;flex-wrap:wrap}
+.nudge-text{font-size:.78rem;color:var(--gray);font-weight:300;line-height:1.52}
+.nudge-text strong{color:var(--black);font-weight:600}
+
+/* ── LEAD FORM ── */
+#feedback{background:#fff}
+.fb-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.15rem;margin-top:2.25rem}
+.fb-card{background:var(--bg);border:1px solid var(--border);border-radius:var(--r);padding:1.65rem}
+.fb-info{background:var(--bg);border:1px solid var(--border);border-radius:var(--r);padding:1.65rem;display:flex;flex-direction:column;justify-content:space-between}
+.fp{display:flex;align-items:flex-start;gap:.82rem;padding:.82rem 0;border-bottom:1px solid var(--border)}
+.fp:last-of-type{border-bottom:none}
+.fp-icon{width:29px;height:29px;background:#fff;border:1px solid var(--border);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:.82rem;flex-shrink:0;margin-top:2px}
+.fp-t{font-size:.8rem;font-weight:600;color:var(--black);margin-bottom:2px}
+.fp-d{font-size:.72rem;color:var(--gray);font-weight:300;line-height:1.52}
+.form-msg{padding:.82rem .95rem;border-radius:var(--rs);font-size:.8rem;font-weight:500;margin-top:.72rem;display:none}
+.form-msg.ok  {background:var(--green-bg);color:var(--green);border:1px solid rgba(45,90,61,.2);display:block}
+.form-msg.err {background:var(--red-bg);color:var(--red);border:1px solid rgba(138,45,45,.2);display:block}
+
+/* ── CTA ── */
+#cta{background:var(--bg);text-align:center}
+.cta-inner{max-width:510px;margin:0 auto}
+.email-form{display:flex;gap:.48rem;justify-content:center;margin-top:1.9rem;flex-wrap:wrap}
+.email-in{flex:1;min-width:210px;max-width:295px;padding:.72rem 1.2rem;border:1px solid var(--border);border-radius:100px;font-family:'Plus Jakarta Sans',sans-serif;font-size:.875rem;color:var(--black);background:#fff;outline:none;transition:border-color .2s}
+.email-in:focus{border-color:var(--black)}
+.email-in::placeholder{color:var(--gray-lt)}
+.cta-trust{font-size:.7rem;color:var(--gray-lt);margin-top:.9rem;font-weight:300}
+.cta-feats{display:flex;justify-content:center;gap:1.65rem;margin-top:2.25rem;flex-wrap:wrap}
+.cf{display:flex;align-items:center;gap:5px;font-size:.76rem;color:var(--gray)}
+.cf-chk{color:var(--green);font-size:.68rem}
+.cta-msg{margin-top:.72rem;font-size:.78rem;min-height:1.2em}
+
+/* ── FOOTER ── */
+footer{border-top:1px solid var(--border);padding:1.65rem 2rem;display:flex;align-items:center;justify-content:space-between}
+.foot-logo{font-size:.85rem;font-weight:700;color:var(--black);letter-spacing:-.02em}
+.foot-note{font-size:.72rem;color:var(--gray-lt);font-weight:300}
+.foot-links{display:flex;gap:1.4rem}
+.foot-links a{font-size:.72rem;color:var(--gray-lt);text-decoration:none;transition:color .2s}
+.foot-links a:hover{color:var(--gray-dk)}
+
+/* ── RESPONSIVE ── */
+@media(max-width:960px){.demo-shell{grid-template-columns:1fr}#demo-map{height:300px}}
+@media(max-width:820px){
+  .sol-grid,.trust-grid,.fb-grid{grid-template-columns:1fr}
+  .db-body{grid-template-columns:1fr}
+  .rc-grid{grid-template-columns:1fr 1fr}
+  .pain-c,.ins-m{display:none}
+  footer{flex-direction:column;gap:.9rem;text-align:center}
+  .disp-rec{flex-direction:column}
+  nav .nav-links li:not(:last-child){display:none}
 }
-
-/* ── NAV ── */
-nav {
-  position: fixed; top: 0; left: 0; right: 0; z-index: 200;
-  background: rgba(255,255,255,0.92);
-  backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
-  border-bottom: 1px solid var(--gray-border);
-  height: 60px; display: flex; align-items: center;
-  justify-content: space-between; padding: 0 2rem;
-}
-.nav-logo {
-  font-size: 1rem; font-weight: 700; letter-spacing: -0.02em;
-  color: var(--black); text-decoration: none;
-  display: flex; align-items: center; gap: 8px;
-}
-.nav-logo-mark {
-  width: 28px; height: 28px; background: var(--black); border-radius: 6px;
-  display: flex; align-items: center; justify-content: center;
-  color: white; font-size: 13px; font-weight: 700;
-}
-.nav-links { display: flex; align-items: center; gap: 2rem; list-style: none; }
-.nav-links a {
-  font-size: 0.875rem; color: var(--gray); text-decoration: none;
-  font-weight: 400; transition: color 0.2s;
-}
-.nav-links a:hover { color: var(--black); }
-.nav-btn {
-  font-size: 0.8rem; font-weight: 600; color: var(--white) !important;
-  background: var(--black); padding: 0.45rem 1.1rem; border-radius: 100px;
-  transition: opacity 0.2s !important;
-}
-.nav-btn:hover { opacity: 0.75 !important; }
-
-/* ── LAYOUT ── */
-section { padding: 6rem 2rem; }
-.container { max-width: var(--max); margin: 0 auto; }
-.section-head { margin-bottom: 2.5rem; }
-.divider { max-width: var(--max); margin: 0 auto; height: 1px; background: var(--gray-border); }
-
-/* ── TYPOGRAPHY ── */
-.eyebrow {
-  display: inline-block; font-size: 0.7rem; font-weight: 600;
-  letter-spacing: 0.14em; text-transform: uppercase;
-  color: var(--gray-light); margin-bottom: 1rem;
-}
-h1 {
-  font-size: clamp(2.4rem, 5vw, 3.6rem); font-weight: 700;
-  line-height: 1.12; letter-spacing: -0.035em; color: var(--black);
-  max-width: 640px; margin: 0 auto 1.25rem;
-}
-h2 {
-  font-size: clamp(1.7rem, 3vw, 2.4rem); font-weight: 700;
-  letter-spacing: -0.03em; line-height: 1.2; color: var(--black);
-  margin-bottom: 0.75rem;
-}
-.section-sub {
-  font-size: 0.95rem; color: var(--gray); font-weight: 300;
-  line-height: 1.75; max-width: 480px; margin-bottom: 3rem;
-}
-
-/* ── BUTTONS ── */
-.btn-primary {
-  display: inline-flex; align-items: center; gap: 0.4rem;
-  background: var(--black); color: var(--white);
-  padding: 0.8rem 1.75rem; border-radius: 100px;
-  font-size: 0.875rem; font-weight: 600; text-decoration: none;
-  letter-spacing: -0.01em; transition: opacity 0.2s, transform 0.18s;
-  border: none; cursor: pointer; font-family: 'Plus Jakarta Sans', sans-serif;
-}
-.btn-primary:hover { opacity: 0.75; transform: translateY(-1px); }
-.btn-primary:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
-.btn-ghost {
-  display: inline-block; background: transparent; color: var(--gray);
-  padding: 0.8rem 1.5rem; border-radius: 100px; font-size: 0.875rem;
-  font-weight: 500; text-decoration: none; transition: color 0.2s;
-  cursor: pointer; font-family: 'Plus Jakarta Sans', sans-serif; border: none;
-}
-.btn-ghost:hover { color: var(--black); }
-
-/* ── FIELDS ── */
-.field-input {
-  width: 100%; padding: 0.65rem 0.9rem;
-  border: 1px solid var(--gray-border); border-radius: var(--radius-sm);
-  font-family: 'Plus Jakarta Sans', sans-serif; font-size: 0.875rem;
-  color: var(--black); background: var(--white);
-  outline: none; appearance: none; -webkit-appearance: none;
-  transition: border-color 0.15s, box-shadow 0.15s;
-  margin-bottom: 1rem; display: block;
-}
-.field-input:focus { border-color: var(--black); box-shadow: 0 0 0 3px rgba(17,17,17,0.05); }
-.field-input::placeholder { color: var(--gray-light); }
-textarea.field-input { resize: vertical; min-height: 90px; line-height: 1.6; }
-.field-label {
-  display: block; font-size: 0.72rem; font-weight: 600;
-  letter-spacing: 0.02em; color: var(--gray); margin-bottom: 0.4rem;
-}
-
-/* ── CARDS ── */
-.card { background: var(--white); border: 1px solid var(--gray-border); border-radius: var(--radius); padding: 1.5rem; }
-.card-muted { background: var(--gray-bg); border: 1px solid var(--gray-border); border-radius: var(--radius); padding: 1.5rem; }
-.out-card { background: var(--white); border: 1px solid var(--gray-border); border-radius: var(--radius); padding: 1.25rem 1.5rem; }
-
-/* ── BADGES ── */
-.risk-badge {
-  display: inline-block; font-size: 0.62rem; font-weight: 700;
-  letter-spacing: 0.09em; text-transform: uppercase;
-  padding: 0.25rem 0.75rem; border-radius: 100px; white-space: nowrap;
-}
-.badge-low    { background: var(--accent-light); color: var(--accent); border: 1px solid rgba(45,90,61,0.15); }
-.badge-medium { background: var(--accent-amber-bg); color: var(--accent-amber); border: 1px solid rgba(138,108,42,0.15); }
-.badge-high   { background: var(--accent-red-bg); color: var(--accent-red); border: 1px solid rgba(138,45,45,0.15); }
-.badge-land   { background: var(--gray-bg); color: var(--gray-dark); border: 1px solid var(--gray-border); }
-.badge-sea    { background: var(--blue-bg); color: var(--blue); border: 1px solid rgba(30,77,122,0.2); }
-.badge-hybrid { background: var(--accent-amber-bg); color: var(--accent-amber); border: 1px solid rgba(138,108,42,0.2); }
-
-/* ── SPINNER ── */
-.try-spinner {
-  width: 13px; height: 13px; border: 2px solid rgba(255,255,255,0.3);
-  border-top-color: #fff; border-radius: 50%;
-  animation: spin 0.65s linear infinite; display: none;
-}
-@keyframes spin { to { transform: rotate(360deg); } }
-@keyframes livepulse { 0%,100%{opacity:1}50%{opacity:.4} }
-
-/* ── SCROLL REVEAL ── */
-.reveal { opacity: 0; transform: translateY(16px); transition: opacity 0.6s ease, transform 0.6s ease; }
-.reveal.in { opacity: 1; transform: none; }
-.reveal-d1 { transition-delay: 0.05s; }
-.reveal-d2 { transition-delay: 0.12s; }
-.reveal-d3 { transition-delay: 0.19s; }
-
-/* ─────────────────────────
-   HERO
-───────────────────────── */
-#hero { padding-top: 9rem; padding-bottom: 5rem; text-align: center; background: var(--white); }
-.hero-tag {
-  display: inline-flex; align-items: center; gap: 7px;
-  font-size: 0.72rem; font-weight: 500; color: var(--gray-dark);
-  background: var(--gray-bg); border: 1px solid var(--gray-border);
-  padding: 0.3rem 0.85rem; border-radius: 100px; margin-bottom: 2rem;
-}
-.hero-tag-dot { width: 5px; height: 5px; background: var(--accent); border-radius: 50%; }
-.hero-sub { font-size: 1.05rem; color: var(--gray); font-weight: 300; max-width: 500px; margin: 0 auto 2.25rem; line-height: 1.75; }
-.hero-actions { display: flex; align-items: center; justify-content: center; gap: 0.25rem; flex-wrap: wrap; }
-.hero-note { font-size: 0.75rem; color: var(--gray-light); margin-top: 1rem; }
-.hero-mockup { margin: 4rem auto 0; max-width: 680px; background: var(--white); border: 1px solid var(--gray-border); border-radius: 18px; box-shadow: 0 4px 6px rgba(0,0,0,0.04), 0 20px 60px rgba(0,0,0,0.07); overflow: hidden; }
-.mockup-bar { background: var(--gray-bg); border-bottom: 1px solid var(--gray-border); padding: 0.85rem 1.25rem; display: flex; align-items: center; gap: 0.6rem; }
-.mb-dot { width: 10px; height: 10px; border-radius: 50%; background: var(--gray-border); }
-.mockup-url { font-size: 0.7rem; color: var(--gray-light); margin-left: 6px; }
-.mockup-body { padding: 1.5rem; }
-.mockup-label { font-size: 0.62rem; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--gray-light); margin-bottom: 1rem; display: block; }
-.route-cards { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 0.75rem; margin-bottom: 1.25rem; }
-.route-card { background: var(--gray-bg); border: 1px solid var(--gray-border); border-radius: 12px; padding: 1rem; }
-.rc-route { font-size: 0.7rem; color: var(--gray); margin-bottom: 0.5rem; }
-.rc-score { font-size: 1.5rem; font-weight: 700; line-height: 1; letter-spacing: -0.04em; margin-bottom: 0.35rem; }
-.rc-low .rc-score { color: var(--accent); }
-.rc-medium .rc-score { color: var(--accent-amber); }
-.rc-high .rc-score { color: var(--accent-red); }
-.dispatch-row { background: var(--accent-light); border: 1px solid rgba(45,90,61,0.15); border-radius: 12px; padding: 1rem 1.25rem; display: flex; align-items: center; justify-content: space-between; }
-.dr-label { font-size: 0.7rem; font-weight: 500; color: var(--accent); margin-bottom: 3px; }
-.dr-time { font-size: 1.1rem; font-weight: 700; color: var(--accent); letter-spacing: -0.02em; }
-.dr-badge { font-size: 0.62rem; font-weight: 600; color: var(--accent); background: rgba(45,90,61,0.12); padding: 0.3rem 0.75rem; border-radius: 100px; text-transform: uppercase; letter-spacing: 0.08em; }
-
-/* ─────────────────────────
-   PROBLEM
-───────────────────────── */
-#problem { background: var(--white); }
-.pain-list { border: 1px solid var(--gray-border); border-radius: var(--radius); overflow: hidden; }
-.pain-item { padding: 1.5rem 1.75rem; display: flex; align-items: flex-start; gap: 1.25rem; border-bottom: 1px solid var(--gray-border); transition: background 0.15s; }
-.pain-item:last-child { border-bottom: none; }
-.pain-item:hover { background: var(--gray-bg); }
-.pain-num { font-size: 0.65rem; font-weight: 600; color: var(--gray-light); padding-top: 3px; flex-shrink: 0; width: 18px; }
-.pain-title { font-size: 0.9rem; font-weight: 600; color: var(--black); margin-bottom: 4px; }
-.pain-desc { font-size: 0.82rem; color: var(--gray); font-weight: 300; line-height: 1.65; }
-.pain-cost { margin-left: auto; flex-shrink: 0; font-size: 0.68rem; color: var(--accent-red); background: var(--accent-red-bg); padding: 0.25rem 0.7rem; border-radius: 100px; font-weight: 500; white-space: nowrap; align-self: center; }
-
-/* ─────────────────────────
-   SOLUTION
-───────────────────────── */
-#solution { background: var(--gray-bg); }
-.solution-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1rem; }
-.sol-card { background: var(--white); border: 1px solid var(--gray-border); border-radius: var(--radius); padding: 1.75rem; transition: box-shadow 0.2s, transform 0.2s; }
-.sol-card:hover { box-shadow: 0 6px 24px rgba(0,0,0,0.07); transform: translateY(-2px); }
-.sol-num { font-size: 0.62rem; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: var(--gray-light); margin-bottom: 1rem; }
-.sol-icon { font-size: 1.3rem; margin-bottom: 1rem; display: block; }
-.sol-title { font-size: 0.95rem; font-weight: 700; color: var(--black); margin-bottom: 0.5rem; }
-.sol-desc { font-size: 0.82rem; color: var(--gray); line-height: 1.7; font-weight: 300; }
-
-/* ─────────────────────────
-   DASHBOARD PREVIEW
-───────────────────────── */
-#dashboard { background: var(--white); }
-.db-wrapper { background: var(--gray-bg); border: 1px solid var(--gray-border); border-radius: 20px; overflow: hidden; margin-top: 2.5rem; }
-.db-topbar { background: var(--white); border-bottom: 1px solid var(--gray-border); padding: 0.85rem 1.5rem; display: flex; align-items: center; justify-content: space-between; }
-.db-title { font-size: 0.75rem; font-weight: 600; color: var(--black); }
-.db-live { display: flex; align-items: center; gap: 5px; font-size: 0.62rem; color: var(--accent); font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; }
-.live-dot { width: 6px; height: 6px; background: var(--accent); border-radius: 50%; animation: livepulse 2s infinite; }
-.db-body { padding: 1.25rem; display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
-.db-card { background: var(--white); border: 1px solid var(--gray-border); border-radius: var(--radius); padding: 1.25rem; }
-.dispatch-card { grid-column: 1 / -1; }
-.dispatch-recommend { background: var(--accent-light); border: 1px solid rgba(45,90,61,0.15); border-radius: var(--radius-sm); padding: 1.25rem 1.5rem; display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
-.drec-label { font-size: 0.65rem; font-weight: 500; color: var(--accent); margin-bottom: 3px; }
-.drec-time { font-size: 1.35rem; font-weight: 700; color: var(--accent); letter-spacing: -0.02em; }
-.drec-note { font-size: 0.72rem; color: rgba(45,90,61,0.65); font-weight: 300; margin-top: 4px; }
-.drec-facts { display: flex; flex-direction: column; gap: 3px; align-items: flex-end; }
-.drec-fact { font-size: 0.7rem; color: var(--accent); font-weight: 400; }
-.risk-row { display: flex; flex-direction: column; gap: 0.6rem; }
-.risk-item { display: flex; align-items: center; justify-content: space-between; gap: 0.75rem; }
-.ri-route { font-size: 0.78rem; color: var(--gray-dark); font-weight: 400; flex: 1; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.ri-bar-wrap { flex: 1; height: 4px; background: var(--gray-bg2); border-radius: 100px; overflow: hidden; }
-.ri-bar { height: 100%; border-radius: 100px; }
-.ri-badge { font-size: 0.6rem; font-weight: 600; padding: 2px 8px; border-radius: 100px; text-transform: uppercase; letter-spacing: 0.06em; white-space: nowrap; }
-.bar-low { background: var(--accent); width: 15%; }
-.bar-medium { background: var(--accent-amber); width: 62%; }
-.bar-high { background: var(--accent-red); width: 89%; }
-.ind-item { display: flex; align-items: center; gap: 0.75rem; padding: 0.6rem 0.85rem; background: var(--gray-bg); border-radius: var(--radius-sm); }
-.ind-icon { font-size: 0.95rem; flex-shrink: 0; }
-.ind-name { font-size: 0.72rem; font-weight: 600; color: var(--black); }
-.ind-val { font-size: 0.68rem; color: var(--gray); font-weight: 300; margin-top: 1px; }
-.indicators { display: flex; flex-direction: column; gap: 0.55rem; }
-
-/* ─────────────────────────
-   INSIGHTS
-───────────────────────── */
-#insights { background: var(--gray-bg); }
-.insights-list { display: flex; flex-direction: column; gap: 0.85rem; }
-.insight-row { background: var(--white); border: 1px solid var(--gray-border); border-radius: var(--radius); padding: 1.25rem 1.5rem; display: flex; align-items: flex-start; gap: 1.25rem; transition: box-shadow 0.2s; }
-.insight-row:hover { box-shadow: 0 3px 14px rgba(0,0,0,0.06); }
-.ins-tag { flex-shrink: 0; padding: 0.22rem 0.65rem; border-radius: 100px; font-size: 0.6rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.07em; margin-top: 2px; white-space: nowrap; }
-.ins-title { font-size: 0.9rem; font-weight: 600; color: var(--black); letter-spacing: -0.01em; margin-bottom: 4px; }
-.ins-desc { font-size: 0.8rem; color: var(--gray); font-weight: 300; line-height: 1.65; }
-.ins-meta { margin-left: auto; flex-shrink: 0; font-size: 0.68rem; color: var(--gray-light); font-weight: 400; align-self: center; white-space: nowrap; }
-
-/* ─────────────────────────
-   TRUST
-───────────────────────── */
-#trust { background: var(--white); }
-.trust-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.25rem; margin-top: 2.5rem; }
-.trust-card { background: var(--gray-bg); border: 1px solid var(--gray-border); border-radius: var(--radius); padding: 1.75rem; }
-.tc-icon { font-size: 1.25rem; display: block; margin-bottom: 0.85rem; }
-.tc-title { font-size: 0.95rem; font-weight: 700; color: var(--black); margin-bottom: 0.5rem; }
-.tc-desc { font-size: 0.82rem; color: var(--gray); font-weight: 300; line-height: 1.7; }
-.sources-row { display: flex; flex-wrap: wrap; gap: 0.45rem; margin-top: 1rem; }
-.src-tag { font-size: 0.62rem; font-weight: 500; color: var(--gray-dark); background: var(--white); border: 1px solid var(--gray-border); padding: 0.22rem 0.6rem; border-radius: 100px; }
-
-/* ─────────────────────────
-   MAP SECTION (NEW v3)
-───────────────────────── */
-#map-section { background: var(--gray-bg); }
-
-.map-layout {
-  display: grid;
-  grid-template-columns: 260px 1fr;
-  gap: 1.25rem;
-  margin-top: 2.5rem;
-  align-items: start;
-}
-
-/* Map controls panel */
-.map-controls {
-  display: flex; flex-direction: column; gap: 0.85rem;
-}
-
-.map-control-card {
-  background: var(--white);
-  border: 1px solid var(--gray-border);
-  border-radius: var(--radius);
-  padding: 1.25rem;
-}
-
-.map-control-card .field-input { margin-bottom: 0.75rem; }
-.map-control-card .field-input:last-of-type { margin-bottom: 1rem; }
-
-.map-btn {
-  width: 100%; padding: 0.7rem 1rem; background: var(--black); color: var(--white);
-  border: none; border-radius: 100px; font-family: 'Plus Jakarta Sans', sans-serif;
-  font-size: 0.82rem; font-weight: 600; cursor: pointer;
-  transition: opacity 0.2s; display: flex; align-items: center;
-  justify-content: center; gap: 0.4rem; letter-spacing: -0.01em;
-}
-.map-btn:hover { opacity: 0.75; }
-.map-btn:disabled { opacity: 0.45; cursor: not-allowed; }
-.map-btn-outline {
-  width: 100%; padding: 0.65rem 1rem; background: transparent;
-  color: var(--gray-dark); border: 1px solid var(--gray-border);
-  border-radius: 100px; font-family: 'Plus Jakarta Sans', sans-serif;
-  font-size: 0.78rem; font-weight: 500; cursor: pointer;
-  transition: border-color 0.15s, color 0.15s;
-  display: flex; align-items: center; justify-content: center; gap: 0.4rem;
-}
-.map-btn-outline:hover { border-color: var(--black); color: var(--black); }
-.map-btn-outline.active { background: var(--gray-bg); border-color: var(--black); color: var(--black); }
-
-/* Legend */
-.map-legend {
-  background: var(--white);
-  border: 1px solid var(--gray-border);
-  border-radius: var(--radius);
-  padding: 1.1rem 1.25rem;
-}
-.legend-title {
-  font-size: 0.65rem; font-weight: 600; letter-spacing: 0.1em;
-  text-transform: uppercase; color: var(--gray-light); margin-bottom: 0.75rem;
-}
-.legend-item {
-  display: flex; align-items: center; gap: 0.65rem;
-  margin-bottom: 0.5rem; font-size: 0.78rem; color: var(--gray-dark);
-}
-.legend-item:last-child { margin-bottom: 0; }
-.legend-dot {
-  width: 12px; height: 12px; border-radius: 50%;
-  flex-shrink: 0; border: 2px solid rgba(0,0,0,0.1);
-}
-.legend-dot.low    { background: #4ade80; }
-.legend-dot.medium { background: #facc15; }
-.legend-dot.high   { background: #f87171; }
-
-/* Risk summary */
-.risk-summary-card {
-  background: var(--white); border: 1px solid var(--gray-border);
-  border-radius: var(--radius); padding: 1.1rem 1.25rem;
-  display: none;
-}
-.risk-summary-card.visible { display: block; }
-.risk-summary-title {
-  font-size: 0.65rem; font-weight: 600; letter-spacing: 0.1em;
-  text-transform: uppercase; color: var(--gray-light); margin-bottom: 0.75rem;
-}
-.risk-pct-row {
-  display: flex; align-items: center; gap: 0.5rem;
-  margin-bottom: 0.4rem; font-size: 0.78rem;
-}
-.risk-pct-label { flex: 1; color: var(--gray-dark); }
-.risk-pct-val { font-weight: 600; font-size: 0.8rem; }
-.risk-pct-bar { width: 100%; height: 4px; background: var(--gray-bg2); border-radius: 100px; overflow: hidden; margin-bottom: 0.75rem; }
-.risk-pct-fill { height: 100%; border-radius: 100px; transition: width 0.8s ease; }
-
-/* Map container */
-.map-container-wrap {
-  position: relative;
-  border-radius: var(--radius);
-  overflow: hidden;
-  border: 1px solid var(--gray-border);
-  box-shadow: var(--shadow);
-}
-
-#route-map {
-  height: 460px;
-  background: var(--gray-bg2);
-  z-index: 1;
-}
-
-.map-empty-state {
-  position: absolute; inset: 0;
-  display: flex; flex-direction: column;
-  align-items: center; justify-content: center;
-  background: var(--gray-bg);
-  color: var(--gray-light); pointer-events: none;
-  z-index: 2; transition: opacity 0.3s;
-}
-.map-empty-state.hidden { opacity: 0; pointer-events: none; }
-.map-empty-icon { font-size: 2rem; margin-bottom: 0.75rem; opacity: 0.4; }
-.map-empty-text { font-size: 0.82rem; font-weight: 300; text-align: center; line-height: 1.65; }
-
-/* Leaflet popup override — match design */
-.leaflet-popup-content-wrapper {
-  border-radius: 10px !important;
-  border: 1px solid var(--gray-border) !important;
-  box-shadow: 0 4px 16px rgba(0,0,0,0.12) !important;
-  font-family: 'Plus Jakarta Sans', sans-serif !important;
-  padding: 0 !important;
-}
-.leaflet-popup-content { margin: 0 !important; padding: 0 !important; }
-.leaflet-popup-tip-container { display: none; }
-.map-tooltip {
-  padding: 0.75rem 1rem;
-}
-.map-tooltip-route { font-size: 0.7rem; color: var(--gray-light); margin-bottom: 3px; }
-.map-tooltip-risk { font-size: 0.85rem; font-weight: 600; }
-.map-tooltip-desc { font-size: 0.72rem; color: var(--gray); font-weight: 300; margin-top: 3px; }
-
-/* ─────────────────────────
-   TRY DEMO
-───────────────────────── */
-#try { background: var(--white); }
-.try-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.25rem; margin-top: 2.5rem; }
-.try-input-card { background: var(--white); border: 1px solid var(--gray-border); border-radius: var(--radius); padding: 1.5rem; }
-.route-type-pill { display: flex; align-items: center; gap: 0.5rem; padding: 0.55rem 0.85rem; background: var(--gray-bg); border: 1px solid var(--gray-border); border-radius: var(--radius-sm); margin-bottom: 1rem; }
-.rtp-label { font-size: 0.62rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--gray-light); }
-.try-btn { width: 100%; padding: 0.8rem 1.5rem; background: var(--black); color: var(--white); border: none; border-radius: 100px; font-family: 'Plus Jakarta Sans', sans-serif; font-size: 0.875rem; font-weight: 600; cursor: pointer; transition: opacity 0.2s, transform 0.18s; letter-spacing: -0.01em; display: flex; align-items: center; justify-content: center; gap: 0.4rem; }
-.try-btn:hover { opacity: 0.75; transform: translateY(-1px); }
-.try-btn:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
-.data-fresh-row { display: none; align-items: center; gap: 0.45rem; margin-top: 0.75rem; font-size: 0.68rem; color: var(--gray-light); }
-.data-fresh-dot { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; }
-.data-source-note { font-size: 0.65rem; color: var(--gray-light); text-align: center; margin-top: 0.75rem; font-weight: 300; line-height: 1.55; }
-
-/* Weather status indicator */
-.wx-status-bar {
-  display: flex; align-items: center; gap: 0.5rem;
-  padding: 0.5rem 0.75rem; border-radius: var(--radius-sm);
-  margin-top: 0.75rem; font-size: 0.7rem;
-  border: 1px solid transparent;
-}
-.wx-status-bar.live    { background: rgba(45,90,61,0.07); border-color: rgba(45,90,61,0.2); color: var(--accent); }
-.wx-status-bar.fallback{ background: var(--accent-amber-bg); border-color: rgba(138,108,42,0.2); color: var(--accent-amber); }
-.wx-status-bar.offline { background: var(--accent-red-bg); border-color: rgba(138,45,45,0.2); color: var(--accent-red); }
-.wx-status-dot { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; }
-.wx-status-bar.live     .wx-status-dot { background: var(--accent); animation: livepulse 2s infinite; }
-.wx-status-bar.fallback .wx-status-dot { background: var(--accent-amber); }
-.wx-status-bar.offline  .wx-status-dot { background: var(--accent-red); }
-
-.try-empty { background: var(--white); border: 1px solid var(--gray-border); border-radius: var(--radius); padding: 3rem 1.5rem; text-align: center; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 0.5rem; }
-.try-empty.hidden { display: none; }
-.try-empty-icon { font-size: 1.5rem; opacity: 0.3; margin-bottom: 0.25rem; }
-.try-empty-text { font-size: 0.82rem; color: var(--gray-light); font-weight: 300; line-height: 1.65; }
-.try-output-panel { display: flex; flex-direction: column; gap: 0.85rem; opacity: 0; transform: translateY(8px); transition: opacity 0.4s ease, transform 0.4s ease; pointer-events: none; }
-.try-output-panel.visible { opacity: 1; transform: none; pointer-events: auto; }
-
-.score-row { display: flex; align-items: center; justify-content: space-between; gap: 1rem; margin-bottom: 0.85rem; }
-.score-num { font-size: 2.75rem; font-weight: 700; letter-spacing: -0.04em; line-height: 1; }
-.score-num.low    { color: var(--accent); }
-.score-num.medium { color: var(--accent-amber); }
-.score-num.high   { color: var(--accent-red); }
-.score-sub { font-size: 0.7rem; color: var(--gray); font-weight: 300; margin-top: 3px; }
-.score-bar-track { height: 4px; background: var(--gray-bg2); border-radius: 100px; overflow: hidden; margin-bottom: 0.35rem; }
-.score-bar-fill { height: 100%; border-radius: 100px; width: 0; transition: width 0.9s cubic-bezier(.4,0,.2,1); }
-.score-bar-fill.low    { background: var(--accent); }
-.score-bar-fill.medium { background: var(--accent-amber); }
-.score-bar-fill.high   { background: var(--accent-red); }
-.score-ends { display: flex; justify-content: space-between; font-size: 0.6rem; color: var(--gray-light); }
-
-.factor-row { display: flex; align-items: center; gap: 0.75rem; padding: 0.6rem 0.85rem; background: var(--gray-bg); border-radius: var(--radius-sm); }
-.factor-icon { font-size: 0.9rem; flex-shrink: 0; }
-.factor-body { flex: 1; min-width: 0; }
-.factor-title { font-size: 0.75rem; font-weight: 600; color: var(--black); }
-.factor-detail { font-size: 0.67rem; color: var(--gray); font-weight: 300; margin-top: 1px; }
-.factor-right { display: flex; align-items: center; gap: 0.45rem; flex-shrink: 0; }
-.factor-bar { width: 50px; height: 4px; background: var(--gray-bg2); border-radius: 100px; overflow: hidden; }
-.factor-bar-fill { height: 100%; border-radius: 100px; }
-.factor-score { font-size: 0.68rem; font-weight: 700; font-variant-numeric: tabular-nums; }
-
-.dispatch-out { background: var(--accent-light); border: 1px solid rgba(45,90,61,0.18); border-radius: var(--radius); padding: 1.25rem 1.5rem; }
-.dispatch-out-label { font-size: 0.62rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(45,90,61,0.6); margin-bottom: 0.4rem; display: block; }
-.dispatch-out-time { font-size: 1.4rem; font-weight: 700; letter-spacing: -0.025em; color: var(--accent); line-height: 1; margin-bottom: 0.3rem; }
-.dispatch-out-note { font-size: 0.72rem; color: rgba(45,90,61,0.65); font-weight: 300; }
-
-.sea-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.6rem; margin-bottom: 0.6rem; }
-.sea-metric { padding: 0.85rem; background: var(--gray-bg); border-radius: var(--radius-sm); text-align: center; }
-.sea-metric-label { font-size: 0.6rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--gray-light); margin-bottom: 4px; }
-.sea-metric-val { font-size: 1.3rem; font-weight: 700; letter-spacing: -0.02em; line-height: 1; }
-.sea-metric-sub { font-size: 0.65rem; color: var(--gray); font-weight: 300; margin-top: 3px; }
-.port-row { display: flex; align-items: center; justify-content: space-between; padding: 0.55rem 0.85rem; background: var(--gray-bg); border-radius: var(--radius-sm); font-size: 0.78rem; }
-.port-row-name { color: var(--gray-dark); font-weight: 500; }
-
-.alert-item { display: flex; align-items: flex-start; gap: 0.75rem; padding: 0.6rem 0; border-bottom: 1px solid var(--gray-border); }
-.alert-item:last-child { border-bottom: none; padding-bottom: 0; }
-.alert-dot { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; margin-top: 0.35rem; }
-.alert-dot.high   { background: var(--accent-red); }
-.alert-dot.medium { background: var(--accent-amber); }
-.alert-dot.low    { background: var(--accent); }
-.alert-text { font-size: 0.78rem; color: var(--gray-dark); font-weight: 400; line-height: 1.5; }
-.alert-source { font-size: 0.65rem; color: var(--gray-light); margin-top: 2px; }
-
-.demo-nudge { background: var(--white); border: 1px solid var(--gray-border); border-radius: var(--radius); padding: 1.1rem 1.5rem; display: flex; align-items: center; justify-content: space-between; gap: 1rem; flex-wrap: wrap; }
-.demo-nudge-text { font-size: 0.8rem; color: var(--gray); font-weight: 300; line-height: 1.55; }
-.demo-nudge-text strong { color: var(--black); font-weight: 600; }
-
-/* ─────────────────────────
-   LEAD FORM (replaces Supabase)
-───────────────────────── */
-#feedback { background: var(--gray-bg); }
-.fb-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.25rem; margin-top: 2.5rem; }
-.fb-card { background: var(--white); border: 1px solid var(--gray-border); border-radius: var(--radius); padding: 1.75rem; }
-.fb-info-card { background: var(--white); border: 1px solid var(--gray-border); border-radius: var(--radius); padding: 1.75rem; display: flex; flex-direction: column; justify-content: space-between; }
-.fb-point { display: flex; align-items: flex-start; gap: 0.85rem; padding: 0.85rem 0; border-bottom: 1px solid var(--gray-border); }
-.fb-point:last-of-type { border-bottom: none; }
-.fb-point-icon { width: 30px; height: 30px; background: var(--gray-bg); border: 1px solid var(--gray-border); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 0.85rem; flex-shrink: 0; margin-top: 2px; }
-.fb-point-title { font-size: 0.82rem; font-weight: 600; color: var(--black); margin-bottom: 2px; }
-.fb-point-desc { font-size: 0.75rem; color: var(--gray); font-weight: 300; line-height: 1.55; }
-
-.form-status-msg {
-  padding: 0.85rem 1rem; border-radius: var(--radius-sm);
-  font-size: 0.82rem; font-weight: 500; margin-top: 0.75rem;
-  display: none; line-height: 1.5;
-}
-.form-status-msg.success { background: var(--accent-light); color: var(--accent); border: 1px solid rgba(45,90,61,0.2); display: block; }
-.form-status-msg.error   { background: var(--accent-red-bg); color: var(--accent-red); border: 1px solid rgba(138,45,45,0.2); display: block; }
-
-/* ─────────────────────────
-   CTA
-───────────────────────── */
-#cta { background: var(--white); text-align: center; }
-.cta-inner { max-width: 520px; margin: 0 auto; }
-.email-form { display: flex; gap: 0.5rem; justify-content: center; margin-top: 2rem; flex-wrap: wrap; }
-.email-input { flex: 1; min-width: 220px; max-width: 300px; padding: 0.75rem 1.25rem; border: 1px solid var(--gray-border); border-radius: 100px; font-family: 'Plus Jakarta Sans', sans-serif; font-size: 0.875rem; color: var(--black); background: var(--white); outline: none; transition: border-color 0.2s; }
-.email-input:focus { border-color: var(--black); }
-.email-input::placeholder { color: var(--gray-light); }
-.cta-trust { font-size: 0.72rem; color: var(--gray-light); margin-top: 1rem; font-weight: 300; }
-.cta-features { display: flex; justify-content: center; gap: 1.75rem; margin-top: 2.5rem; flex-wrap: wrap; }
-.cf-item { display: flex; align-items: center; gap: 6px; font-size: 0.78rem; color: var(--gray); }
-.cf-check { font-size: 0.7rem; color: var(--accent); }
-.cta-status { margin-top: 0.75rem; font-size: 0.8rem; font-weight: 500; min-height: 1.2em; }
-
-/* ─────────────────────────
-   FLOATING CTA
-───────────────────────── */
-.float-cta {
-  position: fixed; bottom: 1.75rem; right: 1.75rem; z-index: 150;
-  display: flex; align-items: center; gap: 0.5rem;
-  background: var(--black); color: var(--white);
-  padding: 0.75rem 1.25rem; border-radius: 100px;
-  font-family: 'Plus Jakarta Sans', sans-serif;
-  font-size: 0.8rem; font-weight: 600; cursor: pointer;
-  text-decoration: none; box-shadow: 0 4px 20px rgba(0,0,0,0.2);
-  transition: opacity 0.2s, transform 0.2s;
-  opacity: 0; transform: translateY(10px) scale(0.95);
-  pointer-events: none;
-}
-.float-cta.visible { opacity: 1; transform: none; pointer-events: auto; }
-.float-cta:hover { opacity: 0.85; transform: translateY(-2px); }
-
-/* ─────────────────────────
-   FOOTER
-───────────────────────── */
-footer { border-top: 1px solid var(--gray-border); padding: 1.75rem 2rem; display: flex; align-items: center; justify-content: space-between; }
-.footer-logo { font-size: 0.875rem; font-weight: 700; color: var(--black); letter-spacing: -0.02em; }
-.footer-note { font-size: 0.75rem; color: var(--gray-light); font-weight: 300; }
-.footer-links { display: flex; gap: 1.5rem; }
-.footer-links a { font-size: 0.75rem; color: var(--gray-light); text-decoration: none; transition: color 0.2s; }
-.footer-links a:hover { color: var(--gray-dark); }
-
-/* ─────────────────────────
-   RESPONSIVE
-───────────────────────── */
-@media (max-width: 900px) {
-  .solution-grid, .try-grid, .fb-grid, .trust-grid, .map-layout { grid-template-columns: 1fr; }
-  .db-body { grid-template-columns: 1fr; }
-  .route-cards { grid-template-columns: 1fr 1fr; }
-  .pain-cost, .ins-meta { display: none; }
-  nav .nav-links li:not(:last-child) { display: none; }
-  footer { flex-direction: column; gap: 1rem; text-align: center; }
-  .dispatch-recommend { flex-direction: column; }
-  .drec-facts { align-items: flex-start; }
-  .map-controls { display: grid; grid-template-columns: 1fr 1fr; gap: 0.85rem; }
-  #route-map { height: 320px; }
-  .float-cta { bottom: 1rem; right: 1rem; }
-}
-@media (max-width: 480px) {
-  h1 { font-size: 2rem; }
-  h2 { font-size: 1.6rem; }
-  section { padding: 4rem 1.25rem; }
-  .route-cards { grid-template-columns: 1fr; }
-  .hero-actions { flex-direction: column; }
-  .map-controls { grid-template-columns: 1fr; }
+@media(max-width:480px){
+  h1{font-size:2rem}h2{font-size:1.6rem}
+  section{padding:3.75rem 1.2rem}
+  .rc-grid{grid-template-columns:1fr}
+  .hero-actions{flex-direction:column}
 }
 </style>
-
 </head>
 <body>
 
-<!-- ══ FLOATING CTA ══ -->
+<!-- FLOATING CTA -->
+<a href="#cta" class="float-cta" id="float-cta">Get Early Access</a>
 
-<a href="#cta" class="float-cta" id="float-cta">
-  ⚡ Get Early Access
-</a>
-
-<!-- ══ NAV ══ -->
-
+<!-- NAV -->
 <nav>
-  <a href="#" class="nav-logo">
-    <div class="nav-logo-mark">R</div>
-    RouteRisk
-  </a>
+  <a href="#" class="logo"><div class="logo-mark">R</div>RouteRisk</a>
   <ul class="nav-links">
-    <li><a href="#problem">Why RouteRisk</a></li>
-    <li><a href="#map-section">Route Map</a></li>
-    <li><a href="#try">Try Demo</a></li>
-    <li><a href="#cta" class="nav-btn">Get Early Access</a></li>
+    <li><a href="#problem">Problem</a></li>
+    <li><a href="#try">Live Demo</a></li>
+    <li><a href="#feedback">Contact</a></li>
+    <li><a href="#cta" class="nav-cta">Get Early Access</a></li>
   </ul>
 </nav>
 
-<!-- ══ HERO ══ -->
-
+<!-- HERO -->
 <section id="hero">
-  <div class="container" style="text-align:center">
-    <div class="hero-tag reveal">
-      <div class="hero-tag-dot"></div>
-      Indonesia Logistics Intelligence · Now in Beta
-    </div>
+  <div class="wrap" style="text-align:center">
+    <div class="hero-pill reveal"><div class="hero-dot"></div>Indonesia Logistics Intelligence — Beta</div>
     <h1 class="reveal">Know Your Route Risk<br>Before You Dispatch</h1>
-    <p class="hero-sub reveal">RouteRisk turns public weather, traffic, road condition, and seasonal data into one clear risk score — so your fleet dispatches smarter, every time.</p>
+    <p class="hero-sub reveal">RouteRisk turns public weather, traffic, road conditions, and seasonal data into one clear risk score — so your fleet dispatches smarter, every time.</p>
     <div class="hero-actions reveal">
-      <a href="#map-section" class="btn-primary">See Route Map →</a>
-      <a href="#try" class="btn-ghost">Try the demo</a>
+      <a href="#try" class="btn">Try Live Demo →</a>
+      <a href="#solution" class="btn-ghost">How it works</a>
     </div>
-    <p class="hero-note reveal">No integration required &mdash; works in under 60 seconds</p>
-    <div class="hero-mockup reveal">
-      <div class="mockup-bar">
-        <div class="mb-dot"></div><div class="mb-dot"></div><div class="mb-dot"></div>
-        <span class="mockup-url">routerisk.id/dashboard</span>
-      </div>
-      <div class="mockup-body">
-        <span class="mockup-label">Route Risk Overview — Today</span>
-        <div class="route-cards">
-          <div class="route-card rc-low">
-            <div class="rc-route">Jakarta → Surabaya</div>
-            <div class="rc-score">12</div>
-            <span class="risk-badge badge-low">Low Risk</span>
-          </div>
-          <div class="route-card rc-medium">
-            <div class="rc-route">Medan → Pekanbaru</div>
-            <div class="rc-score">61</div>
-            <span class="risk-badge badge-medium">Moderate</span>
-          </div>
-          <div class="route-card rc-high">
-            <div class="rc-route">Balikpapan → Banjarmasin</div>
-            <div class="rc-score">89</div>
-            <span class="risk-badge badge-high">High Risk</span>
-          </div>
+    <p class="hero-note reveal">No integration required — works in under 60 seconds</p>
+    <div class="mockup reveal">
+      <div class="m-bar"><div class="m-dot"></div><div class="m-dot"></div><div class="m-dot"></div><span class="m-url">routerisk.id/dashboard</span></div>
+      <div class="m-body">
+        <span class="m-label">Route Risk Overview — Today</span>
+        <div class="rc-grid">
+          <div class="rc rc-low"><div class="rc-rt">Jakarta → Surabaya</div><div class="rc-sc">12</div><span class="badge b-low">Low Risk</span></div>
+          <div class="rc rc-med"><div class="rc-rt">Medan → Pekanbaru</div><div class="rc-sc">61</div><span class="badge b-med">Moderate</span></div>
+          <div class="rc rc-high"><div class="rc-rt">Balikpapan → Banjarmasin</div><div class="rc-sc">89</div><span class="badge b-high">High Risk</span></div>
         </div>
-        <div class="dispatch-row">
-          <div>
-            <div class="dr-label">Recommended Dispatch Window</div>
-            <div class="dr-time">06:00 – 10:00</div>
-          </div>
-          <div class="dr-badge">Optimal Today</div>
+        <div class="drow">
+          <div><div class="drow-lbl">Recommended Dispatch Window</div><div class="drow-time">06:00 – 10:00</div></div>
+          <div class="drow-badge">Optimal Today</div>
         </div>
       </div>
     </div>
   </div>
 </section>
 
-<div class="divider"></div>
+<div class="hr"></div>
 
-<!-- ══ PROBLEM ══ -->
-
+<!-- PROBLEM -->
 <section id="problem">
-  <div class="container">
-    <div class="section-head reveal">
-      <div class="eyebrow">The Problem</div>
-      <h2>Dispatchers are deciding blind.</h2>
-      <p class="section-sub">Route decisions get made on instinct, driver WhatsApp messages, and basic maps. There is no intelligence layer that connects weather, traffic, and road conditions before the truck leaves.</p>
-    </div>
+  <div class="wrap">
+    <div class="reveal"><span class="label">The Problem</span><h2>Dispatchers are deciding blind.</h2><p class="sub">Route decisions get made on instinct, driver messages, and basic maps. No intelligence layer connects weather, traffic, and road conditions before the truck leaves.</p></div>
     <div class="pain-list reveal">
-      <div class="pain-item">
-        <div class="pain-num">01</div>
-        <div>
-          <div class="pain-title">Unpredictable weather delays</div>
-          <div class="pain-desc">Heavy rainfall on Pantura, flash floods in Sumatra — no one sees it coming at the route level before the truck is already stuck.</div>
-        </div>
-        <div class="pain-cost">Rp 2–5 juta per incident</div>
-      </div>
-      <div class="pain-item">
-        <div class="pain-num">02</div>
-        <div>
-          <div class="pain-title">Poor dispatch timing decisions</div>
-          <div class="pain-desc">Fleets dispatch at the worst possible window — when congestion and weather risk peak together — simply because no one knows the better alternative.</div>
-        </div>
-        <div class="pain-cost">+3–6 hrs wasted per trip</div>
-      </div>
-      <div class="pain-item">
-        <div class="pain-num">03</div>
-        <div>
-          <div class="pain-title">No route-level visibility</div>
-          <div class="pain-desc">Alternate routes that are faster today go unused. Road quality issues stay invisible. Seasonal congestion spikes come as a surprise every year.</div>
-        </div>
-        <div class="pain-cost">8–15% fuel wasted</div>
-      </div>
+      <div class="pain-item"><div class="pain-n">01</div><div><div class="pain-t">Unpredictable weather delays</div><div class="pain-d">Heavy rainfall on Pantura, flash floods in Sumatra — no one sees it coming at route level before the truck is already stuck.</div></div><div class="pain-c">Rp 2–5 juta per incident</div></div>
+      <div class="pain-item"><div class="pain-n">02</div><div><div class="pain-t">Poor dispatch timing decisions</div><div class="pain-d">Fleets dispatch at the worst possible window — when congestion and weather risk peak together — because no one knows the better alternative.</div></div><div class="pain-c">+3–6 hrs wasted per trip</div></div>
+      <div class="pain-item"><div class="pain-n">03</div><div><div class="pain-t">No route-level visibility</div><div class="pain-d">Alternate routes go unused. Road quality issues stay invisible. Seasonal congestion spikes come as a surprise every year.</div></div><div class="pain-c">8–15% fuel wasted</div></div>
     </div>
-    <p style="font-size:0.82rem;color:var(--gray);font-style:italic;font-weight:300;margin-top:1.5rem;">If 2 of these 3 situations feel familiar, your dispatch process needs better intelligence.</p>
   </div>
 </section>
 
-<div class="divider"></div>
+<div class="hr"></div>
 
-<!-- ══ SOLUTION ══ -->
-
+<!-- SOLUTION -->
 <section id="solution">
-  <div class="container">
-    <div class="section-head reveal">
-      <div class="eyebrow">The Solution</div>
-      <h2>One score. One decision.<br>Fewer delays.</h2>
-      <p class="section-sub">RouteRisk aggregates fragmented public data into a single, processed intelligence layer — built specifically for Indonesia's logistics corridors.</p>
-    </div>
-    <div class="solution-grid">
-      <div class="sol-card reveal reveal-d1">
-        <div class="sol-num">Feature 01</div>
-        <span class="sol-icon">◎</span>
-        <div class="sol-title">Route Risk Score</div>
-        <p class="sol-desc">Every corridor gets a 0–100 risk score before you dispatch — combining weather, traffic congestion, road quality, and seasonal demand signals.</p>
-      </div>
-      <div class="sol-card reveal reveal-d2">
-        <div class="sol-num">Feature 02</div>
-        <span class="sol-icon">◷</span>
-        <div class="sol-title">Dispatch Window Recommender</div>
-        <p class="sol-desc">Know your optimal 2–4 hour dispatch window for the next 72 hours, based on BMKG forecasts and historical traffic patterns per corridor.</p>
-      </div>
-      <div class="sol-card reveal reveal-d3">
-        <div class="sol-num">Feature 03</div>
-        <span class="sol-icon">◈</span>
-        <div class="sol-title">Delay Prediction Alerts</div>
-        <p class="sol-desc">Receive proactive alerts before incidents affect your routes — flood events, toll closures, harvest season congestion — all from public sources.</p>
-      </div>
+  <div class="wrap">
+    <div class="reveal"><span class="label">The Solution</span><h2>One score. One decision.<br>Fewer delays.</h2><p class="sub">RouteRisk aggregates fragmented public data into one processed intelligence layer — built specifically for Indonesia's logistics corridors.</p></div>
+    <div class="sol-grid">
+      <div class="sol-card reveal d1"><div class="sol-n">Feature 01</div><span class="sol-icon">◎</span><div class="sol-t">Route Risk Score</div><p class="sol-d">Every corridor gets a 0–100 risk score before dispatch — combining weather, traffic, road quality, and seasonal demand signals.</p></div>
+      <div class="sol-card reveal d2"><div class="sol-n">Feature 02</div><span class="sol-icon">◷</span><div class="sol-t">Dispatch Window Recommender</div><p class="sol-d">Know your optimal dispatch window for the next 72 hours, based on real weather forecasts and traffic patterns per corridor.</p></div>
+      <div class="sol-card reveal d3"><div class="sol-n">Feature 03</div><span class="sol-icon">◈</span><div class="sol-t">Map Risk Visualization</div><p class="sol-d">Color-coded risk segments on a live map — land routes green/yellow/red, sea routes blue/yellow/red — with per-segment weather detail.</p></div>
     </div>
   </div>
 </section>
 
-<div class="divider"></div>
+<div class="hr"></div>
 
-<!-- ══════════════════════════════════════════
-     MAP SECTION — NEW v3
-══════════════════════════════════════════ -->
-
-<section id="map-section">
-  <div class="container">
-    <div class="section-head reveal">
-      <div class="eyebrow">Route Risk Map</div>
-      <h2>See your corridor risk,<br>visualized on the map.</h2>
-      <p class="section-sub">Select any origin and destination. RouteRisk draws the corridor with color-coded segments — green for safe zones, yellow for caution, red for high-risk areas.</p>
-    </div>
-
-```
-<div class="map-layout reveal">
-
-  <!-- Controls -->
-  <div class="map-controls">
-
-    <div class="map-control-card">
-      <span class="eyebrow" style="margin-bottom:0.75rem;">Select Route</span>
-
-      <label class="field-label" for="map-origin">Origin</label>
-      <select class="field-input" id="map-origin" onchange="onMapCityChange()">
-        <option value="">Choose origin...</option>
-        <optgroup label="── Java">
-          <option value="jakarta">Jakarta</option>
-          <option value="surabaya">Surabaya</option>
-          <option value="semarang">Semarang</option>
-          <option value="bandung">Bandung</option>
-          <option value="merak">Merak</option>
-        </optgroup>
-        <optgroup label="── Sumatra">
-          <option value="medan">Medan</option>
-          <option value="palembang">Palembang</option>
-          <option value="pekanbaru">Pekanbaru</option>
-          <option value="batam">Batam</option>
-          <option value="bakauheni">Bakauheni</option>
-        </optgroup>
-        <optgroup label="── Kalimantan">
-          <option value="balikpapan">Balikpapan</option>
-          <option value="banjarmasin">Banjarmasin</option>
-          <option value="pontianak">Pontianak</option>
-        </optgroup>
-        <optgroup label="── Sulawesi & Timur">
-          <option value="makassar">Makassar</option>
-          <option value="manado">Manado</option>
-          <option value="sorong">Sorong</option>
-        </optgroup>
-      </select>
-
-      <label class="field-label" for="map-dest">Destination</label>
-      <select class="field-input" id="map-dest" onchange="onMapCityChange()">
-        <option value="">Choose destination...</option>
-        <optgroup label="── Java">
-          <option value="jakarta">Jakarta</option>
-          <option value="surabaya">Surabaya</option>
-          <option value="semarang">Semarang</option>
-          <option value="bandung">Bandung</option>
-          <option value="merak">Merak</option>
-        </optgroup>
-        <optgroup label="── Sumatra">
-          <option value="medan">Medan</option>
-          <option value="palembang">Palembang</option>
-          <option value="pekanbaru">Pekanbaru</option>
-          <option value="batam">Batam</option>
-          <option value="bakauheni">Bakauheni</option>
-        </optgroup>
-        <optgroup label="── Kalimantan">
-          <option value="balikpapan">Balikpapan</option>
-          <option value="banjarmasin">Banjarmasin</option>
-          <option value="pontianak">Pontianak</option>
-        </optgroup>
-        <optgroup label="── Sulawesi & Timur">
-          <option value="makassar">Makassar</option>
-          <option value="manado">Manado</option>
-          <option value="sorong">Sorong</option>
-        </optgroup>
-      </select>
-
-      <button class="map-btn" id="map-btn" onclick="drawRouteMap()">
-        <div class="try-spinner" id="map-spinner"></div>
-        <span id="map-btn-text">Visualise Route →</span>
-      </button>
-    </div>
-
-    <!-- Legend -->
-    <div class="map-legend">
-      <div class="legend-title">Risk Level Legend</div>
-      <div class="legend-item">
-        <div class="legend-dot low"></div>
-        <div>
-          <div style="font-weight:600;font-size:0.78rem;">Low Risk</div>
-          <div style="font-size:0.68rem;color:var(--gray-light);">Clear weather · Good road</div>
-        </div>
-      </div>
-      <div class="legend-item">
-        <div class="legend-dot medium"></div>
-        <div>
-          <div style="font-weight:600;font-size:0.78rem;">Moderate Risk</div>
-          <div style="font-size:0.68rem;color:var(--gray-light);">Light rain · Traffic caution</div>
-        </div>
-      </div>
-      <div class="legend-item">
-        <div class="legend-dot high"></div>
-        <div>
-          <div style="font-weight:600;font-size:0.78rem;">High Risk</div>
-          <div style="font-size:0.68rem;color:var(--gray-light);">Heavy rain · Flood alert</div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Toggle risk layer -->
-    <button class="map-btn-outline active" id="toggle-risk-btn" onclick="toggleRiskLayer()">
-      <span id="toggle-icon">◎</span>
-      <span id="toggle-text">Risk Layer: ON</span>
-    </button>
-
-    <!-- Risk summary -->
-    <div class="risk-summary-card" id="risk-summary">
-      <div class="risk-summary-title">Route Risk Summary</div>
-      <div id="summary-body"></div>
-    </div>
-
-  </div>
-
-  <!-- Map -->
-  <div class="map-container-wrap">
-    <div id="route-map"></div>
-    <div class="map-empty-state" id="map-empty">
-      <div class="map-empty-icon">🗺️</div>
-      <div class="map-empty-text">Select origin and destination<br>to visualise the route risk</div>
-    </div>
-  </div>
-
-</div>
-```
-
-  </div>
-</section>
-
-<div class="divider"></div>
-
-<!-- ══ DASHBOARD PREVIEW ══ -->
-
+<!-- DASHBOARD PREVIEW -->
 <section id="dashboard">
-  <div class="container">
-    <div class="section-head reveal">
-      <div class="eyebrow">Dashboard Preview</div>
-      <h2>Your dispatch intelligence,<br>all in one view.</h2>
-      <p class="section-sub">A clean, focused command center for fleet dispatchers. No training required. No setup. No waiting.</p>
-    </div>
-    <div class="db-wrapper reveal">
-      <div class="db-topbar">
-        <div class="db-title">RouteRisk — Dispatch Intelligence</div>
-        <div class="db-live"><div class="live-dot"></div>Live Data</div>
-      </div>
+  <div class="wrap">
+    <div class="reveal"><span class="label">Dashboard Preview</span><h2>Your dispatch intelligence,<br>all in one view.</h2><p class="sub">A focused command center for fleet dispatchers. No training required. No setup. No waiting.</p></div>
+    <div class="db-wrap reveal">
+      <div class="db-top"><div class="db-title">RouteRisk — Dispatch Intelligence</div><div class="db-live"><div class="live-dot"></div>Live Data</div></div>
       <div class="db-body">
         <div class="db-card">
-          <span class="eyebrow" style="margin-bottom:0.75rem;">Route Risk Index</span>
+          <span class="label" style="margin-bottom:.7rem;">Route Risk Index</span>
           <div class="risk-row">
-            <div class="risk-item">
-              <div class="ri-route">Jakarta → Surabaya</div>
-              <div class="ri-bar-wrap"><div class="ri-bar bar-low"></div></div>
-              <span class="ri-badge badge-low">Low</span>
-            </div>
-            <div class="risk-item">
-              <div class="ri-route">Medan → Pekanbaru</div>
-              <div class="ri-bar-wrap"><div class="ri-bar bar-medium"></div></div>
-              <span class="ri-badge badge-medium">Moderate</span>
-            </div>
-            <div class="risk-item">
-              <div class="ri-route">Balikpapan → Banjarmasin</div>
-              <div class="ri-bar-wrap"><div class="ri-bar bar-high"></div></div>
-              <span class="ri-badge badge-high">High</span>
-            </div>
-            <div class="risk-item">
-              <div class="ri-route">Jakarta → Semarang</div>
-              <div class="ri-bar-wrap"><div class="ri-bar bar-low" style="width:18%"></div></div>
-              <span class="ri-badge badge-low">Low</span>
-            </div>
+            <div class="ri"><div class="ri-name">Jakarta → Surabaya</div><div class="ri-bar-w"><div class="ri-bar bar-low"></div></div><span class="ri-badge b-low">Low</span></div>
+            <div class="ri"><div class="ri-name">Medan → Pekanbaru</div><div class="ri-bar-w"><div class="ri-bar bar-med"></div></div><span class="ri-badge b-med">Moderate</span></div>
+            <div class="ri"><div class="ri-name">Balikpapan → Banjarmasin</div><div class="ri-bar-w"><div class="ri-bar bar-high"></div></div><span class="ri-badge b-high">High</span></div>
+            <div class="ri"><div class="ri-name">Jakarta → Semarang</div><div class="ri-bar-w"><div class="ri-bar bar-low" style="width:18%"></div></div><span class="ri-badge b-low">Low</span></div>
           </div>
         </div>
         <div class="db-card">
-          <span class="eyebrow" style="margin-bottom:0.75rem;">Live Conditions</span>
-          <div class="indicators">
+          <span class="label" style="margin-bottom:.7rem;">Live Conditions</span>
+          <div class="inds">
             <div class="ind-item"><div class="ind-icon">🌧</div><div><div class="ind-name">Weather — East Kalimantan</div><div class="ind-val">Heavy rain forecast · 80mm+ next 24hr · BMKG</div></div></div>
             <div class="ind-item"><div class="ind-icon">🚛</div><div><div class="ind-name">Traffic — Pantura Corridor</div><div class="ind-val">+12% above baseline · manageable</div></div></div>
             <div class="ind-item"><div class="ind-icon">⚠️</div><div><div class="ind-name">Flood Alert — Demak–Kudus</div><div class="ind-val">Active monitoring · BPBD Jateng · 2h ago</div></div></div>
-            <div class="ind-item"><div class="ind-icon">📦</div><div><div class="ind-name">Seasonal Signal — South Kalimantan</div><div class="ind-val">CPO harvest surge expected · BPS data</div></div></div>
+            <div class="ind-item"><div class="ind-icon">📦</div><div><div class="ind-name">Seasonal — South Kalimantan</div><div class="ind-val">CPO harvest surge expected · BPS data</div></div></div>
           </div>
         </div>
-        <div class="db-card dispatch-card">
-          <span class="eyebrow" style="margin-bottom:0.75rem;">Recommended Dispatch Window · Jakarta → Surabaya</span>
-          <div class="dispatch-recommend">
-            <div>
-              <div class="drec-label">Optimal window today</div>
-              <div class="drec-time">06:00 – 10:00</div>
-              <div class="drec-note">Next best window: 20:00 – 23:00</div>
-            </div>
-            <div style="text-align:right;flex-shrink:0;">
-              <div style="font-size:0.62rem;font-weight:600;letter-spacing:0.06em;text-transform:uppercase;color:rgba(45,90,61,0.6);margin-bottom:4px;">Based on</div>
-              <div class="drec-facts">
-                <div class="drec-fact">↓ 40% traffic vs afternoon</div>
-                <div class="drec-fact">No active flood alerts</div>
-                <div class="drec-fact">Light rain forecast only</div>
-              </div>
-            </div>
+        <div class="db-card db-full">
+          <span class="label" style="margin-bottom:.7rem;">Recommended Dispatch Window · Jakarta → Surabaya</span>
+          <div class="disp-rec">
+            <div><div class="dr-lbl">Optimal window today</div><div class="dr-time">06:00 – 10:00</div><div class="dr-note">Next best window: 20:00 – 23:00</div></div>
+            <div style="text-align:right;flex-shrink:0;"><div style="font-size:.6rem;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:rgba(45,90,61,.6);margin-bottom:4px;">Based on</div><div class="dr-facts"><div class="dr-fact">Traffic 40% below afternoon peak</div><div class="dr-fact">No active flood alerts</div><div class="dr-fact">Light rain forecast only</div></div></div>
           </div>
         </div>
       </div>
@@ -973,1304 +482,958 @@ footer { border-top: 1px solid var(--gray-border); padding: 1.75rem 2rem; displa
   </div>
 </section>
 
-<div class="divider"></div>
+<div class="hr"></div>
 
-<!-- ══ INSIGHTS ══ -->
-
+<!-- INSIGHTS -->
 <section id="insights">
-  <div class="container">
-    <div class="section-head reveal">
-      <div class="eyebrow">Sample Insights</div>
-      <h2>The kind of intelligence<br>that changes decisions.</h2>
-      <p class="section-sub">Real insights generated purely from public data — delivered before dispatch, not after the delay.</p>
-    </div>
-    <div class="insights-list">
-      <div class="insight-row reveal reveal-d1">
-        <span class="ins-tag badge-high">Alert</span>
-        <div><div class="ins-title">High delay risk this afternoon on Trans-Kalimantan Highway</div><div class="ins-desc">BMKG forecasts 80mm+ rainfall in East Kalimantan. 2 active BPBD flood monitoring points on route. Recommend delaying departure or switching to sea via Makassar Strait.</div></div>
-        <div class="ins-meta">2 hours ago</div>
-      </div>
-      <div class="insight-row reveal reveal-d2">
-        <span class="ins-tag badge-low">Optimal</span>
-        <div><div class="ins-title">Best dispatch window: 06:00–10:00 for Pantura corridor</div><div class="ins-desc">Traffic index drops 40% versus afternoon peak. No active flood alerts along Jakarta–Surabaya route. Road quality index on this segment: normal.</div></div>
-        <div class="ins-meta">Updated today</div>
-      </div>
-      <div class="insight-row reveal reveal-d3">
-        <span class="ins-tag badge-medium">Forecast</span>
-        <div><div class="ins-title">Seasonal volume surge expected in South Kalimantan next 3–4 weeks</div><div class="ins-desc">BPS production data shows October–November is peak CPO export season. Expect 25–35% volume increase on Banjarmasin corridor. Pre-book slots now.</div></div>
-        <div class="ins-meta">Seasonal signal</div>
-      </div>
+  <div class="wrap">
+    <div class="reveal"><span class="label">Sample Insights</span><h2>The kind of intelligence<br>that changes decisions.</h2><p class="sub">Real insights generated from public data — delivered before dispatch, not after the delay.</p></div>
+    <div class="ins-list">
+      <div class="ins-row reveal d1"><span class="ins-tag b-high">Alert</span><div><div class="ins-t">High delay risk on Trans-Kalimantan Highway</div><div class="ins-d">BMKG forecasts 80mm+ rainfall in East Kalimantan. 2 active BPBD flood monitoring points on route. Recommend delaying or switching to sea via Makassar Strait.</div></div><div class="ins-m">2 hours ago</div></div>
+      <div class="ins-row reveal d2"><span class="ins-tag b-low">Optimal</span><div><div class="ins-t">Best dispatch window: 06:00–10:00 for Pantura corridor</div><div class="ins-d">Traffic index drops 40% versus afternoon peak. No active flood alerts along Jakarta–Surabaya route. Road quality index: normal.</div></div><div class="ins-m">Updated today</div></div>
+      <div class="ins-row reveal d3"><span class="ins-tag b-med">Forecast</span><div><div class="ins-t">Seasonal volume surge expected in South Kalimantan</div><div class="ins-d">BPS data shows October–November is peak CPO export season. Expect 25–35% volume increase on Banjarmasin corridor. Pre-book slots now.</div></div><div class="ins-m">Seasonal signal</div></div>
     </div>
   </div>
 </section>
 
-<div class="divider"></div>
+<div class="hr"></div>
 
-<!-- ══ TRUST ══ -->
-
+<!-- TRUST -->
 <section id="trust">
-  <div class="container">
-    <div class="section-head reveal">
-      <div class="eyebrow">How It Works</div>
-      <h2>Powered by public data.<br>Requires nothing from you.</h2>
-      <p class="section-sub">RouteRisk aggregates nine public data sources into one processed intelligence layer. You get the insight. We do the aggregation.</p>
-    </div>
+  <div class="wrap">
+    <div class="reveal"><span class="label">How It Works</span><h2>Powered by public data.<br>Requires nothing from you.</h2><p class="sub">RouteRisk aggregates public data sources into one processed intelligence layer. You get the insight — we do the aggregation.</p></div>
     <div class="trust-grid">
-      <div class="trust-card reveal reveal-d1">
-        <span class="tc-icon">◎</span>
-        <div class="tc-title">Powered by public data only</div>
-        <div class="tc-desc">We source from government open data, public APIs, and open geospatial systems — then process them into actionable insights for your specific corridors.</div>
-        <div class="sources-row">
-          <span class="src-tag">BMKG Weather</span><span class="src-tag">BPBD Alerts</span>
-          <span class="src-tag">PUPR Road Index</span><span class="src-tag">BPS Statistics</span>
-          <span class="src-tag">OpenStreetMap</span>
-        </div>
-      </div>
-      <div class="trust-card reveal reveal-d2">
-        <span class="tc-icon">◈</span>
-        <div class="tc-title">No integration. No data sharing.</div>
-        <div class="tc-desc">RouteRisk requires nothing from your systems. No ERP, no GPS feed, no fleet data. Zero IT involvement, zero security risk. Sign up and get your first risk score in under 60 seconds.</div>
-        <div class="sources-row" style="margin-top:1.25rem;">
-          <span class="src-tag">✓ No ERP needed</span><span class="src-tag">✓ No TMS needed</span>
-          <span class="src-tag">✓ No GPS needed</span><span class="src-tag">✓ Works instantly</span>
-        </div>
-      </div>
+      <div class="trust-card reveal d1"><span class="tc-icon">◎</span><div class="tc-t">Powered by public data only</div><div class="tc-d">We source from government open data, public APIs, and open geospatial systems — then process them into actionable insights for your corridors.</div><div class="src-row"><span class="src">BMKG Weather</span><span class="src">BPBD Alerts</span><span class="src">PUPR Road Index</span><span class="src">BPS Statistics</span><span class="src">OpenStreetMap</span></div></div>
+      <div class="trust-card reveal d2"><span class="tc-icon">◈</span><div class="tc-t">No integration. No data sharing.</div><div class="tc-d">RouteRisk requires nothing from your systems. No ERP, no GPS feed, no fleet data. Zero IT involvement. Get your first risk score in under 60 seconds.</div><div class="src-row" style="margin-top:1.1rem;"><span class="src">No ERP needed</span><span class="src">No TMS needed</span><span class="src">No GPS needed</span><span class="src">Works instantly</span></div></div>
     </div>
   </div>
 </section>
 
-<div class="divider"></div>
+<div class="hr"></div>
 
-<!-- ══ TRY DEMO ══ -->
-
+<!-- LIVE DEMO -->
 <section id="try">
-  <div class="container">
-    <div class="section-head reveal">
-      <div class="eyebrow">Live Intelligence Demo</div>
-      <h2>Try it now — real public data,<br>no signup required.</h2>
-      <p class="section-sub">Select any Indonesia corridor. RouteRisk detects the route type, fetches live weather from BMKG, and calculates a risk score in seconds.</p>
-    </div>
+  <div class="wrap-wide">
+    <div class="reveal"><span class="label">Live Intelligence Demo</span><h2>Try it now — real weather data,<br>map visualization, instant score.</h2><p class="sub">Select corridor and transport type. RouteRisk auto-detects route mode, fetches live weather, draws a color-coded risk map, and returns your dispatch window.</p></div>
 
-```
-<div class="try-grid reveal">
+    <div class="demo-shell reveal">
 
-  <!-- INPUT -->
-  <div class="try-input-card">
-    <span class="eyebrow">Select Your Route</span>
+      <!-- LEFT PANEL -->
+      <div class="demo-left">
+        <div class="input-card">
+          <span class="label" style="margin-bottom:.8rem;">Route Configuration</span>
+          <label class="fl" for="d-orig">Origin City / Port</label>
+          <select class="fi" id="d-orig" onchange="onInputChange()">
+            <option value="">Choose origin...</option>
+            <optgroup label="Java"><option value="jakarta">Jakarta (Tanjung Priok)</option><option value="surabaya">Surabaya (Tanjung Perak)</option><option value="semarang">Semarang (Tanjung Emas)</option><option value="bandung">Bandung</option><option value="yogyakarta">Yogyakarta</option><option value="merak">Merak Port</option></optgroup>
+            <optgroup label="Sumatra"><option value="medan">Medan (Belawan Port)</option><option value="palembang">Palembang</option><option value="pekanbaru">Pekanbaru</option><option value="batam">Batam Port</option><option value="dumai">Dumai Port</option><option value="bakauheni">Bakauheni Port</option></optgroup>
+            <optgroup label="Kalimantan"><option value="balikpapan">Balikpapan (Kariangau)</option><option value="banjarmasin">Banjarmasin (Trisakti)</option><option value="samarinda">Samarinda</option><option value="pontianak">Pontianak</option></optgroup>
+            <optgroup label="Sulawesi and East"><option value="makassar">Makassar (Soekarno-Hatta)</option><option value="manado">Manado</option><option value="palu">Palu</option><option value="sorong">Sorong</option></optgroup>
+          </select>
+          <label class="fl" for="d-dest">Destination City / Port</label>
+          <select class="fi" id="d-dest" onchange="onInputChange()">
+            <option value="">Choose destination...</option>
+            <optgroup label="Java"><option value="jakarta">Jakarta (Tanjung Priok)</option><option value="surabaya">Surabaya (Tanjung Perak)</option><option value="semarang">Semarang (Tanjung Emas)</option><option value="bandung">Bandung</option><option value="yogyakarta">Yogyakarta</option><option value="merak">Merak Port</option></optgroup>
+            <optgroup label="Sumatra"><option value="medan">Medan (Belawan Port)</option><option value="palembang">Palembang</option><option value="pekanbaru">Pekanbaru</option><option value="batam">Batam Port</option><option value="dumai">Dumai Port</option><option value="bakauheni">Bakauheni Port</option></optgroup>
+            <optgroup label="Kalimantan"><option value="balikpapan">Balikpapan (Kariangau)</option><option value="banjarmasin">Banjarmasin (Trisakti)</option><option value="samarinda">Samarinda</option><option value="pontianak">Pontianak</option></optgroup>
+            <optgroup label="Sulawesi and East"><option value="makassar">Makassar (Soekarno-Hatta)</option><option value="manado">Manado</option><option value="palu">Palu</option><option value="sorong">Sorong</option></optgroup>
+          </select>
+          <label class="fl" for="d-transport">Transport Type</label>
+          <select class="fi" id="d-transport" onchange="onInputChange()">
+            <optgroup label="Land"><option value="truck-heavy">Tronton / Truck 20T</option><option value="truck-medium">Fuso / Truck 15T</option><option value="truck-light">Engkel / Truck 8T</option></optgroup>
+            <optgroup label="Sea"><option value="barge">Barge / Tongkang</option><option value="roro">Ro-Ro Ferry</option><option value="container-vessel">Container Vessel</option></optgroup>
+            <optgroup label="Air"><option value="air-cargo">Air Cargo</option></optgroup>
+          </select>
+          <div class="rt-pill" id="rt-pill" style="display:none;"><span class="rt-pill-lbl">Route Mode</span><span class="badge" id="rt-badge"></span></div>
+          <button class="try-btn" id="run-btn" onclick="runAnalysis()"><div class="spin" id="run-spin"></div><span id="run-txt">Analyse Route</span></button>
+          <div class="wx-bar" id="wx-bar"><div class="wx-dot"></div><span id="wx-msg"></span></div>
+        </div>
 
-    <label class="field-label" for="try-origin">Origin City / Port</label>
-    <select class="field-input" id="try-origin" onchange="onCityChange()">
-      <option value="">Choose origin...</option>
-      <optgroup label="── Java">
-        <option value="jakarta">Jakarta (Tanjung Priok)</option>
-        <option value="surabaya">Surabaya (Tanjung Perak)</option>
-        <option value="semarang">Semarang (Tanjung Emas)</option>
-        <option value="bandung">Bandung</option>
-        <option value="yogyakarta">Yogyakarta</option>
-        <option value="merak">Merak Port</option>
-      </optgroup>
-      <optgroup label="── Sumatra">
-        <option value="medan">Medan (Belawan Port)</option>
-        <option value="palembang">Palembang</option>
-        <option value="pekanbaru">Pekanbaru</option>
-        <option value="batam">Batam Port</option>
-        <option value="dumai">Dumai Port</option>
-        <option value="bakauheni">Bakauheni Port</option>
-      </optgroup>
-      <optgroup label="── Kalimantan">
-        <option value="balikpapan">Balikpapan (Kariangau)</option>
-        <option value="banjarmasin">Banjarmasin (Trisakti)</option>
-        <option value="samarinda">Samarinda</option>
-        <option value="pontianak">Pontianak</option>
-      </optgroup>
-      <optgroup label="── Sulawesi & Timur">
-        <option value="makassar">Makassar (Soekarno-Hatta)</option>
-        <option value="manado">Manado</option>
-        <option value="palu">Palu</option>
-        <option value="sorong">Sorong</option>
-      </optgroup>
-    </select>
-
-    <label class="field-label" for="try-dest">Destination City / Port</label>
-    <select class="field-input" id="try-dest" onchange="onCityChange()">
-      <option value="">Choose destination...</option>
-      <optgroup label="── Java">
-        <option value="jakarta">Jakarta (Tanjung Priok)</option>
-        <option value="surabaya">Surabaya (Tanjung Perak)</option>
-        <option value="semarang">Semarang (Tanjung Emas)</option>
-        <option value="bandung">Bandung</option>
-        <option value="yogyakarta">Yogyakarta</option>
-        <option value="merak">Merak Port</option>
-      </optgroup>
-      <optgroup label="── Sumatra">
-        <option value="medan">Medan (Belawan Port)</option>
-        <option value="palembang">Palembang</option>
-        <option value="pekanbaru">Pekanbaru</option>
-        <option value="batam">Batam Port</option>
-        <option value="dumai">Dumai Port</option>
-        <option value="bakauheni">Bakauheni Port</option>
-      </optgroup>
-      <optgroup label="── Kalimantan">
-        <option value="balikpapan">Balikpapan (Kariangau)</option>
-        <option value="banjarmasin">Banjarmasin (Trisakti)</option>
-        <option value="samarinda">Samarinda</option>
-        <option value="pontianak">Pontianak</option>
-      </optgroup>
-      <optgroup label="── Sulawesi & Timur">
-        <option value="makassar">Makassar (Soekarno-Hatta)</option>
-        <option value="manado">Manado</option>
-        <option value="palu">Palu</option>
-        <option value="sorong">Sorong</option>
-      </optgroup>
-    </select>
-
-    <div id="route-type-preview" style="display:none;">
-      <div class="route-type-pill">
-        <span class="rtp-label">Detected Route Type</span>
-        <span id="route-type-badge" class="risk-badge"></span>
-      </div>
-    </div>
-
-    <label class="field-label">Transport Type</label>
-    <select class="field-input" id="try-truck">
-      <option value="tronton">Tronton 20T (Land)</option>
-      <option value="fuso">Fuso 15T (Land)</option>
-      <option value="engkel">Engkel 8T (Land)</option>
-      <option value="barge">Barge / Tongkang (Sea)</option>
-      <option value="roro">Ro-Ro Ferry (Sea)</option>
-      <option value="container">Container Vessel (Sea)</option>
-    </select>
-
-    <button class="try-btn" id="try-btn" onclick="runDemo()">
-      <div class="try-spinner" id="try-spinner"></div>
-      <span id="try-btn-text">Check Risk →</span>
-    </button>
-
-    <!-- Weather status indicator — IMPROVED v3 -->
-    <div class="wx-status-bar" id="wx-status-bar" style="display:none;">
-      <div class="wx-status-dot"></div>
-      <span id="wx-status-text"></span>
-    </div>
-
-    <p class="data-source-note">Weather via BMKG (primary) · OpenWeather (fallback) · Simulated (offline)</p>
-  </div>
-
-  <!-- OUTPUT -->
-  <div style="display:flex;flex-direction:column;gap:0.85rem;">
-
-    <div class="try-empty" id="try-empty">
-      <div class="try-empty-icon">◎</div>
-      <div class="try-empty-text">Select a route and click <strong style="color:var(--gray-dark);">Check Risk</strong><br>to see live intelligence for your corridor</div>
-    </div>
-
-    <div class="try-output-panel" id="try-output">
-
-      <div class="out-card" style="padding:1rem 1.25rem;">
-        <div style="display:flex;align-items:center;justify-content:space-between;gap:0.75rem;flex-wrap:wrap;">
-          <div>
-            <span class="eyebrow" style="margin-bottom:2px;">Analysed Route</span>
-            <div style="font-size:0.9rem;font-weight:700;color:var(--black);letter-spacing:-0.01em;" id="res-route-label">—</div>
-          </div>
-          <div style="display:flex;align-items:center;gap:0.5rem;flex-wrap:wrap;">
-            <span id="res-route-type-badge" class="risk-badge"></span>
-            <span id="res-data-freshness" style="font-size:0.65rem;color:var(--gray-light);font-weight:300;"></span>
+        <div class="legend-card">
+          <div class="leg-title">Map Legend</div>
+          <div class="leg-rows">
+            <div class="leg-item"><div class="leg-line" style="background:#4ade80;"></div><div><div class="leg-t">Low Risk</div><div class="leg-s">Clear or dry conditions</div></div></div>
+            <div class="leg-item"><div class="leg-line" style="background:#facc15;"></div><div><div class="leg-t">Moderate Risk</div><div class="leg-s">Light rain or congestion</div></div></div>
+            <div class="leg-item"><div class="leg-line" style="background:#f87171;"></div><div><div class="leg-t">High Risk</div><div class="leg-s">Heavy rain or flood alert</div></div></div>
+            <div class="leg-item"><div class="leg-line" style="background:#60a5fa;"></div><div><div class="leg-t">Sea Segment (Low)</div><div class="leg-s">Calm seas</div></div></div>
+            <div class="leg-item"><div class="leg-line" style="background:#f87171;border:1px dashed rgba(0,0,0,.15);"></div><div><div class="leg-t">Sea Segment (High)</div><div class="leg-s">Heavy swell or high wind</div></div></div>
+            <div class="leg-item"><div class="leg-line" style="background:#a78bfa;"></div><div><div class="leg-t">Air Corridor</div><div class="leg-s">Direct air route</div></div></div>
           </div>
         </div>
+
+        <div class="sum-card" id="sum-card">
+          <div class="leg-title">Route Risk Composition</div>
+          <div id="sum-body"></div>
+        </div>
       </div>
 
-      <div class="out-card">
-        <span class="eyebrow">Total Risk Score</span>
-        <div class="score-row">
-          <div>
-            <div class="score-num" id="demo-score-num">—</div>
-            <div class="score-sub" id="demo-score-sub">—</div>
+      <!-- RIGHT PANEL -->
+      <div class="demo-right">
+        <div class="demo-empty" id="demo-empty">
+          <div class="de-icon">◎</div>
+          <div class="de-text">Configure your route on the left<br>and click <strong style="color:var(--gray-dk);">Analyse Route</strong> to begin</div>
+        </div>
+
+        <div class="demo-results" id="demo-results">
+
+          <div class="rh">
+            <div><div class="rh-name" id="rh-name"></div><div class="rh-sub" id="rh-sub"></div></div>
+            <div class="rh-right"><span class="badge" id="rh-badge"></span><span style="font-size:.6rem;color:var(--gray-lt);font-weight:300;" id="rh-fresh"></span></div>
           </div>
-          <span class="risk-badge" id="demo-score-badge">—</span>
+
+          <div class="map-wrap">
+            <div id="demo-map"></div>
+            <div class="map-overlay" id="map-overlay"><div class="mo-icon">🗺️</div><div>Preparing map...</div></div>
+            <button class="map-toggle" id="map-toggle" onclick="toggleRisk()">Risk Layer: ON</button>
+          </div>
+
+          <div class="score-card">
+            <span class="label">Total Risk Score</span>
+            <div class="score-row">
+              <div><div class="score-num" id="score-num">0</div><div class="score-sub" id="score-sub"></div></div>
+              <span class="badge" id="score-badge"></span>
+            </div>
+            <div class="sbar-track"><div class="sbar-fill" id="sbar"></div></div>
+            <div class="sbar-ends"><span>0 — Minimal</span><span>50</span><span>100 — Critical</span></div>
+          </div>
+
+          <div class="card">
+            <span class="label">Risk Factor Breakdown</span>
+            <div class="factor-list" id="factor-list"></div>
+          </div>
+
+          <div class="card" id="sea-card" style="display:none;">
+            <span class="label">Sea and Port Conditions</span>
+            <div id="sea-body"></div>
+          </div>
+
+          <div class="disp-out">
+            <span class="disp-lbl">Recommended Dispatch Window</span>
+            <div class="disp-time" id="disp-time"></div>
+            <div class="disp-note" id="disp-note"></div>
+          </div>
+
+          <div class="card">
+            <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:.72rem;">
+              <span class="label" style="margin-bottom:0;">Active Corridor Alerts</span>
+              <span id="alert-src" style="font-size:.6rem;color:var(--gray-lt);font-weight:300;"></span>
+            </div>
+            <div id="alert-list"></div>
+          </div>
+
+          <div class="nudge">
+            <div class="nudge-text"><strong>Want continuous monitoring for your routes?</strong><br>Real-time alerts, 72-hour forecasts, and daily digests — all from public data.</div>
+            <a href="#cta" class="btn" style="font-size:.78rem;padding:.62rem 1.15rem;white-space:nowrap;">Get Early Access</a>
+          </div>
+
         </div>
-        <div class="score-bar-track"><div class="score-bar-fill" id="demo-score-bar"></div></div>
-        <div class="score-ends"><span>0 — Minimal</span><span>50</span><span>100 — Critical</span></div>
       </div>
-
-      <div class="out-card">
-        <span class="eyebrow">Risk Factor Breakdown</span>
-        <div id="res-breakdown-list" style="display:flex;flex-direction:column;gap:0.5rem;"></div>
-      </div>
-
-      <div class="out-card" id="res-sea-card" style="display:none;">
-        <span class="eyebrow">Sea & Port Conditions</span>
-        <div id="res-sea-body" style="display:flex;flex-direction:column;gap:0.6rem;"></div>
-      </div>
-
-      <div class="dispatch-out">
-        <span class="dispatch-out-label">Recommended Dispatch Window</span>
-        <div class="dispatch-out-time" id="demo-dispatch-time">—</div>
-        <div class="dispatch-out-note" id="demo-dispatch-note">—</div>
-      </div>
-
-      <div class="out-card">
-        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:0.75rem;">
-          <span class="eyebrow" style="margin-bottom:0;">Active Alerts</span>
-          <span id="res-alert-source" style="font-size:0.62rem;color:var(--gray-light);font-weight:300;"></span>
-        </div>
-        <div id="demo-alert-list"></div>
-      </div>
-
-      <div class="demo-nudge">
-        <div class="demo-nudge-text">
-          <strong>Want continuous monitoring for your routes?</strong><br>
-          Real-time alerts, 72-hour forecasts, and daily email digests — all from public data.
-        </div>
-        <a href="#cta" class="btn-primary" style="font-size:0.8rem;padding:0.65rem 1.25rem;white-space:nowrap;">Get Early Access →</a>
-      </div>
-
     </div>
-  </div>
-</div>
-```
-
   </div>
 </section>
 
-<div class="divider"></div>
+<div class="hr"></div>
 
-<!-- ══════════════════════════════════════════
-     LEAD FORM — Formspree (replaces Supabase)
-══════════════════════════════════════════ -->
-
+<!-- LEAD FORM -->
 <section id="feedback">
-  <div class="container">
-    <div class="section-head reveal">
-      <div class="eyebrow">Talk to Us</div>
-      <h2>Tell us your biggest<br>logistics challenge.</h2>
-      <p class="section-sub">RouteRisk is in early beta. Your feedback directly shapes what we build next. Takes 2 minutes.</p>
-    </div>
+  <div class="wrap">
+    <div class="reveal"><span class="label">Talk to Us</span><h2>Tell us your biggest<br>logistics challenge.</h2><p class="sub">RouteRisk is in early beta. Your feedback directly shapes what we build next. Takes 2 minutes.</p></div>
     <div class="fb-grid reveal">
-
-```
-  <div class="fb-card">
-    <!--
-      FORMSPREE SETUP:
-      1. Go to https://formspree.io → New Form
-      2. Copy your form endpoint (e.g. https://formspree.io/f/xyzabc)
-      3. Replace YOUR_FORMSPREE_ENDPOINT below with it
-    -->
-    <form id="lead-form" action="https://formspree.io/f/YOUR_FORMSPREE_ENDPOINT" method="POST">
-
-      <label class="field-label" for="fb-name">Your Name</label>
-      <input type="text" class="field-input" id="fb-name" name="name" placeholder="Budi Santoso" required>
-
-      <label class="field-label" for="fb-role">Your Role</label>
-      <select class="field-input" id="fb-role" name="role" required>
-        <option value="">Select your role...</option>
-        <option>Fleet Dispatcher</option>
-        <option>Logistics Planner</option>
-        <option>Supply Chain Manager</option>
-        <option>Fleet Owner / Operator</option>
-        <option>3PL Coordinator</option>
-        <option>Other</option>
-      </select>
-
-      <label class="field-label" for="fb-email">Email Address</label>
-      <input type="email" class="field-input" id="fb-email" name="email" placeholder="you@company.com" required>
-
-      <label class="field-label" for="fb-problem">What is your biggest logistics challenge today?</label>
-      <textarea class="field-input" id="fb-problem" name="problem" placeholder="e.g. Sulit mengetahui apakah cuaca berdampak ke pengiriman hari ini..." required></textarea>
-
-      <!-- Hidden fields for context -->
-      <input type="hidden" name="_subject" value="RouteRisk Lead Form Submission">
-      <input type="hidden" name="_next" value="">
-
-      <button type="submit" class="btn-primary" id="fb-btn" style="width:100%;justify-content:center;">
-        <div class="try-spinner" id="fb-spinner"></div>
-        <span id="fb-btn-text">Submit Feedback →</span>
-      </button>
-
-      <div class="form-status-msg" id="fb-status"></div>
-
-    </form>
-
-    <div id="fb-success" style="display:none;text-align:center;padding:2.5rem 1rem;">
-      <div style="font-size:1.75rem;margin-bottom:0.85rem;">✓</div>
-      <div style="font-size:1rem;font-weight:700;color:var(--black);margin-bottom:0.4rem;">Thank you!</div>
-      <div style="font-size:0.85rem;color:var(--gray);font-weight:300;line-height:1.65;">We have received your message.<br>We will contact you shortly.</div>
-    </div>
-  </div>
-
-  <div class="fb-info-card">
-    <div>
-      <span class="eyebrow" style="margin-bottom:1rem;">Why this matters</span>
-      <div class="fb-point">
-        <div class="fb-point-icon">◎</div>
-        <div>
-          <div class="fb-point-title">Early users get priority access</div>
-          <div class="fb-point-desc">Everyone who submits feedback is first in line when we open full access — with an extended free trial.</div>
+      <div class="fb-card">
+        <form id="lead-form" action="https://formspree.io/f/YOUR_FORMSPREE_ENDPOINT" method="POST">
+          <label class="fl">Your Name</label><input type="text" class="fi" name="name" placeholder="Budi Santoso" required>
+          <label class="fl">Your Role</label>
+          <select class="fi" name="role" required><option value="">Select your role...</option><option>Fleet Dispatcher</option><option>Logistics Planner</option><option>Supply Chain Manager</option><option>Fleet Owner / Operator</option><option>3PL Coordinator</option><option>Other</option></select>
+          <label class="fl">Email Address</label><input type="email" class="fi" name="email" placeholder="you@company.com" required>
+          <label class="fl">What is your biggest logistics challenge today?</label>
+          <textarea class="fi" name="problem" placeholder="e.g. Sulit mengetahui apakah cuaca berdampak ke pengiriman hari ini..." required></textarea>
+          <input type="hidden" name="_subject" value="RouteRisk Lead Form">
+          <button type="submit" class="btn" id="fb-btn" style="width:100%;justify-content:center;"><div class="spin" id="fb-spin"></div><span id="fb-txt">Submit Feedback</span></button>
+          <div class="form-msg" id="fb-msg"></div>
+        </form>
+        <div id="fb-ok" style="display:none;text-align:center;padding:2.25rem 1rem;">
+          <div style="font-size:1.6rem;margin-bottom:.7rem;">✓</div>
+          <div style="font-size:.95rem;font-weight:700;color:var(--black);margin-bottom:.35rem;">Thank you!</div>
+          <div style="font-size:.82rem;color:var(--gray);font-weight:300;line-height:1.62;">We have received your message.<br>We will contact you shortly.</div>
         </div>
       </div>
-      <div class="fb-point">
-        <div class="fb-point-icon">◈</div>
+      <div class="fb-info">
         <div>
-          <div class="fb-point-title">We build what you actually need</div>
-          <div class="fb-point-desc">RouteRisk is shaped by real dispatchers and planners — not assumptions. Your input determines our roadmap.</div>
+          <span class="label" style="margin-bottom:.9rem;">Why this matters</span>
+          <div class="fp"><div class="fp-icon">◎</div><div><div class="fp-t">Early users get priority access</div><div class="fp-d">Everyone who submits feedback is first in line when we open full access — with an extended free trial.</div></div></div>
+          <div class="fp"><div class="fp-icon">◈</div><div><div class="fp-t">We build what you actually need</div><div class="fp-d">RouteRisk is shaped by real dispatchers and planners — not assumptions. Your input determines our roadmap.</div></div></div>
+          <div class="fp"><div class="fp-icon">◷</div><div><div class="fp-t">No spam. Ever.</div><div class="fp-d">We only email when there is something genuinely useful to share. Unsubscribe anytime.</div></div></div>
         </div>
-      </div>
-      <div class="fb-point">
-        <div class="fb-point-icon">◷</div>
-        <div>
-          <div class="fb-point-title">No spam. Ever.</div>
-          <div class="fb-point-desc">We only email when there's something genuinely useful to share. Unsubscribe anytime, no questions asked.</div>
-        </div>
+        <div style="margin-top:1.4rem;padding-top:1.15rem;border-top:1px solid var(--border);font-size:.7rem;color:var(--gray-lt);font-weight:300;line-height:1.62;">Built by a team with direct experience in supply chain digitalization, trucking, and tugboat logistics across Indonesia.</div>
       </div>
     </div>
-    <div style="margin-top:1.5rem;padding-top:1.25rem;border-top:1px solid var(--gray-border);">
-      <div style="font-size:0.72rem;color:var(--gray-light);font-weight:300;line-height:1.65;">
-        RouteRisk is built by a team with direct experience in supply chain digitalization, trucking, and tugboat logistics across Indonesia.
-      </div>
-    </div>
-  </div>
-
-</div>
-```
-
   </div>
 </section>
 
-<div class="divider"></div>
+<div class="hr"></div>
 
-<!-- ══ CTA ══ -->
-
+<!-- CTA -->
 <section id="cta">
   <div class="cta-inner reveal">
-    <div class="eyebrow" style="text-align:center;display:block;">Early Access Open</div>
+    <span class="label" style="display:block;text-align:center;">Early Access Open</span>
     <h2 style="text-align:center;">Know your route risk<br>before you dispatch.</h2>
-    <p class="section-sub" style="margin:0.75rem auto 0;text-align:center;max-width:400px;">
-      Join logistics teams getting smarter dispatch decisions every morning. Free 30-day trial. No credit card.
-    </p>
+    <p class="sub" style="margin:.7rem auto 0;text-align:center;max-width:390px;">Join logistics teams getting smarter dispatch decisions every morning. Free 30-day trial. No credit card.</p>
     <div class="email-form">
-      <input type="email" class="email-input" id="waitlist-email" placeholder="Work email address">
-      <button class="btn-primary" id="waitlist-btn" onclick="joinWaitlist()">
-        <div class="try-spinner" id="waitlist-spinner"></div>
-        <span id="waitlist-btn-text">Get Early Access →</span>
-      </button>
+      <input type="email" class="email-in" id="wl-email" placeholder="Work email address">
+      <button class="btn" id="wl-btn" onclick="joinWaitlist()"><div class="spin" id="wl-spin"></div><span id="wl-txt">Get Early Access</span></button>
     </div>
-    <div class="cta-status" id="cta-status"></div>
+    <div class="cta-msg" id="cta-msg"></div>
     <p class="cta-trust">Free 30-day trial &nbsp;·&nbsp; No credit card &nbsp;·&nbsp; No data sharing required</p>
-    <div class="cta-features">
-      <div class="cf-item"><span class="cf-check">✓</span>Works in 60 seconds</div>
-      <div class="cf-item"><span class="cf-check">✓</span>All Indonesia corridors</div>
-      <div class="cf-item"><span class="cf-check">✓</span>72-hour risk forecast</div>
-      <div class="cf-item"><span class="cf-check">✓</span>No integration needed</div>
+    <div class="cta-feats">
+      <div class="cf"><span class="cf-chk">✓</span>Works in 60 seconds</div>
+      <div class="cf"><span class="cf-chk">✓</span>All Indonesia corridors</div>
+      <div class="cf"><span class="cf-chk">✓</span>72-hour risk forecast</div>
+      <div class="cf"><span class="cf-chk">✓</span>No integration needed</div>
     </div>
   </div>
 </section>
 
-<!-- ══ FOOTER ══ -->
-
+<!-- FOOTER -->
 <footer>
-  <div class="footer-logo">RouteRisk</div>
-  <div class="footer-note">© 2025 RouteRisk. Indonesia Logistics Intelligence.</div>
-  <div class="footer-links">
-    <a href="#">Privacy</a>
-    <a href="#">Terms</a>
-    <a href="#">Contact</a>
-  </div>
+  <div class="foot-logo">RouteRisk</div>
+  <div class="foot-note">2025 RouteRisk. Indonesia Logistics Intelligence.</div>
+  <div class="foot-links"><a href="#">Privacy</a><a href="#">Terms</a><a href="#">Contact</a></div>
 </footer>
 
-<!-- Leaflet JS -->
-
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-
 <script>
 'use strict';
 
-// ════════════════════════════════════════════════════════
-// ROUTERISK ENGINE v3
-// 1. Map visualization (Leaflet)
-// 2. Improved BMKG weather (3-tier fallback)
-// 3. Formspree lead form (no backend)
-// ════════════════════════════════════════════════════════
-
-// ── SCROLL REVEAL ──
-const revealObs = new IntersectionObserver(entries => {
-  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('in'); });
-}, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
-document.querySelectorAll('.reveal').forEach(el => revealObs.observe(el));
-
-// ── FLOATING CTA ──
-(function() {
-  const floatCta = document.getElementById('float-cta');
-  const hero     = document.getElementById('hero');
-  const observer = new IntersectionObserver(([entry]) => {
-    floatCta.classList.toggle('visible', !entry.isIntersecting);
-  }, { threshold: 0 });
-  if (hero) observer.observe(hero);
-})();
-
-// ════════════════════════════════════════════════════════
-// CITY DATABASE — coordinates + metadata
-// ════════════════════════════════════════════════════════
-const CITIES = {
-  jakarta:    { name:'Jakarta',    bmkg:'501', island:'java',       lat:-6.21,  lon:106.85, port:true,  portName:'Tanjung Priok',       portCongestion:'medium' },
-  surabaya:   { name:'Surabaya',   bmkg:'508', island:'java',       lat:-7.26,  lon:112.75, port:true,  portName:'Tanjung Perak',       portCongestion:'low'    },
-  semarang:   { name:'Semarang',   bmkg:'507', island:'java',       lat:-7.00,  lon:110.42, port:true,  portName:'Tanjung Emas',        portCongestion:'low'    },
-  bandung:    { name:'Bandung',    bmkg:'504', island:'java',       lat:-6.91,  lon:107.61, port:false, portName:null,                  portCongestion:null     },
-  yogyakarta: { name:'Yogyakarta', bmkg:'510', island:'java',       lat:-7.80,  lon:110.36, port:false, portName:null,                  portCongestion:null     },
-  merak:      { name:'Merak',      bmkg:'503', island:'java',       lat:-5.93,  lon:105.98, port:true,  portName:'Merak Ferry Port',    portCongestion:'high'   },
-  medan:      { name:'Medan',      bmkg:'202', island:'sumatra',    lat:3.59,   lon:98.67,  port:true,  portName:'Belawan Port',        portCongestion:'medium' },
-  palembang:  { name:'Palembang',  bmkg:'209', island:'sumatra',    lat:-2.99,  lon:104.75, port:false, portName:null,                  portCongestion:null     },
-  pekanbaru:  { name:'Pekanbaru',  bmkg:'206', island:'sumatra',    lat:0.53,   lon:101.45, port:false, portName:null,                  portCongestion:null     },
-  batam:      { name:'Batam',      bmkg:'213', island:'sumatra',    lat:1.07,   lon:104.02, port:true,  portName:'Batam Port',          portCongestion:'medium' },
-  dumai:      { name:'Dumai',      bmkg:'206', island:'sumatra',    lat:1.68,   lon:101.45, port:true,  portName:'Dumai Port',          portCongestion:'low'    },
-  bakauheni:  { name:'Bakauheni',  bmkg:'210', island:'sumatra',    lat:-5.87,  lon:105.73, port:true,  portName:'Bakauheni Port',      portCongestion:'medium' },
-  balikpapan: { name:'Balikpapan', bmkg:'703', island:'kalimantan', lat:-1.27,  lon:116.83, port:true,  portName:'Kariangau Port',      portCongestion:'low'    },
-  banjarmasin:{ name:'Banjarmasin',bmkg:'706', island:'kalimantan', lat:-3.32,  lon:114.59, port:true,  portName:'Trisakti Port',       portCongestion:'medium' },
-  samarinda:  { name:'Samarinda',  bmkg:'703', island:'kalimantan', lat:-0.50,  lon:117.15, port:false, portName:null,                  portCongestion:null     },
-  pontianak:  { name:'Pontianak',  bmkg:'701', island:'kalimantan', lat:-0.03,  lon:109.33, port:true,  portName:'Dwikora Port',        portCongestion:'low'    },
-  makassar:   { name:'Makassar',   bmkg:'801', island:'sulawesi',   lat:-5.14,  lon:119.43, port:true,  portName:'Soekarno-Hatta Port', portCongestion:'medium' },
-  manado:     { name:'Manado',     bmkg:'805', island:'sulawesi',   lat:1.49,   lon:124.84, port:false, portName:null,                  portCongestion:null     },
-  palu:       { name:'Palu',       bmkg:'803', island:'sulawesi',   lat:-0.90,  lon:119.88, port:false, portName:null,                  portCongestion:null     },
-  sorong:     { name:'Sorong',     bmkg:'901', island:'papua',      lat:-0.87,  lon:131.25, port:true,  portName:'Sorong Port',         portCongestion:'low'    },
+/* ══════════════════════════════════════════
+   MODULE 1 · CITY DATABASE
+══════════════════════════════════════════ */
+var CITIES = {
+  jakarta:    {name:'Jakarta',    island:'java',       lat:-6.21, lon:106.85, port:true,  portName:'Tanjung Priok',       portCong:'medium', nearPort:null},
+  surabaya:   {name:'Surabaya',   island:'java',       lat:-7.26, lon:112.75, port:true,  portName:'Tanjung Perak',       portCong:'low',    nearPort:null},
+  semarang:   {name:'Semarang',   island:'java',       lat:-7.00, lon:110.42, port:true,  portName:'Tanjung Emas',        portCong:'low',    nearPort:null},
+  bandung:    {name:'Bandung',    island:'java',       lat:-6.91, lon:107.61, port:false, portName:null,                  portCong:null,     nearPort:'jakarta'},
+  yogyakarta: {name:'Yogyakarta', island:'java',       lat:-7.80, lon:110.36, port:false, portName:null,                  portCong:null,     nearPort:'semarang'},
+  merak:      {name:'Merak',      island:'java',       lat:-5.93, lon:105.98, port:true,  portName:'Merak Ferry Port',    portCong:'high',   nearPort:null},
+  medan:      {name:'Medan',      island:'sumatra',    lat:3.59,  lon:98.67,  port:true,  portName:'Belawan Port',        portCong:'medium', nearPort:null},
+  palembang:  {name:'Palembang',  island:'sumatra',    lat:-2.99, lon:104.75, port:false, portName:null,                  portCong:null,     nearPort:'batam'},
+  pekanbaru:  {name:'Pekanbaru',  island:'sumatra',    lat:0.53,  lon:101.45, port:false, portName:null,                  portCong:null,     nearPort:'dumai'},
+  batam:      {name:'Batam',      island:'sumatra',    lat:1.07,  lon:104.02, port:true,  portName:'Batam Port',          portCong:'medium', nearPort:null},
+  dumai:      {name:'Dumai',      island:'sumatra',    lat:1.68,  lon:101.45, port:true,  portName:'Dumai Port',          portCong:'low',    nearPort:null},
+  bakauheni:  {name:'Bakauheni',  island:'sumatra',    lat:-5.87, lon:105.73, port:true,  portName:'Bakauheni Port',      portCong:'medium', nearPort:null},
+  balikpapan: {name:'Balikpapan', island:'kalimantan', lat:-1.27, lon:116.83, port:true,  portName:'Kariangau Port',      portCong:'low',    nearPort:null},
+  banjarmasin:{name:'Banjarmasin',island:'kalimantan', lat:-3.32, lon:114.59, port:true,  portName:'Trisakti Port',       portCong:'medium', nearPort:null},
+  samarinda:  {name:'Samarinda',  island:'kalimantan', lat:-0.50, lon:117.15, port:false, portName:null,                  portCong:null,     nearPort:'balikpapan'},
+  pontianak:  {name:'Pontianak',  island:'kalimantan', lat:-0.03, lon:109.33, port:true,  portName:'Dwikora Port',        portCong:'low',    nearPort:null},
+  makassar:   {name:'Makassar',   island:'sulawesi',   lat:-5.14, lon:119.43, port:true,  portName:'Soekarno-Hatta Port', portCong:'medium', nearPort:null},
+  manado:     {name:'Manado',     island:'sulawesi',   lat:1.49,  lon:124.84, port:false, portName:null,                  portCong:null,     nearPort:'makassar'},
+  palu:       {name:'Palu',       island:'sulawesi',   lat:-0.90, lon:119.88, port:false, portName:null,                  portCong:null,     nearPort:'makassar'},
+  sorong:     {name:'Sorong',     island:'papua',      lat:-0.87, lon:131.25, port:true,  portName:'Sorong Port',         portCong:'low',    nearPort:null}
 };
 
-// ════════════════════════════════════════════════════════
-// ROUTE TYPE DETECTION
-// ════════════════════════════════════════════════════════
-const ALWAYS_SEA    = new Set(['merak-bakauheni','bakauheni-merak','batam-jakarta','jakarta-batam']);
-const ALWAYS_HYBRID = new Set(['jakarta-medan','medan-jakarta','jakarta-makassar','makassar-jakarta','jakarta-balikpapan','balikpapan-jakarta','surabaya-makassar','makassar-surabaya','surabaya-banjarmasin','banjarmasin-surabaya']);
-const CROSS_ISLAND  = {'java-sumatra':1,'sumatra-java':1,'java-kalimantan':1,'kalimantan-java':1,'java-sulawesi':1,'sulawesi-java':1,'java-papua':1,'papua-java':1,'sumatra-kalimantan':1,'kalimantan-sumatra':1,'kalimantan-sulawesi':1,'sulawesi-kalimantan':1,'sulawesi-papua':1,'papua-sulawesi':1};
+/* ══════════════════════════════════════════
+   MODULE 2 · ROUTE TYPE DETECTION
+══════════════════════════════════════════ */
+var SEA_TRANSPORTS = {barge:1, roro:1, 'container-vessel':1};
+var FORCE_SEA = {'merak-bakauheni':1,'bakauheni-merak':1};
+var CROSS_SEA = {
+  'java-sumatra':1,'sumatra-java':1,'java-kalimantan':1,'kalimantan-java':1,
+  'java-sulawesi':1,'sulawesi-java':1,'java-papua':1,'papua-java':1,
+  'sumatra-kalimantan':1,'kalimantan-sumatra':1,'kalimantan-sulawesi':1,
+  'sulawesi-kalimantan':1,'sulawesi-papua':1,'papua-sulawesi':1,
+  'sumatra-papua':1,'papua-sumatra':1
+};
 
-function detectRouteType(ok, dk) {
-  const pair = ok + '-' + dk;
-  if (ALWAYS_SEA.has(pair))    return 'sea';
-  if (ALWAYS_HYBRID.has(pair)) return 'hybrid';
-  const o = CITIES[ok], d = CITIES[dk];
+function detectRouteType(ok, dk, transport) {
+  if (transport === 'air-cargo') return 'air';
+  if (FORCE_SEA[ok+'-'+dk]) return 'sea';
+  var o = CITIES[ok], d = CITIES[dk];
   if (!o || !d) return 'land';
-  const ip = o.island + '-' + d.island;
-  if (o.island === d.island) return (o.port && d.port) ? 'hybrid' : 'land';
-  if (CROSS_ISLAND[ip]) return (o.port && d.port) ? 'sea' : 'hybrid';
-  return 'land';
+  if (SEA_TRANSPORTS[transport]) return 'sea';
+  var ip = o.island+'-'+d.island;
+  if (!CROSS_SEA[ip]) return 'land';
+  return 'hybrid';
 }
 
-// ════════════════════════════════════════════════════════
-// WEATHER ENGINE — 3-tier fallback
-// TIER 1: BMKG official API
-// TIER 2: OpenWeather (free, no key needed for simulated)
-// TIER 3: Simulated data seeded by city
-// ════════════════════════════════════════════════════════
-const FALLBACK_WX = {
-  jakarta:    {rainfall:8,  windSpeed:14, weatherCode:1},
-  surabaya:   {rainfall:6,  windSpeed:12, weatherCode:0},
-  semarang:   {rainfall:14, windSpeed:15, weatherCode:2},
-  bandung:    {rainfall:20, windSpeed:10, weatherCode:2},
-  yogyakarta: {rainfall:11, windSpeed:11, weatherCode:1},
-  merak:      {rainfall:16, windSpeed:18, weatherCode:3},
-  medan:      {rainfall:74, windSpeed:16, weatherCode:5},
-  palembang:  {rainfall:48, windSpeed:14, weatherCode:4},
-  pekanbaru:  {rainfall:70, windSpeed:13, weatherCode:5},
-  batam:      {rainfall:45, windSpeed:15, weatherCode:4},
-  dumai:      {rainfall:55, windSpeed:14, weatherCode:5},
-  bakauheni:  {rainfall:18, windSpeed:17, weatherCode:3},
-  balikpapan: {rainfall:88, windSpeed:15, weatherCode:5},
-  banjarmasin:{rainfall:91, windSpeed:13, weatherCode:5},
-  samarinda:  {rainfall:80, windSpeed:12, weatherCode:5},
-  pontianak:  {rainfall:62, windSpeed:12, weatherCode:5},
-  makassar:   {rainfall:22, windSpeed:20, weatherCode:3},
-  manado:     {rainfall:57, windSpeed:18, weatherCode:4},
-  palu:       {rainfall:30, windSpeed:16, weatherCode:3},
-  sorong:     {rainfall:95, windSpeed:14, weatherCode:5},
+function getHybridWaypoints(ok, dk) {
+  var o = CITIES[ok], d = CITIES[dk];
+  var dpt = o.port ? ok : o.nearPort;
+  var arr = d.port ? dk : d.nearPort;
+  var wps = [ok];
+  if (dpt && dpt !== ok) wps.push(dpt);
+  if (arr && arr !== dk) wps.push(arr);
+  wps.push(dk);
+  return wps.filter(function(v,i,a){return a.indexOf(v)===i;});
+}
+
+/* ══════════════════════════════════════════
+   MODULE 3 · WEATHER ENGINE
+   Primary: wttr.in (CORS-open, free, no key)
+   Fallback: climate baseline (clearly labelled)
+══════════════════════════════════════════ */
+var CLIMATE = {
+  jakarta:{r:8,w:14,d:'Partly cloudy'},surabaya:{r:6,w:12,d:'Clear skies'},
+  semarang:{r:14,w:15,d:'Mostly cloudy'},bandung:{r:20,w:10,d:'Mostly cloudy'},
+  yogyakarta:{r:11,w:11,d:'Partly cloudy'},merak:{r:16,w:18,d:'Light rain'},
+  medan:{r:74,w:16,d:'Heavy rain'},palembang:{r:48,w:14,d:'Moderate rain'},
+  pekanbaru:{r:70,w:13,d:'Heavy rain'},batam:{r:45,w:15,d:'Moderate rain'},
+  dumai:{r:55,w:14,d:'Heavy rain'},bakauheni:{r:18,w:17,d:'Light rain'},
+  balikpapan:{r:88,w:15,d:'Heavy rain'},banjarmasin:{r:91,w:13,d:'Heavy rain'},
+  samarinda:{r:80,w:12,d:'Heavy rain'},pontianak:{r:62,w:12,d:'Heavy rain'},
+  makassar:{r:22,w:20,d:'Light rain'},manado:{r:57,w:18,d:'Moderate rain'},
+  palu:{r:30,w:16,d:'Light rain'},sorong:{r:95,w:14,d:'Heavy rain'}
 };
 
-const WX_DESC = {0:'Clear skies',1:'Partly cloudy',2:'Mostly cloudy',3:'Light rain',4:'Moderate rain',5:'Heavy rain',60:'Local showers',61:'Thunderstorms'};
-const WX_RAIN = {0:2,1:4,2:8,3:15,4:30,5:60,60:25,61:70};
-
-// Helper: fetch with timeout
-async function fetchWithTimeout(url, ms = 5000, options = {}) {
-  const ctrl = new AbortController();
-  const timer = setTimeout(() => ctrl.abort(), ms);
-  try {
-    const res = await fetch(url, { ...options, signal: ctrl.signal });
-    clearTimeout(timer);
-    return res;
-  } catch (err) {
-    clearTimeout(timer);
-    throw err;
-  }
+function wttrCodeToRain(code) {
+  var c = parseInt(code,10);
+  if (c <= 113) return 0; if (c <= 116) return 2; if (c <= 119) return 5;
+  if (c <= 143) return 3; if (c <= 176) return 8; if (c <= 200) return 10;
+  if (c <= 263) return 12; if (c <= 299) return 20; if (c <= 302) return 30;
+  if (c <= 314) return 45; if (c <= 321) return 20; if (c <= 350) return 60;
+  return 70;
 }
 
-// Tier 1 — BMKG
-async function fetchBMKG(cityKey) {
-  const city = CITIES[cityKey];
-  if (!city) throw new Error('unknown city');
-
-  const res = await fetchWithTimeout(
-    `https://api.bmkg.go.id/publik/prakiraan-cuaca?adm4=${city.bmkg}`,
-    5000,
-    { headers: { Accept: 'application/json' } }
-  );
-
-  if (!res.ok) throw new Error(`BMKG HTTP ${res.status}`);
-  const data = await res.json();
-  const now  = data?.data?.[0]?.cuaca?.[0]?.[0];
-  if (!now) throw new Error('BMKG: no cuaca data');
-
-  const code = parseInt(now.weather || 0);
-  return {
-    rainfall:    WX_RAIN[code] ?? parseFloat(now.tp || 5),
-    windSpeed:   parseFloat(now.ws || 12),
-    weatherDesc: WX_DESC[code] || 'Variable',
-    source:      'BMKG Live',
-    tier:        'live'
-  };
+function fetchWithTimeout(url, ms) {
+  return new Promise(function(resolve, reject) {
+    var ctrl = new AbortController();
+    var t = setTimeout(function(){ ctrl.abort(); }, ms);
+    fetch(url, {signal: ctrl.signal, headers:{Accept:'application/json','User-Agent':'RouteRisk/4'}})
+      .then(function(r){ clearTimeout(t); resolve(r); })
+      .catch(function(e){ clearTimeout(t); reject(e); });
+  });
 }
 
-// Tier 2 — OpenWeather (free endpoint, no key, returns simulated based on lat/lon)
-// Note: real OWM free tier needs an API key. We use wttr.in as a truly free fallback.
-async function fetchOpenWeather(cityKey) {
-  const city = CITIES[cityKey];
-  if (!city) throw new Error('unknown city');
-
-  // wttr.in provides free weather JSON without an API key
-  const res = await fetchWithTimeout(
-    `https://wttr.in/${city.lat},${city.lon}?format=j1`,
-    5000,
-    { headers: { Accept: 'application/json' } }
-  );
-
-  if (!res.ok) throw new Error(`wttr.in HTTP ${res.status}`);
-  const data = await res.json();
-  const cur  = data?.current_condition?.[0];
-  if (!cur) throw new Error('wttr.in: no current_condition');
-
-  const rainfallMM  = parseFloat(cur.precipMM || 0);
-  const windKmph    = parseFloat(cur.windspeedKmph || 10);
-  const weatherCode = parseInt(cur.weatherCode || 113);
-  // Map wttr.in weather codes to BMKG-like rain levels
-  const rainFromCode = weatherCode <= 113 ? 0 :
-                       weatherCode <= 176 ? 10 :
-                       weatherCode <= 263 ? 20 :
-                       weatherCode <= 305 ? 45 :
-                       weatherCode <= 374 ? 65 : 80;
-  const effectiveRain = Math.max(rainfallMM, rainFromCode);
-
-  return {
-    rainfall:    effectiveRain,
-    windSpeed:   windKmph,
-    weatherDesc: cur.weatherDesc?.[0]?.value || 'Variable',
-    source:      'Backup weather data',
-    tier:        'fallback'
-  };
+function fetchWeather(cityKey) {
+  var city = CITIES[cityKey];
+  if (!city) return Promise.reject(new Error('Unknown city'));
+  return fetchWithTimeout(
+    'https://wttr.in/'+city.lat+','+city.lon+'?format=j1', 7000
+  ).then(function(res) {
+    if (!res.ok) throw new Error('wttr.in HTTP '+res.status);
+    return res.json();
+  }).then(function(data) {
+    var cur = data && data.current_condition && data.current_condition[0];
+    if (!cur) throw new Error('No weather data');
+    var precip = parseFloat(cur.precipMM || 0);
+    var code   = wttrCodeToRain(cur.weatherCode);
+    var desc   = (cur.weatherDesc && cur.weatherDesc[0] && cur.weatherDesc[0].value) || 'Variable';
+    return {
+      rainfall: Math.max(precip, code),
+      windSpeed: parseFloat(cur.windspeedKmph || 12),
+      desc: desc,
+      source: 'wttr.in live',
+      tier: 'live'
+    };
+  }).catch(function(err) {
+    console.warn('[RouteRisk] Weather fetch failed for', cityKey, '-', err.message);
+    var b = CLIMATE[cityKey] || {r:20,w:14,d:'Variable'};
+    var variance = Math.sin(new Date().getHours() * 0.26) * 5;
+    return {
+      rainfall: Math.max(0, b.r + variance),
+      windSpeed: b.w,
+      desc: b.d,
+      source: 'Regional climate baseline',
+      tier: 'offline'
+    };
+  });
 }
 
-// Tier 3 — Simulated (always works, seeded by city characteristics)
-function simulateWeather(cityKey) {
-  const fb = FALLBACK_WX[cityKey] || { rainfall: 20, windSpeed: 14, weatherCode: 2 };
-  // Add slight daily variance
-  const hour    = new Date().getHours();
-  const variance = Math.sin(hour * 0.26) * 8; // ±8mm variation by time of day
-  return {
-    rainfall:    Math.max(0, fb.rainfall + variance),
-    windSpeed:   fb.windSpeed,
-    weatherDesc: WX_DESC[fb.weatherCode] || 'Variable',
-    source:      'Simulated data',
-    tier:        'offline'
-  };
-}
+/* ══════════════════════════════════════════
+   MODULE 4 · RISK ENGINE
+══════════════════════════════════════════ */
+var ROAD_Q = {jakarta:.10,surabaya:.12,semarang:.13,bandung:.16,yogyakarta:.14,merak:.15,
+  medan:.35,palembang:.32,pekanbaru:.38,batam:.20,dumai:.42,bakauheni:.18,
+  balikpapan:.50,banjarmasin:.55,samarinda:.52,pontianak:.48,
+  makassar:.28,manado:.34,palu:.45,sorong:.58};
+var TRAF = {jakarta:.72,surabaya:.50,semarang:.44,bandung:.60,yogyakarta:.38,merak:.55,
+  medan:.44,palembang:.35,pekanbaru:.30,batam:.32,dumai:.22,bakauheni:.45,
+  balikpapan:.30,banjarmasin:.34,samarinda:.28,pontianak:.26,
+  makassar:.40,manado:.20,palu:.24,sorong:.15};
 
-// Main weather fetcher — tries each tier in order, never throws
-async function fetchWeather(cityKey) {
-  // Tier 1: BMKG
-  try {
-    return await fetchBMKG(cityKey);
-  } catch (e1) {
-    console.warn(`[RouteRisk] BMKG unavailable for ${cityKey}:`, e1.message);
-  }
-
-  // Tier 2: wttr.in
-  try {
-    return await fetchOpenWeather(cityKey);
-  } catch (e2) {
-    console.warn(`[RouteRisk] wttr.in unavailable for ${cityKey}:`, e2.message);
-  }
-
-  // Tier 3: Simulated (always succeeds)
-  console.info(`[RouteRisk] Using simulated weather for ${cityKey}`);
-  return simulateWeather(cityKey);
-}
-
-// Weather status UI
-function setWxStatus(tier, text) {
-  const bar  = document.getElementById('wx-status-bar');
-  const txt  = document.getElementById('wx-status-text');
-  if (!bar || !txt) return;
-  bar.className = `wx-status-bar ${tier}`;
-  bar.style.display = 'flex';
-  txt.textContent   = text;
-}
-
-// ════════════════════════════════════════════════════════
-// RISK CALCULATORS
-// ════════════════════════════════════════════════════════
-const ROAD_Q  = {jakarta:.10,surabaya:.12,semarang:.13,bandung:.16,yogyakarta:.14,merak:.15,medan:.35,palembang:.32,pekanbaru:.38,batam:.20,dumai:.42,bakauheni:.18,balikpapan:.50,banjarmasin:.55,samarinda:.52,pontianak:.48,makassar:.28,manado:.34,palu:.45,sorong:.58};
-const TRAFFIC = {jakarta:.72,surabaya:.50,semarang:.44,bandung:.60,yogyakarta:.38,merak:.55,medan:.44,palembang:.35,pekanbaru:.30,batam:.32,dumai:.22,bakauheni:.45,balikpapan:.30,banjarmasin:.34,samarinda:.28,pontianak:.26,makassar:.40,manado:.20,palu:.24,sorong:.15};
-
-const SEA_ZONES = {
-  sunda:     {name:'Sunda Strait',    waveBase:1.0, windBase:16},
-  'java-sea':{name:'Java Sea',        waveBase:1.2, windBase:18},
-  makassar:  {name:'Makassar Strait', waveBase:1.8, windBase:22},
-  banda:     {name:'Banda Sea',       waveBase:2.2, windBase:25},
-  malacca:   {name:'Malacca Strait',  waveBase:0.9, windBase:15},
-  karimata:  {name:'Karimata Strait', waveBase:1.4, windBase:20},
+var SEA_ZONES = {
+  sunda:     {name:'Sunda Strait',    wb:1.0,wnb:16},
+  'java-sea':{name:'Java Sea',        wb:1.2,wnb:18},
+  makassar:  {name:'Makassar Strait', wb:1.8,wnb:22},
+  banda:     {name:'Banda Sea',       wb:2.2,wnb:25},
+  malacca:   {name:'Malacca Strait',  wb:0.9,wnb:15},
+  karimata:  {name:'Karimata Strait', wb:1.4,wnb:20}
 };
-const ZONE_MAP = {'java-sumatra':'sunda','sumatra-java':'sunda','java-kalimantan':'java-sea','kalimantan-java':'java-sea','java-sulawesi':'java-sea','sulawesi-java':'java-sea','java-papua':'banda','papua-java':'banda','sumatra-kalimantan':'malacca','kalimantan-sumatra':'karimata','kalimantan-sulawesi':'makassar','sulawesi-kalimantan':'makassar','merak-bakauheni':'sunda','bakauheni-merak':'sunda'};
+var ZONE_MAP = {
+  'java-sumatra':'sunda','sumatra-java':'sunda',
+  'java-kalimantan':'java-sea','kalimantan-java':'java-sea',
+  'java-sulawesi':'java-sea','sulawesi-java':'java-sea',
+  'java-papua':'banda','papua-java':'banda',
+  'sumatra-kalimantan':'malacca','kalimantan-sumatra':'karimata',
+  'kalimantan-sulawesi':'makassar','sulawesi-kalimantan':'makassar',
+  'merak-bakauheni':'sunda','bakauheni-merak':'sunda'
+};
 
 function getSeaZone(ok, dk) {
-  const o = CITIES[ok], d = CITIES[dk];
-  const pair = ok+'-'+dk, ip = (o?.island||'')+ '-'+(d?.island||'');
+  var pair = ok+'-'+dk;
+  var o = CITIES[ok], d = CITIES[dk];
+  var ip = (o?o.island:'')+ '-'+(d?d.island:'');
   return SEA_ZONES[ZONE_MAP[pair] || ZONE_MAP[ip] || 'java-sea'] || SEA_ZONES['java-sea'];
 }
 
 function calcLand(ok, dk, ow, dw) {
-  const rain = (ow.rainfall + dw.rainfall) / 2;
-  const rs   = rain>80?90:rain>50?70:rain>20?45:rain>5?20:8;
-  const ts   = Math.round(((TRAFFIC[ok]||.4)+(TRAFFIC[dk]||.4))/2*100);
-  const rds  = Math.round(((ROAD_Q[ok]||.35)+(ROAD_Q[dk]||.35))/2*100);
+  var rain = (ow.rainfall + dw.rainfall) / 2;
+  var rs   = rain>80?90:rain>50?70:rain>20?45:rain>5?20:8;
+  var ts   = Math.round(((TRAF[ok]||.4)+(TRAF[dk]||.4))/2*100);
+  var rds  = Math.round(((ROAD_Q[ok]||.35)+(ROAD_Q[dk]||.35))/2*100);
   return {
     score: Math.min(97, Math.round(rs*.45+ts*.30+rds*.25)),
     f: {
-      rain:    {s:Math.round(rs), l:`${Math.round(rain)}mm avg · ${ow.weatherDesc}`},
-      traffic: {s:ts,              l:`${ts}% congestion index`},
-      road:    {s:rds,             l:`PUPR road quality index: ${100-rds}% condition`}
+      rainfall:{s:Math.round(rs),d:''+Math.round(rain)+'mm avg · '+ow.desc},
+      traffic: {s:ts,             d:''+ts+'% congestion index'},
+      road:    {s:rds,            d:'Road condition rated '+(100-rds)+'%'}
     }
   };
 }
 
 function calcSea(zone, avgWind) {
-  const wet  = [10,11,0,1,2].includes(new Date().getMonth());
-  const wave = zone.waveBase + (wet?.4:-.1) + (Math.random()*.5-.25);
-  const wind = zone.windBase + avgWind*.3 + (Math.random()*4-2);
-  const ws   = wave<1?10:wave<1.5?25:wave<2?45:wave<2.5?65:wave<3?80:95;
-  const wds  = wind<15?10:wind<20?25:wind<25?45:wind<30?65:85;
+  var wet  = [10,11,0,1,2].indexOf(new Date().getMonth()) > -1;
+  var wave = zone.wb + (wet?.4:-.1) + (Math.random()*.5-.25);
+  var wind = zone.wnb + avgWind*.3 + (Math.random()*4-2);
+  var ws   = wave<1?10:wave<1.5?25:wave<2?45:wave<2.5?65:wave<3?80:95;
+  var wds  = wind<15?10:wind<20?25:wind<25?45:wind<30?65:85;
   return {
-    score: Math.min(97, Math.round(ws*.60+wds*.40)),
-    wave:Math.round(wave*10)/10, wind:Math.round(wind), zone:zone.name, wet,
+    score: Math.min(97,Math.round(ws*.60+wds*.40)),
+    wave: Math.round(wave*10)/10, wind: Math.round(wind),
+    zoneName: zone.name, wet: wet,
     f: {
-      wave:{s:Math.round(ws), l:`${Math.round(wave*10)/10}m · ${zone.name}`},
-      wind:{s:Math.round(wds),l:`${Math.round(wind)} km/h`}
+      wave:{s:Math.round(ws),d:''+Math.round(wave*10)/10+'m · '+zone.name},
+      wind:{s:Math.round(wds),d:''+Math.round(wind)+' km/h'}
     }
   };
 }
 
 function calcPort(ck) {
-  const c = CITIES[ck];
-  if (!c?.port) return null;
-  return {score:{low:15,medium:45,high:75}[c.portCongestion]||40, level:c.portCongestion, name:c.portName};
+  var c = CITIES[ck];
+  if (!c || !c.port) return null;
+  return {score:{low:15,medium:45,high:75}[c.portCong]||40, level:c.portCong, name:c.portName};
 }
 
-function calcTotal(type, land, sea, po, pd) {
-  if (type==='land') return land.score;
-  const ps = ((po?.score||30)+(pd?.score||30))/2;
-  if (type==='sea') return Math.min(97, Math.round(sea.score*.65+ps*.35));
-  return Math.min(97, Math.round(land.score*.35+sea.score*.45+ps*.20));
+function calcTotal(rt, land, sea, po, pd) {
+  if (rt==='land'||rt==='air') return land.score;
+  var ps = ((po?po.score:30)+(pd?pd.score:30))/2;
+  if (rt==='sea') return Math.min(97,Math.round(sea.score*.65+ps*.35));
+  return Math.min(97,Math.round(land.score*.35+sea.score*.45+ps*.20));
 }
 
-// ════════════════════════════════════════════════════════
-// ALERTS DATABASE
-// ════════════════════════════════════════════════════════
-const ALERTS_DB = {
-  java:[
-    {sev:'medium',text:'BPBD Jateng: Flood monitoring active at Demak–Kudus, Pantura segment.',source:'BPBD Jateng',time:'2h ago'},
-    {sev:'low',   text:'Traffic advisory: Cikampek interchange elevated +38% above baseline. Allow extra 45 min.',source:'Jasa Marga',time:'30min ago'},
-  ],
-  sumatra:[
-    {sev:'high',  text:'BPBD Riau: Elevated flood risk on Lintas Sumatra km 145–210. 3 monitoring points active.',source:'BPBD Riau',time:'1h ago'},
-    {sev:'medium',text:'BMKG: Moderate to heavy rainfall (40–70mm) in Sumatera Selatan through tomorrow.',source:'BMKG',time:'3h ago'},
-  ],
-  kalimantan:[
-    {sev:'high',  text:'BMKG: Heavy rainfall warning (80–100mm) for Kalimantan Timur. Flood alert issued.',source:'BMKG',time:'45min ago'},
-    {sev:'medium',text:'Seasonal CPO harvest surge: freight volumes on Banjarmasin corridor up 31% vs baseline.',source:'BPS',time:'12h ago'},
-  ],
-  sulawesi:[
-    {sev:'medium',text:'BMKG: Wind gusts up to 55km/h forecast for South Sulawesi coastal areas next 24 hours.',source:'BMKG Maritim',time:'4h ago'},
-  ],
-  papua:[
-    {sev:'high',  text:'BMKG: Extreme rainfall warning for Papua Barat (>120mm/24hr). BPBD alert: SIAGA.',source:'BPBD Papua',time:'1h ago'},
-  ],
-  sea:[
-    {sev:'medium',text:'BMKG Maritim: Wave heights 1.5–2.5m forecast in Java Sea for next 48 hours.',source:'BMKG Maritim',time:'2h ago'},
-    {sev:'medium',text:'Makassar Strait: Wind 22–28 knot forecast. Moderate swell advisory for small vessels.',source:'BMKG Maritim',time:'5h ago'},
-  ],
-};
+/* ══════════════════════════════════════════
+   MODULE 5 · MAP RENDERER
+══════════════════════════════════════════ */
+var demoMap = null;
+var mapLayers = [];
+var riskOn = true;
 
-function getAlerts(ok, dk, type) {
-  const o = CITIES[ok], d = CITIES[dk];
-  const pool = [];
-  [o?.island, d?.island].forEach(i => { if(i && ALERTS_DB[i]) pool.push(...ALERTS_DB[i]); });
-  if (type==='sea'||type==='hybrid') pool.push(...ALERTS_DB.sea);
-  const seen = new Set(), out = [];
-  for (const a of pool) {
-    if (!seen.has(a.text)) { seen.add(a.text); out.push(a); }
-    if (out.length >= 3) break;
-  }
-  return out;
+var LC = {low:'#4ade80', medium:'#facc15', high:'#f87171'};
+var SC = {low:'#60a5fa', medium:'#facc15', high:'#f87171'};
+var AIR_C = '#a78bfa';
+
+function mmToRisk(mm) {
+  if (mm > 55) return 'high';
+  if (mm > 18) return 'medium';
+  return 'low';
 }
 
-const DISPATCH_WINDOWS = [
-  {w:'05:00 – 08:00', note:'Lowest risk overlap — optimal for long-haul. Traffic 40% below baseline.'},
-  {w:'06:00 – 10:00', note:'Early morning window with stable weather and minimal congestion.'},
-  {w:'05:30 – 09:00', note:'Pre-dawn departure avoids peak congestion. Rain expected after 10:00.'},
-  {w:'07:00 – 09:30', note:'Narrow safe window. Risk increases sharply from 10:00 onwards.'},
-  {w:'20:00 – 23:00', note:'Night window recommended. Daytime risk level too high for safe dispatch.'},
-  {w:'04:00 – 06:30', note:'Very early pre-dawn only. Conditions improve significantly after midnight.'},
-];
-
-function getDispatch(total, type) {
-  if(total>=80) return DISPATCH_WINDOWS[5];
-  if(total>=65) return DISPATCH_WINDOWS[4];
-  if(total>=50) return DISPATCH_WINDOWS[3];
-  if(type==='sea') return DISPATCH_WINDOWS[1];
-  if(total<25)  return DISPATCH_WINDOWS[0];
-  return DISPATCH_WINDOWS[2];
+function initMap() {
+  if (demoMap) return;
+  demoMap = L.map('demo-map', {center:[-2.5,118.0],zoom:5});
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{
+    attribution:'© <a href="https://openstreetmap.org">OpenStreetMap</a> contributors',
+    maxZoom:18
+  }).addTo(demoMap);
 }
 
-// ════════════════════════════════════════════════════════
-// RENDER HELPERS
-// ════════════════════════════════════════════════════════
-function lvl(s) { return s<30?'low':s<65?'medium':'high'; }
-const LVL_LABEL  = {low:'LOW RISK', medium:'MODERATE', high:'HIGH RISK'};
-const LVL_COLOR  = {low:'var(--accent)', medium:'var(--accent-amber)', high:'var(--accent-red)'};
-const LVL_BG     = {low:'var(--accent-light)', medium:'var(--accent-amber-bg)', high:'var(--accent-red-bg)'};
-const RT_BADGE   = {land:'badge-land', sea:'badge-sea', hybrid:'badge-hybrid'};
-const RT_LABEL   = {land:'🛣 LAND', sea:'⚓ SEA', hybrid:'🔀 HYBRID'};
-
-function fRow(icon, title, detail, score) {
-  const l = lvl(score);
-  return `<div class="factor-row">
-    <span class="factor-icon">${icon}</span>
-    <div class="factor-body">
-      <div class="factor-title">${title}</div>
-      <div class="factor-detail">${detail}</div>
-    </div>
-    <div class="factor-right">
-      <div class="factor-bar"><div class="factor-bar-fill" style="width:${score}%;background:${LVL_COLOR[l]};"></div></div>
-      <span class="factor-score" style="color:${LVL_COLOR[l]};">${score}</span>
-    </div>
-  </div>`;
+function clearLayers() {
+  mapLayers.forEach(function(l){ try{demoMap.removeLayer(l);}catch(e){} });
+  mapLayers = [];
 }
 
-function animateNum(el, target, ms) {
-  const t0 = performance.now();
-  const go = now => {
-    const p = Math.min((now-t0)/ms, 1), e = 1-Math.pow(1-p, 3);
-    el.textContent = Math.round(target*e);
-    if (p < 1) requestAnimationFrame(go);
-  };
-  requestAnimationFrame(go);
-}
-
-function highlight(id) {
-  const el = document.getElementById(id);
-  if (el) { el.style.borderColor='var(--accent-red)'; setTimeout(()=>el.style.borderColor='',1600); }
-}
-
-// ── Route type preview badge ──
-function onCityChange() {
-  const ok = document.getElementById('try-origin').value;
-  const dk = document.getElementById('try-dest').value;
-  const wrap  = document.getElementById('route-type-preview');
-  const badge = document.getElementById('route-type-badge');
-  if (ok && dk && ok!==dk) {
-    const rt = detectRouteType(ok, dk);
-    wrap.style.display = 'block';
-    badge.className    = 'risk-badge ' + RT_BADGE[rt];
-    badge.textContent  = RT_LABEL[rt];
-  } else {
-    wrap.style.display = 'none';
-  }
-}
-
-// ════════════════════════════════════════════════════════
-// MAIN DEMO RUNNER
-// ════════════════════════════════════════════════════════
-async function runDemo() {
-  const ok = document.getElementById('try-origin').value;
-  const dk = document.getElementById('try-dest').value;
-  if (!ok || !dk) { highlight('try-origin'); highlight('try-dest'); return; }
-  if (ok === dk)  { highlight('try-dest'); return; }
-
-  const btn   = document.getElementById('try-btn');
-  const spin  = document.getElementById('try-spinner');
-  const txt   = document.getElementById('try-btn-text');
-  btn.disabled = true;
-  spin.style.display = 'block';
-  txt.textContent    = 'Fetching data...';
-
-  const routeType = detectRouteType(ok, dk);
-  const oc = CITIES[ok], dc = CITIES[dk];
-
-  // Fetch weather — 3-tier, always returns something
-  txt.textContent = 'Checking weather data...';
-  const [ow, dw] = await Promise.all([fetchWeather(ok), fetchWeather(dk)]);
-
-  // Update status indicator based on what tier was used
-  const tier = (ow.tier === 'live' && dw.tier === 'live') ? 'live'
-             : (ow.tier === 'offline' && dw.tier === 'offline') ? 'offline'
-             : 'fallback';
-  const tierMsg = {
-    live:     '✓ Live BMKG data · Updated just now',
-    fallback: '⚠ Using backup weather data · Live data unavailable, fallback active',
-    offline:  '○ Simulated data · Live data unavailable at this time'
-  };
-  setWxStatus(tier, tierMsg[tier]);
-
-  txt.textContent = 'Calculating risk score...';
-  await new Promise(r => setTimeout(r, 250));
-
-  const land = calcLand(ok, dk, ow, dw);
-  let sea = null, po = null, pd = null;
-  if (routeType === 'sea' || routeType === 'hybrid') {
-    sea = calcSea(getSeaZone(ok, dk), (ow.windSpeed+dw.windSpeed)/2);
-    po  = oc.port ? calcPort(ok) : null;
-    pd  = dc.port ? calcPort(dk) : null;
-  }
-
-  const total    = calcTotal(routeType, land, sea, po, pd);
-  const tl       = lvl(total);
-  const dispatch = getDispatch(total, routeType);
-  const alerts   = getAlerts(ok, dk, routeType);
-  const freshLbl = `${ow.source} · ${new Date().toLocaleTimeString('id-ID',{hour:'2-digit',minute:'2-digit'})} WIB`;
-
-  // ── Render route header
-  document.getElementById('res-route-label').textContent = `${oc.name} → ${dc.name}`;
-  const rtb = document.getElementById('res-route-type-badge');
-  rtb.className   = 'risk-badge ' + RT_BADGE[routeType];
-  rtb.textContent = RT_LABEL[routeType];
-  document.getElementById('res-data-freshness').textContent = freshLbl;
-
-  // ── Score
-  const numEl = document.getElementById('demo-score-num');
-  numEl.className = 'score-num ' + tl;
-  animateNum(numEl, total, 900);
-  document.getElementById('demo-score-sub').textContent = `${oc.name} → ${dc.name} · ${routeType.toUpperCase()} route`;
-  const sbl = document.getElementById('demo-score-badge');
-  sbl.className   = 'risk-badge badge-' + tl;
-  sbl.textContent = LVL_LABEL[tl];
-  const barEl = document.getElementById('demo-score-bar');
-  barEl.className = 'score-bar-fill ' + tl;
-  setTimeout(() => { barEl.style.width = total + '%'; }, 80);
-
-  // ── Breakdown
-  let bHTML = '';
-  if (routeType==='land'||routeType==='hybrid') {
-    bHTML += fRow('🌧', 'Rainfall Forecast',   land.f.rain.l,    land.f.rain.s);
-    bHTML += fRow('🚛', 'Traffic Congestion',  land.f.traffic.l, land.f.traffic.s);
-    bHTML += fRow('🛣', 'Road Quality Index',  land.f.road.l,    land.f.road.s);
-  }
-  if (sea) {
-    bHTML += fRow('🌊', 'Wave Height', sea.f.wave.l, sea.f.wave.s);
-    bHTML += fRow('💨', 'Wind Speed',  sea.f.wind.l, sea.f.wind.s);
-  }
-  if (po) bHTML += fRow('⚓', `Port Congestion (${po.name})`, `Level: ${po.level.toUpperCase()}`, po.score);
-  if (pd) bHTML += fRow('⚓', `Port Congestion (${pd.name})`, `Level: ${pd.level.toUpperCase()}`, pd.score);
-  document.getElementById('res-breakdown-list').innerHTML = bHTML;
-
-  // ── Sea card
-  const seaCard = document.getElementById('res-sea-card');
-  if (sea) {
-    seaCard.style.display = 'block';
-    const sl = lvl(sea.score);
-    const portRows = [po, pd].filter(Boolean).map(p => `
-      <div class="port-row">
-        <span class="port-row-name">${p.name}</span>
-        <span class="risk-badge badge-${p.level}">${p.level.toUpperCase()}</span>
-      </div>`).join('');
-    document.getElementById('res-sea-body').innerHTML = `
-      <div class="sea-grid">
-        <div class="sea-metric">
-          <div class="sea-metric-label">Wave Height</div>
-          <div class="sea-metric-val" style="color:${LVL_COLOR[sl]};">${sea.wave}m</div>
-          <div class="sea-metric-sub">${sea.zone}</div>
-        </div>
-        <div class="sea-metric">
-          <div class="sea-metric-label">Wind Speed</div>
-          <div class="sea-metric-val" style="color:${LVL_COLOR[sl]};">${sea.wind} km/h</div>
-          <div class="sea-metric-sub">${sea.wet?'Wet season':'Dry season'}</div>
-        </div>
-      </div>${portRows}`;
-  } else {
-    seaCard.style.display = 'none';
-  }
-
-  // ── Dispatch
-  document.getElementById('demo-dispatch-time').textContent = dispatch.w;
-  document.getElementById('demo-dispatch-note').textContent = dispatch.note;
-
-  // ── Alerts
-  document.getElementById('res-alert-source').textContent = ow.source;
-  document.getElementById('demo-alert-list').innerHTML = alerts.map(a => `
-    <div class="alert-item">
-      <div class="alert-dot ${a.sev}"></div>
-      <div>
-        <div class="alert-text">${a.text}</div>
-        <div class="alert-source">${a.source} · ${a.time}</div>
-      </div>
-    </div>`).join('');
-
-  // ── Show output
-  document.getElementById('try-empty').classList.add('hidden');
-  document.getElementById('try-output').classList.add('visible');
-
-  btn.disabled = false;
-  spin.style.display = 'none';
-  txt.textContent    = 'Recalculate →';
-}
-
-// ════════════════════════════════════════════════════════
-// MAP SECTION — Leaflet Route Risk Visualization
-// ════════════════════════════════════════════════════════
-let leafletMap      = null;
-let routeLayers     = [];
-let markerLayers    = [];
-let riskLayerVisible = true;
-
-// Segment risk descriptors
-const SEGMENT_RISK = {
-  high: [
-    { label:'Heavy Rain — Potential Delay', detail:'80mm+ rainfall expected. Road flooding risk elevated.' },
-    { label:'Flood Alert Active', detail:'BPBD monitoring active. Road closure possible.' },
-    { label:'Severe Weather Zone', detail:'Storm cell detected. Allow +2–3hr buffer.' },
-    { label:'High Congestion + Rain', detail:'Peak hour + wet roads. Dispatch not recommended.' },
-  ],
-  medium: [
-    { label:'Moderate Rain — Caution', detail:'25–50mm expected. Reduce speed on wet roads.' },
-    { label:'Elevated Traffic Congestion', detail:'Traffic index +35% above baseline. Allow extra 45 min.' },
-    { label:'Road Quality Caution', detail:'PUPR road index: fair condition. Potholes reported.' },
-    { label:'Light Shower — Monitor', detail:'Intermittent rain. Monitor BPBD updates.' },
-  ],
-  low: [
-    { label:'Clear Weather', detail:'No rain forecast. Road conditions normal.' },
-    { label:'Good Conditions', detail:'Low traffic, dry roads. Optimal for dispatch.' },
-    { label:'Partly Cloudy — Safe', detail:'No weather disruption expected in next 6 hours.' },
-    { label:'Smooth Corridor', detail:'BMKG forecast: clear. Traffic baseline normal.' },
-  ]
-};
-
-const MAP_COLORS = { low: '#4ade80', medium: '#facc15', high: '#f87171' };
-
-function getRandItem(arr) {
-  return arr[Math.floor(Math.random() * arr.length)];
-}
-
-// Generate intermediate waypoints between two lat/lon points
-function interpolatePoints(lat1, lon1, lat2, lon2, n) {
-  const pts = [];
-  for (let i = 0; i <= n; i++) {
-    const t = i / n;
-    // Add slight curve for visual realism
-    const midLat = lat1 + (lat2 - lat1) * t;
-    const midLon = lon1 + (lon2 - lon1) * t;
-    const curveFactor = Math.sin(t * Math.PI) * 0.6; // slight bowing
-    const perpLat = -(lon2 - lon1) * curveFactor * 0.1;
-    const perpLon =  (lat2 - lat1) * curveFactor * 0.1;
-    pts.push([midLat + perpLat, midLon + perpLon]);
+function interp(lat1,lon1,lat2,lon2,n,mag) {
+  mag = mag || 0.55;
+  var pts = [];
+  for (var i=0;i<=n;i++) {
+    var t = i/n;
+    var lat = lat1+(lat2-lat1)*t;
+    var lon = lon1+(lon2-lon1)*t;
+    var bow = Math.sin(t*Math.PI)*mag;
+    pts.push([lat-(lon2-lon1)*bow*.09, lon+(lat2-lat1)*bow*.09]);
   }
   return pts;
 }
 
-// Assign risk to segments based on weather data + route position
-function assignSegmentRisks(n, rainOrigin, rainDest) {
-  const risks = [];
-  for (let i = 0; i < n; i++) {
-    const t = i / (n - 1 || 1);
-    // Interpolate rain along route
-    const rain = rainOrigin + (rainDest - rainOrigin) * t;
-    // Add randomness to make it look realistic
-    const variance = (Math.random() - 0.5) * 20;
-    const effectiveRain = Math.max(0, rain + variance);
-
-    let risk;
-    if (effectiveRain > 55)      risk = 'high';
-    else if (effectiveRain > 20) risk = 'medium';
-    else                         risk = 'low';
-
-    risks.push(risk);
+var POP_TEXT = {
+  land:{
+    low: [['Clear Weather','No rain forecast. Road conditions normal.'],['Good Road Conditions','Dry surface. Traffic baseline normal.']],
+    medium:[['Moderate Rain — Caution','20–50mm expected. Wet roads, reduce speed.'],['Traffic Congestion','Elevated congestion detected in this segment.']],
+    high: [['Heavy Rain — High Risk','55mm+ rainfall. Road flooding risk. Delay recommended.'],['Flood Alert Active','BPBD monitoring active. Road closure possible.']]
+  },
+  sea:{
+    low: [['Calm Seas','Wave height below 1m. Good visibility. Safe for all vessels.'],['Favorable Conditions','Wind under 20 km/h. No swell advisory.']],
+    medium:[['Moderate Swell','1–2m waves. Small vessels caution. Allow extra time.'],['Elevated Wind','20–28 km/h wind. Monitor BMKG maritime.']],
+    high: [['Heavy Swell Warning','2m+ waves. Small vessels advised not to depart.'],['BMKG Maritime Alert','Strong wind gusts. Delay recommended.']]
   }
-  return risks;
+};
+
+function buildPopup(mode, risk, idx, total, mm) {
+  var pool = (POP_TEXT[mode]||POP_TEXT.land)[risk];
+  var pair = pool[idx % pool.length];
+  var col  = mode==='sea' ? SC[risk] : LC[risk];
+  var bg   = {low:'#f0faf0',medium:'#fffbe8',high:'#fff0f0'}[risk];
+  var tc   = {low:'#1a3d1a',medium:'#4a3200',high:'#4a1010'}[risk];
+  return '<div class="mpop" style="background:'+bg+';">'
+    +'<div class="mpop-meta">'+(mode==='sea'?'Sea':'Land')+' Segment '+(idx+1)+' / '+total+' · '+Math.round(mm)+'mm</div>'
+    +'<div class="mpop-title" style="color:'+tc+';"><div class="mpop-dot" style="background:'+col+';"></div>'+pair[0]+'</div>'
+    +'<div class="mpop-detail">'+pair[1]+'</div></div>';
 }
 
-// Initialize Leaflet map
-function initMap() {
-  if (leafletMap) return;
-
-  leafletMap = L.map('route-map', {
-    center:  [-2.5, 118.0], // Indonesia center
-    zoom:    5,
-    zoomControl: true,
-    attributionControl: true,
-  });
-
-  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-    attribution: '© <a href="https://openstreetmap.org">OpenStreetMap</a> contributors',
-    maxZoom: 18,
-  }).addTo(leafletMap);
+function addMarker(ck, isEnd) {
+  var c = CITIES[ck]; if (!c||!demoMap) return;
+  var sz = isEnd?12:8;
+  var m = L.marker([c.lat,c.lon],{icon:L.divIcon({
+    className:'',
+    html:'<div style="width:'+sz+'px;height:'+sz+'px;border-radius:50%;background:'+(isEnd?'#111':'#555')+';border:2px solid #fff;box-shadow:0 1px 5px rgba(0,0,0,.3);"></div>',
+    iconSize:[sz,sz],iconAnchor:[sz/2,sz/2]
+  })}).bindTooltip('<span style="font-family:\'Plus Jakarta Sans\',sans-serif;font-size:12px;font-weight:600;padding:3px 6px;">'+c.name+'</span>',
+    {direction:'top',offset:[0,-8]}).addTo(demoMap);
+  mapLayers.push(m);
 }
 
-// Draw city marker
-function addCityMarker(cityKey, label) {
-  const c = CITIES[cityKey];
-  if (!c || !leafletMap) return;
-
-  const icon = L.divIcon({
-    className: '',
-    html: `<div style="
-      width:10px;height:10px;border-radius:50%;
-      background:#111;border:2px solid #fff;
-      box-shadow:0 1px 4px rgba(0,0,0,0.3);
-    "></div>`,
-    iconSize: [10, 10],
-    iconAnchor: [5, 5],
-  });
-
-  const marker = L.marker([c.lat, c.lon], { icon })
-    .bindTooltip(`<div style="font-family:'Plus Jakarta Sans',sans-serif;font-size:12px;font-weight:600;padding:4px 8px;">${c.name}</div>`, {
-      permanent: false, direction: 'top', offset: [0, -8]
-    })
-    .addTo(leafletMap);
-
-  markerLayers.push(marker);
+function drawSegs(pts, rains, mode, sIdx, total) {
+  var colors = mode==='sea' ? SC : LC;
+  for (var i=0;i<pts.length-1;i++) {
+    var sp  = [pts[i],pts[i+1]];
+    var rsk = mmToRisk(rains[i]||0);
+    var col = colors[rsk];
+    var hi  = mode==='sea' && rsk==='high';
+    var shadow = L.polyline(sp,{color:'rgba(0,0,0,.11)',weight:8,lineCap:'round',lineJoin:'round'}).addTo(demoMap);
+    var opts = {color:col,weight:mode==='sea'?4:5,opacity:.9,lineCap:'round',lineJoin:'round'};
+    if (hi){opts.dashArray='8 6';}
+    var ln = L.polyline(sp,opts)
+      .bindPopup(buildPopup(mode,rsk,sIdx+i,total,rains[i]||0),{maxWidth:260,minWidth:185})
+      .on('mouseover',function(){this.openPopup();})
+      .addTo(demoMap);
+    mapLayers.push(shadow,ln);
+  }
 }
 
-// Build popup HTML for a segment
-function buildPopup(riskLevel, segIdx, total) {
-  const info = getRandItem(SEGMENT_RISK[riskLevel]);
-  const colors = { low:'#e8f0eb', medium:'#faf5e8', high:'#faf0f0' };
-  const textColors = { low:'#2d5a3d', medium:'#8a6c2a', high:'#8a2d2d' };
-  return `<div class="map-tooltip">
-    <div class="map-tooltip-route" style="color:#999;">Segment ${segIdx+1} / ${total}</div>
-    <div class="map-tooltip-risk" style="color:${textColors[riskLevel]};">
-      <span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:${MAP_COLORS[riskLevel]};margin-right:5px;"></span>
-      ${info.label}
-    </div>
-    <div class="map-tooltip-desc">${info.detail}</div>
-  </div>`;
-}
-
-function onMapCityChange() {
-  const ok = document.getElementById('map-origin').value;
-  const dk = document.getElementById('map-dest').value;
-  const btn = document.getElementById('map-btn');
-  btn.disabled = !(ok && dk && ok !== dk);
-}
-
-async function drawRouteMap() {
-  const ok  = document.getElementById('map-origin').value;
-  const dk  = document.getElementById('map-dest').value;
-  if (!ok || !dk || ok === dk) return;
-
-  const btn  = document.getElementById('map-btn');
-  const spin = document.getElementById('map-spinner');
-  const txt  = document.getElementById('map-btn-text');
-  btn.disabled       = true;
-  spin.style.display = 'block';
-  txt.textContent    = 'Loading map...';
-
-  // Init map on first use
+function renderMap(ok, dk, rt, waypoints, ow, dw) {
   initMap();
-  document.getElementById('map-empty').classList.add('hidden');
+  clearLayers();
+  document.getElementById('map-overlay').classList.add('hidden');
+  document.getElementById('map-toggle').classList.add('show');
 
-  // Clear previous layers
-  routeLayers.forEach(l => leafletMap.removeLayer(l));
-  markerLayers.forEach(l => leafletMap.removeLayer(l));
-  routeLayers  = [];
-  markerLayers = [];
+  var oc = CITIES[ok], dc = CITIES[dk];
+  var N = 7;
 
-  const oc = CITIES[ok], dc = CITIES[dk];
-  if (!oc || !dc) { btn.disabled = false; return; }
-
-  // Fetch weather for endpoints (use our 3-tier system)
-  txt.textContent = 'Fetching weather...';
-  const [ow, dw] = await Promise.all([fetchWeather(ok), fetchWeather(dk)]);
-
-  txt.textContent = 'Drawing route...';
-  await new Promise(r => setTimeout(r, 100));
-
-  const NUM_SEGMENTS = 8;
-  const points       = interpolatePoints(oc.lat, oc.lon, dc.lat, dc.lon, NUM_SEGMENTS);
-  const risks        = assignSegmentRisks(NUM_SEGMENTS, ow.rainfall, dw.rainfall);
-
-  // Draw each segment
-  for (let i = 0; i < NUM_SEGMENTS - 1; i++) {
-    const segPts   = [points[i], points[i+1]];
-    const risk     = risks[i];
-    const color    = MAP_COLORS[risk];
-    const popupHtml = buildPopup(risk, i, NUM_SEGMENTS - 1);
-
-    // Shadow/background line
-    const shadow = L.polyline(segPts, {
-      color: 'rgba(0,0,0,0.15)', weight: 7, opacity: 1,
-      lineCap: 'round', lineJoin: 'round'
-    }).addTo(leafletMap);
-
-    // Colored risk line
-    const line = L.polyline(segPts, {
-      color, weight: 5, opacity: 0.92,
-      lineCap: 'round', lineJoin: 'round'
-    })
-    .bindPopup(popupHtml, { maxWidth: 260, minWidth: 200 })
-    .on('mouseover', function(e) { this.openPopup(); })
-    .addTo(leafletMap);
-
-    routeLayers.push(shadow, line);
-  }
-
-  // Add city markers
-  addCityMarker(ok, oc.name);
-  addCityMarker(dk, dc.name);
-
-  // Fit map to route
-  const bounds = L.latLngBounds(points);
-  leafletMap.fitBounds(bounds, { padding: [50, 50] });
-
-  // Show risk summary
-  const counts = { low:0, medium:0, high:0 };
-  risks.forEach(r => counts[r]++);
-  const total    = risks.length;
-  const pctLow   = Math.round(counts.low   / total * 100);
-  const pctMed   = Math.round(counts.medium/ total * 100);
-  const pctHigh  = Math.round(counts.high  / total * 100);
-
-  const summaryEl = document.getElementById('risk-summary');
-  summaryEl.classList.add('visible');
-  document.getElementById('summary-body').innerHTML = `
-    <div class="risk-pct-row">
-      <span class="risk-pct-label" style="color:#2d5a3d;">Low Risk</span>
-      <span class="risk-pct-val" style="color:#2d5a3d;">${pctLow}%</span>
-    </div>
-    <div class="risk-pct-bar"><div class="risk-pct-fill" style="width:${pctLow}%;background:#4ade80;"></div></div>
-    <div class="risk-pct-row">
-      <span class="risk-pct-label" style="color:#8a6c2a;">Moderate Risk</span>
-      <span class="risk-pct-val" style="color:#8a6c2a;">${pctMed}%</span>
-    </div>
-    <div class="risk-pct-bar"><div class="risk-pct-fill" style="width:${pctMed}%;background:#facc15;"></div></div>
-    <div class="risk-pct-row">
-      <span class="risk-pct-label" style="color:#8a2d2d;">High Risk</span>
-      <span class="risk-pct-val" style="color:#8a2d2d;">${pctHigh}%</span>
-    </div>
-    <div class="risk-pct-bar"><div class="risk-pct-fill" style="width:${pctHigh}%;background:#f87171;"></div></div>
-    <div style="font-size:0.68rem;color:var(--gray-light);margin-top:0.5rem;font-weight:300;">Based on ${ow.source} · Hover segments for detail</div>
-  `;
-
-  btn.disabled       = false;
-  spin.style.display = 'none';
-  txt.textContent    = 'Redraw Route →';
-}
-
-function toggleRiskLayer() {
-  riskLayerVisible = !riskLayerVisible;
-  const toggleBtn = document.getElementById('toggle-risk-btn');
-  const toggleTxt = document.getElementById('toggle-text');
-  const toggleIco = document.getElementById('toggle-icon');
-
-  routeLayers.forEach(l => {
-    if (riskLayerVisible) l.addTo(leafletMap);
-    else leafletMap.removeLayer(l);
-  });
-
-  toggleTxt.textContent = riskLayerVisible ? 'Risk Layer: ON' : 'Risk Layer: OFF';
-  toggleIco.textContent = riskLayerVisible ? '◎' : '○';
-  toggleBtn.classList.toggle('active', riskLayerVisible);
-}
-
-// ════════════════════════════════════════════════════════
-// LEAD FORM — Formspree (AJAX submission)
-// ════════════════════════════════════════════════════════
-document.getElementById('lead-form').addEventListener('submit', async function(e) {
-  e.preventDefault();
-
-  const btn    = document.getElementById('fb-btn');
-  const spin   = document.getElementById('fb-spinner');
-  const txt    = document.getElementById('fb-btn-text');
-  const status = document.getElementById('fb-status');
-
-  btn.disabled       = true;
-  spin.style.display = 'block';
-  txt.textContent    = 'Submitting...';
-  status.className   = 'form-status-msg';
-
-  try {
-    const formData = new FormData(this);
-    const response = await fetch(this.action, {
-      method:  'POST',
-      body:    formData,
-      headers: { 'Accept': 'application/json' },
-    });
-
-    if (response.ok) {
-      // Success — hide form, show thank you message
-      document.getElementById('lead-form').style.display   = 'none';
-      document.getElementById('fb-success').style.display  = 'block';
-    } else {
-      // Formspree error (form not set up yet, etc.)
-      const data = await response.json().catch(() => ({}));
-      // Still show success for demo purposes if endpoint not configured
-      if (this.action.includes('YOUR_FORMSPREE_ENDPOINT')) {
-        console.log('[RouteRisk Lead]', Object.fromEntries(formData));
-        document.getElementById('lead-form').style.display  = 'none';
-        document.getElementById('fb-success').style.display = 'block';
-      } else {
-        throw new Error(data.error || `HTTP ${response.status}`);
-      }
-    }
-
-  } catch (err) {
-    console.error('[RouteRisk Form Error]', err);
-    status.textContent = 'Something went wrong. Please try again.';
-    status.className   = 'form-status-msg error';
-    btn.disabled       = false;
-    spin.style.display = 'none';
-    txt.textContent    = 'Submit Feedback →';
-  }
-});
-
-// ════════════════════════════════════════════════════════
-// CTA WAITLIST — Formspree (simple email capture)
-// ════════════════════════════════════════════════════════
-async function joinWaitlist() {
-  const email  = document.getElementById('waitlist-email').value.trim();
-  const status = document.getElementById('cta-status');
-
-  if (!email || !email.includes('@')) {
-    const el = document.getElementById('waitlist-email');
-    el.style.borderColor = 'var(--accent-red)';
-    setTimeout(() => el.style.borderColor = '', 1600);
+if (rt==='air') {
+    var pts = interp(oc.lat,oc.lon,dc.lat,dc.lon,N,1.2);
+    var sh  = L.polyline(pts,{color:'rgba(0,0,0,.09)',weight:7,lineCap:'round'}).addTo(demoMap);
+    var ln  = L.polyline(pts,{color:AIR_C,weight:4,opacity:.85,dashArray:'12 6',lineCap:'round'})
+      .bindPopup('<div class="mpop" style="background:#f4f0ff;"><div class="mpop-title" style="color:#3b4fa8;"><div class="mpop-dot" style="background:'+AIR_C+';"></div>Air Cargo Corridor</div><div class="mpop-detail">Direct air route. Not subject to road or sea conditions.</div></div>',{maxWidth:240})
+      .on('mouseover',function(){this.openPopup();}).addTo(demoMap);
+    mapLayers.push(sh,ln);
+    addMarker(ok,true); addMarker(dk,true);
+    demoMap.fitBounds(L.latLngBounds(pts),{padding:[50,50]});
     return;
   }
 
-  const btn  = document.getElementById('waitlist-btn');
-  const spin = document.getElementById('waitlist-spinner');
-  const txt  = document.getElementById('waitlist-btn-text');
+  if (rt==='land') {
+    var pts = interp(oc.lat,oc.lon,dc.lat,dc.lon,N);
+    var rains = pts.map(function(_,i){
+      var t=i/(pts.length-1||1);
+      return ow.rainfall+(dw.rainfall-ow.rainfall)*t+(Math.random()-.5)*14;
+    });
+    drawSegs(pts,rains,'land',0,N);
+    addMarker(ok,true); addMarker(dk,true);
+    demoMap.fitBounds(L.latLngBounds(pts),{padding:[50,50]});
+    return;
+  }
 
-  btn.disabled       = true;
-  spin.style.display = 'block';
-  txt.textContent    = 'Joining...';
-  status.style.color = '';
-  status.textContent = '';
+  if (rt==='sea') {
+    var pts = interp(oc.lat,oc.lon,dc.lat,dc.lon,N,.85);
+    var z = getSeaZone(ok,dk);
+    var wr = z.wb*18;
+    var rains = pts.map(function(){return wr+(Math.random()-.5)*18;});
+    drawSegs(pts,rains,'sea',0,N);
+    addMarker(ok,true); addMarker(dk,true);
+    demoMap.fitBounds(L.latLngBounds(pts),{padding:[50,50]});
+    return;
+  }
 
-  // Simulate a short delay for UX (replace with Formspree if desired)
-  await new Promise(r => setTimeout(r, 700));
-
-  // Log (replace with Formspree fetch if needed)
-  console.log('[RouteRisk Waitlist]', { email, ts: new Date().toISOString() });
-
-  document.getElementById('waitlist-email').value = '';
-  status.style.color  = 'var(--accent)';
-  status.textContent  = '✓ You\'re on the list. We\'ll reach out soon.';
-  btn.disabled        = false;
-  spin.style.display  = 'none';
-  txt.textContent     = 'Get Early Access →';
+  if (rt==='hybrid') {
+    var allPts=[]; var total=waypoints.length>1?(waypoints.length-1)*N:N;
+    var sIdx=0;
+    for (var i=0;i<waypoints.length-1;i++) {
+      var fk=waypoints[i], tk=waypoints[i+1];
+      var fc=CITIES[fk], tc=CITIES[tk];
+      if (!fc||!tc) continue;
+      var isSeaLeg = fc.port && tc.port && fc.island!==tc.island;
+      var mode = isSeaLeg?'sea':'land';
+      var pts  = interp(fc.lat,fc.lon,tc.lat,tc.lon,N,isSeaLeg?.9:.5);
+      var rains;
+      if (isSeaLeg) {
+        var z2 = getSeaZone(fk,tk);
+        var wr2 = z2.wb*18;
+        rains = pts.map(function(){return wr2+(Math.random()-.5)*16;});
+      } else {
+        var ref = i===0?ow:dw;
+        rains = pts.map(function(){return ref.rainfall+(Math.random()-.5)*11;});
+      }
+      drawSegs(pts,rains,mode,sIdx,total);
+      allPts = allPts.concat(pts);
+      sIdx += N;
+    }
+    waypoints.forEach(function(wk,i){addMarker(wk,i===0||i===waypoints.length-1);});
+    if (allPts.length) demoMap.fitBounds(L.latLngBounds(allPts),{padding:[50,50]});
+  }
 }
 
-// ── Init map controls state ──
-document.getElementById('map-btn').disabled = true;
-</script>
+function toggleRisk() {
+  riskOn = !riskOn;
+  var btn = document.getElementById('map-toggle');
+  mapLayers.forEach(function(l){
+    if (riskOn) l.addTo(demoMap); else demoMap.removeLayer(l);
+  });
+  btn.textContent = riskOn ? 'Risk Layer: ON' : 'Risk Layer: OFF';
+}
 
+/* ══════════════════════════════════════════
+   MODULE 6 · RENDER ENGINE
+══════════════════════════════════════════ */
+function lvl(s){ return s<30?'low':s<65?'medium':'high'; }
+var LVL_LABEL = {low:'LOW RISK',medium:'MODERATE',high:'HIGH RISK'};
+var LVL_COLOR = {low:'var(--green)',medium:'var(--amber)',high:'var(--red)'};
+var RT_BADGE  = {land:'b-land',sea:'b-sea',hybrid:'b-hybrid',air:'b-air'};
+var RT_LABEL  = {land:'Land Route',sea:'Sea Route',hybrid:'Hybrid Route',air:'Air Corridor'};
+
+function animNum(el, target, ms) {
+  var t0=performance.now();
+  function go(now){
+    var p=Math.min((now-t0)/ms,1), e=1-Math.pow(1-p,3);
+    el.textContent=Math.round(target*e);
+    if(p<1)requestAnimationFrame(go);
+  }
+  requestAnimationFrame(go);
+}
+
+function fRow(icon, title, detail, score) {
+  var l = lvl(score);
+  return '<div class="factor-row">'
+    +'<span class="fi-icon">'+icon+'</span>'
+    +'<div class="fi-body"><div class="fi-t">'+title+'</div><div class="fi-d">'+detail+'</div></div>'
+    +'<div class="fi-right"><div class="fi-bar"><div class="fi-bar-fill" style="width:'+score+'%;background:'+LVL_COLOR[l]+';"></div></div>'
+    +'<span class="fi-score" style="color:'+LVL_COLOR[l]+';">'+score+'</span></div></div>';
+}
+
+var ALERTS_DB = {
+  java:[
+    {sev:'medium',t:'BPBD Jateng: Flood monitoring active at Demak–Kudus, Pantura segment.',s:'BPBD Jateng',ts:'2h ago'},
+    {sev:'low',   t:'Traffic advisory: Cikampek interchange elevated +38% above baseline.',s:'Jasa Marga',ts:'30min ago'}
+  ],
+  sumatra:[
+    {sev:'high',  t:'BPBD Riau: Elevated flood risk on Lintas Sumatra km 145–210.',s:'BPBD Riau',ts:'1h ago'},
+    {sev:'medium',t:'BMKG: Moderate to heavy rainfall (40–70mm) in Sumatera Selatan.',s:'BMKG',ts:'3h ago'}
+  ],
+  kalimantan:[
+    {sev:'high',  t:'BMKG: Heavy rainfall warning (80–100mm) for Kalimantan Timur.',s:'BMKG',ts:'45min ago'},
+    {sev:'medium',t:'Seasonal CPO harvest surge: freight volumes up 31% vs baseline.',s:'BPS',ts:'12h ago'}
+  ],
+  sulawesi:[{sev:'medium',t:'BMKG: Wind gusts up to 55km/h forecast for South Sulawesi coastal areas.',s:'BMKG Maritim',ts:'4h ago'}],
+  papua:   [{sev:'high',  t:'BMKG: Extreme rainfall warning for Papua Barat (more than 120mm per 24hr).',s:'BPBD Papua',ts:'1h ago'}],
+  sea:[
+    {sev:'medium',t:'BMKG Maritim: Wave heights 1.5–2.5m forecast in Java Sea for next 48 hours.',s:'BMKG Maritim',ts:'2h ago'},
+    {sev:'medium',t:'Makassar Strait: Wind 22–28 knot forecast. Swell advisory active.',s:'BMKG Maritim',ts:'5h ago'}
+  ]
+};
+
+function getAlerts(ok, dk, rt) {
+  var o=CITIES[ok],d=CITIES[dk];
+  var pool=[];
+  [o&&o.island,d&&d.island].forEach(function(isl){
+    if(isl&&ALERTS_DB[isl])pool=pool.concat(ALERTS_DB[isl]);
+  });
+  if(rt==='sea'||rt==='hybrid')pool=pool.concat(ALERTS_DB.sea);
+  var seen={},out=[];
+  pool.forEach(function(a){ if(!seen[a.t]){seen[a.t]=1;out.push(a);} });
+  return out.slice(0,3);
+}
+
+var DISPATCHES = [
+  {w:'05:00 – 08:00',n:'Lowest risk overlap. Traffic 40% below baseline. Optimal for long-haul.'},
+  {w:'06:00 – 10:00',n:'Early morning window with stable weather and minimal congestion.'},
+  {w:'05:30 – 09:00',n:'Pre-dawn departure avoids peak congestion. Rain expected after 10:00.'},
+  {w:'07:00 – 09:30',n:'Narrow safe window. Risk increases sharply from 10:00 onwards.'},
+  {w:'20:00 – 23:00',n:'Night window recommended. Daytime risk level too high for safe dispatch.'},
+  {w:'04:00 – 06:30',n:'Very early pre-dawn only. Conditions improve after midnight.'}
+];
+
+function pickDispatch(total, rt) {
+  if(total>=80)return DISPATCHES[5];
+  if(total>=65)return DISPATCHES[4];
+  if(total>=50)return DISPATCHES[3];
+  if(rt==='sea')return DISPATCHES[1];
+  if(total<25) return DISPATCHES[0];
+  return DISPATCHES[2];
+}
+
+function renderResults(params) {
+  var ok=params.ok,dk=params.dk,rt=params.rt,total=params.total;
+  var land=params.land,sea=params.sea,portO=params.portO,portD=params.portD;
+  var ow=params.ow,dw=params.dw;
+  var oc=CITIES[ok],dc=CITIES[dk];
+  var tl=lvl(total);
+
+  // Route header
+  document.getElementById('rh-name').textContent = oc.name+' → '+dc.name;
+  document.getElementById('rh-sub').textContent  =
+    RT_LABEL[rt]+' · '+ow.source+' · '+new Date().toLocaleTimeString('id-ID',{hour:'2-digit',minute:'2-digit'})+' WIB';
+  var rhb = document.getElementById('rh-badge');
+  rhb.className='badge '+RT_BADGE[rt]; rhb.textContent=RT_LABEL[rt];
+  document.getElementById('rh-fresh').textContent = ow.tier==='live'?'Live data':'Climate baseline';
+
+  // Score
+  var numEl = document.getElementById('score-num');
+  numEl.className='score-num '+tl;
+  animNum(numEl, total, 900);
+  document.getElementById('score-sub').textContent = oc.name+' → '+dc.name+' · '+rt.toUpperCase();
+  var sb=document.getElementById('score-badge');
+  sb.className='badge b-'+tl; sb.textContent=LVL_LABEL[tl];
+  var bar=document.getElementById('sbar');
+  bar.className='sbar-fill '+tl;
+  setTimeout(function(){bar.style.width=total+'%';},80);
+
+  // Factors
+  var f='';
+  if(rt==='land'||rt==='hybrid'||rt==='air'){
+    f+=fRow('🌧','Rainfall Forecast',   land.f.rainfall.d, land.f.rainfall.s);
+    f+=fRow('🚛','Traffic Congestion',  land.f.traffic.d,  land.f.traffic.s);
+    f+=fRow('🛣','Road Quality Index',  land.f.road.d,     land.f.road.s);
+  }
+  if(sea&&(rt==='sea'||rt==='hybrid')){
+    f+=fRow('🌊','Wave Height', sea.f.wave.d, sea.f.wave.s);
+    f+=fRow('💨','Wind Speed',  sea.f.wind.d, sea.f.wind.s);
+  }
+  if(portO) f+=fRow('⚓','Port Congestion — '+portO.name,'Level: '+portO.level.toUpperCase(),portO.score);
+  if(portD) f+=fRow('⚓','Port Congestion — '+portD.name,'Level: '+portD.level.toUpperCase(),portD.score);
+  document.getElementById('factor-list').innerHTML=f;
+
+  // Sea card
+  var seaCard=document.getElementById('sea-card');
+  if(sea&&(rt==='sea'||rt==='hybrid')){
+    seaCard.style.display='block';
+    var sl=lvl(sea.score);
+    var pr=[portO,portD].filter(Boolean).map(function(p){
+      return '<div class="port-row"><span class="port-name">'+p.name+'</span><span class="badge b-'+p.level+'">'+p.level.toUpperCase()+'</span></div>';
+    }).join('');
+    document.getElementById('sea-body').innerHTML=
+      '<div class="sea-grid">'
+      +'<div class="sea-met"><div class="sea-met-lbl">Wave Height</div><div class="sea-met-val" style="color:'+LVL_COLOR[sl]+';">'+sea.wave+'m</div><div class="sea-met-sub">'+sea.zoneName+'</div></div>'
+      +'<div class="sea-met"><div class="sea-met-lbl">Wind Speed</div><div class="sea-met-val" style="color:'+LVL_COLOR[sl]+';">'+sea.wind+' km/h</div><div class="sea-met-sub">'+(sea.wet?'Wet season':'Dry season')+'</div></div>'
+      +'</div>'+pr;
+  } else { seaCard.style.display='none'; }
+
+  // Dispatch
+  var disp=pickDispatch(total,rt);
+  document.getElementById('disp-time').textContent=disp.w;
+  document.getElementById('disp-note').textContent=disp.n;
+
+  // Alerts
+  document.getElementById('alert-src').textContent=ow.source;
+  var al=getAlerts(ok,dk,rt);
+  document.getElementById('alert-list').innerHTML=al.map(function(a){
+    return '<div class="alert-item">'
+      +'<div class="al-dot '+a.sev+'"></div>'
+      +'<div><div class="al-text">'+a.t+'</div><div class="al-src">'+a.s+' · '+a.ts+'</div></div>'
+      +'</div>';
+  }).join('');
+
+  // Risk summary
+  var N=7;
+  var avg=(ow.rainfall+dw.rainfall)/2;
+  var counts={low:0,medium:0,high:0};
+  for(var i=0;i<N;i++){
+    var r=avg+(Math.random()-.5)*18;
+    counts[mmToRisk(r)]++;
+  }
+  var pL=Math.round(counts.low/N*100),pM=Math.round(counts.medium/N*100),pH=Math.round(counts.high/N*100);
+  var sc=document.getElementById('sum-card');
+  sc.classList.add('show');
+  document.getElementById('sum-body').innerHTML=
+    '<div style="margin-bottom:.65rem;">'
+    +'<div class="pct-row"><span style="color:var(--green)">Low Risk</span><span style="color:var(--green);font-weight:600;">'+pL+'%</span></div>'
+    +'<div class="pct-bar"><div class="pct-fill" style="width:'+pL+'%;background:#4ade80;"></div></div>'
+    +'<div class="pct-row"><span style="color:var(--amber)">Moderate</span><span style="color:var(--amber);font-weight:600;">'+pM+'%</span></div>'
+    +'<div class="pct-bar"><div class="pct-fill" style="width:'+pM+'%;background:#facc15;"></div></div>'
+    +'<div class="pct-row"><span style="color:var(--red)">High Risk</span><span style="color:var(--red);font-weight:600;">'+pH+'%</span></div>'
+    +'<div class="pct-bar"><div class="pct-fill" style="width:'+pH+'%;background:#f87171;"></div></div>'
+    +'</div><div style="font-size:.62rem;color:var(--gray-lt);font-weight:300;">Source: '+ow.source+'</div>';
+
+  // Show results
+  document.getElementById('demo-empty').classList.add('hidden');
+  document.getElementById('demo-results').classList.add('show');
+}
+
+/* ══════════════════════════════════════════
+   INPUT CHANGE HANDLER
+══════════════════════════════════════════ */
+function onInputChange() {
+  var ok = document.getElementById('d-orig').value;
+  var dk = document.getElementById('d-dest').value;
+  var tr = document.getElementById('d-transport').value;
+  var pill  = document.getElementById('rt-pill');
+  var badge = document.getElementById('rt-badge');
+  if (ok && dk && ok !== dk) {
+    var rt = detectRouteType(ok,dk,tr);
+    pill.style.display = 'flex';
+    badge.className    = 'badge '+RT_BADGE[rt];
+    badge.textContent  = RT_LABEL[rt];
+  } else { pill.style.display = 'none'; }
+}
+
+/* ══════════════════════════════════════════
+   MAIN ANALYSIS RUNNER
+══════════════════════════════════════════ */
+function runAnalysis() {
+  var ok = document.getElementById('d-orig').value;
+  var dk = document.getElementById('d-dest').value;
+  var tr = document.getElementById('d-transport').value;
+  if (!ok) { flash('d-orig'); return; }
+  if (!dk) { flash('d-dest'); return; }
+  if (ok===dk) { flash('d-dest'); return; }
+
+  var btn=document.getElementById('run-btn');
+  var spin=document.getElementById('run-spin');
+  var txt=document.getElementById('run-txt');
+  btn.disabled=true; spin.style.display='block'; txt.textContent='Fetching weather...';
+
+  initMap();
+
+  var rt = detectRouteType(ok,dk,tr);
+  var oc = CITIES[ok], dc = CITIES[dk];
+
+  Promise.all([fetchWeather(ok), fetchWeather(dk)])
+  .then(function(res) {
+    var ow=res[0], dw=res[1];
+
+    // Weather status bar
+    var wxBar=document.getElementById('wx-bar');
+    var wxMsg=document.getElementById('wx-msg');
+    if (ow.tier==='live') {
+      wxBar.className='wx-bar live';
+      wxMsg.textContent='Live weather data active — '+ow.source;
+    } else {
+      wxBar.className='wx-bar backup';
+      wxMsg.textContent='Live weather temporarily unavailable — using regional climate baseline';
+    }
+
+    txt.textContent='Calculating risk...';
+    return new Promise(function(resolve){
+      setTimeout(function(){ resolve({ow:ow,dw:dw}); }, 150);
+    });
+  })
+  .then(function(d) {
+    var ow=d.ow, dw=d.dw;
+    var land  = calcLand(ok,dk,ow,dw);
+    var sea   = null, portO=null, portD=null;
+    if (rt==='sea'||rt==='hybrid') {
+      sea   = calcSea(getSeaZone(ok,dk),(ow.windSpeed+dw.windSpeed)/2);
+      portO = oc.port?calcPort(ok):null;
+      portD = dc.port?calcPort(dk):null;
+    }
+    var total = calcTotal(rt,land,sea,portO,portD);
+    var wps   = rt==='hybrid'?getHybridWaypoints(ok,dk):[ok,dk];
+
+    txt.textContent='Drawing map...';
+    renderMap(ok,dk,rt,wps,ow,dw);
+    renderResults({ok:ok,dk:dk,rt:rt,total:total,land:land,sea:sea,portO:portO,portD:portD,ow:ow,dw:dw,wps:wps});
+
+    btn.disabled=false; spin.style.display='none'; txt.textContent='Recalculate';
+  })
+  .catch(function(err) {
+    console.error('[RouteRisk]', err);
+    btn.disabled=false; spin.style.display='none'; txt.textContent='Analyse Route';
+  });
+}
+
+function flash(id) {
+  var el=document.getElementById(id);
+  if(!el) return;
+  el.style.borderColor='var(--red)';
+  setTimeout(function(){el.style.borderColor='';},1600);
+}
+
+/* ══════════════════════════════════════════
+   MODULE 7 · FORM HANDLERS
+══════════════════════════════════════════ */
+document.getElementById('lead-form').addEventListener('submit', function(e) {
+  e.preventDefault();
+  var btn=document.getElementById('fb-btn');
+  var spin=document.getElementById('fb-spin');
+  var txt=document.getElementById('fb-txt');
+  var msg=document.getElementById('fb-msg');
+  var form=this;
+  btn.disabled=true; spin.style.display='block'; txt.textContent='Submitting...'; msg.className='form-msg';
+
+  var isDemo = form.action.indexOf('YOUR_FORMSPREE_ENDPOINT') > -1;
+  var doSubmit = isDemo
+    ? new Promise(function(r){setTimeout(function(){
+        console.log('[RouteRisk Lead]',Object.fromEntries?Object.fromEntries(new FormData(form)):'(form data)');
+        r({ok:true});
+      },800);})
+    : fetch(form.action,{method:'POST',body:new FormData(form),headers:{Accept:'application/json'}});
+
+  Promise.resolve(doSubmit)
+  .then(function(res){ if(res.ok===false) throw new Error('HTTP error'); })
+  .then(function(){
+    form.style.display='none';
+    document.getElementById('fb-ok').style.display='block';
+  })
+  .catch(function(){
+    msg.textContent='Something went wrong. Please try again.';
+    msg.className='form-msg err';
+    btn.disabled=false; spin.style.display='none'; txt.textContent='Submit Feedback';
+  });
+});
+
+function joinWaitlist() {
+  var email=document.getElementById('wl-email').value.trim();
+  var msg=document.getElementById('cta-msg');
+  if(!email||email.indexOf('@')<0){
+    var el=document.getElementById('wl-email');
+    el.style.borderColor='var(--red)';
+    setTimeout(function(){el.style.borderColor='';},1600);
+    return;
+  }
+  var btn=document.getElementById('wl-btn'),spin=document.getElementById('wl-spin'),txt=document.getElementById('wl-txt');
+  btn.disabled=true; spin.style.display='block'; txt.textContent='Joining...';
+  setTimeout(function(){
+    console.log('[RouteRisk Waitlist]',{email:email,ts:new Date().toISOString()});
+    document.getElementById('wl-email').value='';
+    msg.style.color='var(--green)';
+    msg.textContent='You are on the list. We will reach out soon.';
+    btn.disabled=false; spin.style.display='none'; txt.textContent='Get Early Access';
+  },750);
+}
+
+/* ══════════════════════════════════════════
+   MODULE 8 · UTILS
+══════════════════════════════════════════ */
+// Scroll reveal
+var ro = new IntersectionObserver(function(entries){
+  entries.forEach(function(e){ if(e.isIntersecting)e.target.classList.add('in'); });
+},{threshold:.08,rootMargin:'0px 0px -40px 0px'});
+document.querySelectorAll('.reveal').forEach(function(el){ro.observe(el);});
+
+// Floating CTA
+var fCTA = document.getElementById('float-cta');
+var heroEl = document.getElementById('hero');
+if(heroEl){
+  new IntersectionObserver(function(entries){
+    fCTA.classList.toggle('show',!entries[0].isIntersecting);
+  },{threshold:0}).observe(heroEl);
+}
+</script>
 </body>
 </html>
